@@ -1,0 +1,48 @@
+%option noyywrap
+
+%%
+
+"if"    {return tIF;}
+"else"    {return tELSE;}
+"then"    {return tTHEN;}
+"while"    {return tWHILE;}
+"int"    {return tINT;}
+"char"    {return tCHAR;}
+"main()"    {return tMAIN;}
+"void"    {return tvoid found;}
+"+"    {return tPLUS;}
+"-"    {return tMOINS;}
+"*"    {return tMULT;}
+"/"    {return tDIV;}
+"**"    {return tEXP;}
+"="    {return tEQUAL;}
+"("    {return tPOPEN;}
+")"    {return tPCLOSE;}
+"{"    {return tAOPEN;}
+"}"    {return tACLOSE;}
+"["    {return tCOPEN;}
+"]"    {return tCCLOSE;}
+" "    {return tSPACE;}
+"\t"    {return tTAB;}
+[ \t]+$ ;
+[ \t]+ printf(" ");
+"\b"    {return tBACKSPACE;}
+","    {return tCOMA;}
+";"    {return tSEMICOLON;}
+"=>"    {return tGEQ;}
+"=<"    {return tLEQ;}
+"=="    {return tBE;}
+"<"    {return tINF;}
+">"    {return tSUP;}
+"\n"    {return tNEWL;}
+[A-Za-z][A-Za-z_0-9]* printf("Contenu %s", yytext) ;
+[0-9]+ {printf(return tINT);}
+[0-9]+[.][0-9]+ {return tDEC;}
+[0-9]+e[0-9]+ {printf(return tExpo;);}
+%%
+    main()
+        {
+            yylex();
+            return 1;
+        }
+

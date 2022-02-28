@@ -1,0 +1,48 @@
+%option noyywrap
+
+%%
+
+"if"    {fprintf(stderr,"IF\n");}
+"else"    {fprintf(stderr,"ELSE\n");}
+"then"    {fprintf(stderr,"THEN\n");}
+"while"    {fprintf(stderr,"WHILE\n");}
+"int"    {fprintf(stderr,"INT\n");}
+"char"    {fprintf(stderr,"CHAR\n");}
+"main()"    {fprintf(stderr,"MAIN\n");}
+"void"    {fprintf(stderr,"void found\n");}
+"+"    {fprintf(stderr,"PLUS\n");}
+"-"    {fprintf(stderr,"MOINS\n");}
+"*"    {fprintf(stderr,"MULT\n");}
+"/"    {fprintf(stderr,"DIV\n");}
+"**"    {fprintf(stderr,"EXP\n");}
+"="    {fprintf(stderr,"EQUAL\n");}
+"("    {fprintf(stderr,"POPEN\n");}
+")"    {fprintf(stderr,"PCLOSE\n");}
+"{"    {fprintf(stderr,"AOPEN\n");}
+"}"    {fprintf(stderr,"ACLOSE\n");}
+"["    {fprintf(stderr,"COPEN\n");}
+"]"    {fprintf(stderr,"CCLOSE\n");}
+" "    {fprintf(stderr,"SPACE\n");}
+"\t"    {fprintf(stderr,"TAB\n");}
+[ \t]+$ ;
+[ \t]+ printf(" ");
+"\b"    {fprintf(stderr,"BACKSPACE\n");}
+","    {fprintf(stderr,"COMA\n");}
+";"    {fprintf(stderr,"SEMICOLON\n");}
+"=>"    {fprintf(stderr,"GEQ\n");}
+"=<"    {fprintf(stderr,"LEQ\n");}
+"=="    {fprintf(stderr,"BE\n");}
+"<"    {fprintf(stderr,"INF\n");}
+">"    {fprintf(stderr,"SUP\n");}
+"\n"    {fprintf(stderr,"NEWL\n");}
+[A-Za-z][A-Za-z_0-9]* printf("Contenu %s", yytext) ;
+[0-9]+ {printf("Int trouvé %s",yytext);}
+[0-9]+[.][0-9]+ {printf("décimal trouvé %s",yytext);}
+[0-9]+e[0-9]+ {printf("exponentielle trouvée  %s",yytext);}
+%%
+    main()
+        {
+            yylex();
+            return 1;
+        }
+
