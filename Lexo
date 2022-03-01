@@ -8,7 +8,7 @@
 "while"    {fprintf(stderr,"WHILE\n");}
 "int"    {fprintf(stderr,"INT\n");}
 "char"    {fprintf(stderr,"CHAR\n");}
-"main()"    {fprintf(stderr,"MAIN\n");}
+"main"    {fprintf(stderr,"MAIN\n");}
 "void"    {fprintf(stderr,"void found\n");}
 "+"    {fprintf(stderr,"PLUS\n");}
 "-"    {fprintf(stderr,"MOINS\n");}
@@ -39,6 +39,7 @@
 [0-9]+ {printf("Int trouvé %s \n",yytext);}
 [0-9]+[.][0-9]+ {printf("décimal trouvé %s \n",yytext);}
 [0-9]+e[0-9]+ {printf("exponentielle trouvée  %s \n",yytext);}
+[A-Za-z_0-9] {printf("Character decté  %s \n", yytext) ;}
 %%
 int main()
 {

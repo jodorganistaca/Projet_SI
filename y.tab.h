@@ -63,29 +63,32 @@ extern int yydebug;
     tDIV = 269,
     tPOW = 270,
     tEQUAL = 271,
-    tPOPEN = 272,
-    tPCLOSE = 273,
-    tAOPEN = 274,
-    tACLOSE = 275,
-    tCOPEN = 276,
-    tCCLOSE = 277,
-    tSPACE = 278,
-    tTAB = 279,
-    tBACKSPACE = 280,
-    tCOMA = 281,
-    tSEMICOLON = 282,
-    tGEQ = 283,
-    tLEQ = 284,
-    tBE = 285,
-    tINF = 286,
-    tSUP = 287,
-    tNEWL = 288,
-    tDEC = 289,
-    tEXPO = 290,
-    tCONTENU = 291,
-    tAPOS = 292,
-    tCHARACTER = 293,
-    tINTEGER = 294
+    tAND = 272,
+    tOR = 273,
+    tPOPEN = 274,
+    tPCLOSE = 275,
+    tAOPEN = 276,
+    tACLOSE = 277,
+    tCOPEN = 278,
+    tCCLOSE = 279,
+    tSPACE = 280,
+    tTAB = 281,
+    tBACKSPACE = 282,
+    tCOMA = 283,
+    tSEMICOLON = 284,
+    tGEQ = 285,
+    tLEQ = 286,
+    tBE = 287,
+    tINF = 288,
+    tSUP = 289,
+    tNEWL = 290,
+    tDEC = 291,
+    tEXPO = 292,
+    tCONTENU = 293,
+    tAPOS = 294,
+    tCHARACTER = 295,
+    tINTEGER = 296,
+    tERROR = 297
   };
 #endif
 /* Tokens.  */
@@ -103,29 +106,32 @@ extern int yydebug;
 #define tDIV 269
 #define tPOW 270
 #define tEQUAL 271
-#define tPOPEN 272
-#define tPCLOSE 273
-#define tAOPEN 274
-#define tACLOSE 275
-#define tCOPEN 276
-#define tCCLOSE 277
-#define tSPACE 278
-#define tTAB 279
-#define tBACKSPACE 280
-#define tCOMA 281
-#define tSEMICOLON 282
-#define tGEQ 283
-#define tLEQ 284
-#define tBE 285
-#define tINF 286
-#define tSUP 287
-#define tNEWL 288
-#define tDEC 289
-#define tEXPO 290
-#define tCONTENU 291
-#define tAPOS 292
-#define tCHARACTER 293
-#define tINTEGER 294
+#define tAND 272
+#define tOR 273
+#define tPOPEN 274
+#define tPCLOSE 275
+#define tAOPEN 276
+#define tACLOSE 277
+#define tCOPEN 278
+#define tCCLOSE 279
+#define tSPACE 280
+#define tTAB 281
+#define tBACKSPACE 282
+#define tCOMA 283
+#define tSEMICOLON 284
+#define tGEQ 285
+#define tLEQ 286
+#define tBE 287
+#define tINF 288
+#define tSUP 289
+#define tNEWL 290
+#define tDEC 291
+#define tEXPO 292
+#define tCONTENU 293
+#define tAPOS 294
+#define tCHARACTER 295
+#define tINTEGER 296
+#define tERROR 297
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

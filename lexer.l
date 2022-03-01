@@ -1,3 +1,8 @@
+%{
+#include "y.tab.h"
+#include <stdio.h>
+%}
+
 %option noyywrap
 
 %%
@@ -9,7 +14,7 @@
 "int"    {return tINT;}
 "char"    {return tCHAR;}
 "main"    {return tMAIN;}
-"void"    {return tvoid found;}
+"void"    {return tVOID;}
 "+"    {return tPLUS;}
 "&"    {return tAND;}
 "|"    {return tOR;}
@@ -42,10 +47,13 @@
 [0-9]+ {return tINTEGER;}
 [0-9]+[.][0-9]+ {return tDEC;}
 [0-9]+e[0-9]+ {return tEXPO;}
-[A-Za-z] {return tCHARACTER}
+[A-Za-z_0-9] {return tCHARACTER;}
+. {return tERROR;}
 %%
+/*
 int main(){
     yylex();
     return 1;
 }
+*/
 
