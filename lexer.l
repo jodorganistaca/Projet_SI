@@ -16,7 +16,7 @@
 "-"    {return tMOINS;}
 "*"    {return tMULT;}
 "/"    {return tDIV;}
-"**"    {return tEXP;}
+"**"    {return tPOW;}
 "="    {return tEQUAL;}
 "("    {return tPOPEN;}
 ")"    {return tPCLOSE;}
@@ -24,6 +24,7 @@
 "}"    {return tACLOSE;}
 "["    {return tCOPEN;}
 "]"    {return tCCLOSE;}
+"'"    {return tAPOS;}
 " "    {return tSPACE;}
 "\t"    {return tTAB;}
 [ \t]+$ ;
@@ -37,10 +38,11 @@
 "<"    {return tINF;}
 ">"    {return tSUP;}
 "\n"    {return tNEWL;}
-[A-Za-z][A-Za-z_0-9]* printf("Contenu %s", yytext) ;
-[0-9]+ {printf(return tINT);}
+[A-Za-z][A-Za-z_0-9]* {return tCONTENU;}
+[0-9]+ {return tINTEGER;}
 [0-9]+[.][0-9]+ {return tDEC;}
-[0-9]+e[0-9]+ {printf(return tExpo;);}
+[0-9]+e[0-9]+ {return tEXPO;}
+[A-Za-z] {return tCHARACTER}
 %%
 int main(){
     yylex();

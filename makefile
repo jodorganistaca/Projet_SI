@@ -10,5 +10,7 @@ lexer:
 
 parser:
 	yacc -d parser.y
+	gcc y.tab.c
+	gcc y.tab.c lex.yy.c –ll –o parser.exe
 	
 
