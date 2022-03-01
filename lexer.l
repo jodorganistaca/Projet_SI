@@ -8,9 +8,11 @@
 "while"    {return tWHILE;}
 "int"    {return tINT;}
 "char"    {return tCHAR;}
-"main()"    {return tMAIN;}
+"main"    {return tMAIN;}
 "void"    {return tvoid found;}
 "+"    {return tPLUS;}
+"&"    {return tAND;}
+"|"    {return tOR;}
 "-"    {return tMOINS;}
 "*"    {return tMULT;}
 "/"    {return tDIV;}
@@ -40,9 +42,8 @@
 [0-9]+[.][0-9]+ {return tDEC;}
 [0-9]+e[0-9]+ {printf(return tExpo;);}
 %%
-    main()
-        {
-            yylex();
-            return 1;
-        }
+int main(){
+    yylex();
+    return 1;
+}
 

@@ -35,14 +35,14 @@
 "<"    {fprintf(stderr,"INF\n");}
 ">"    {fprintf(stderr,"SUP\n");}
 "\n"    {fprintf(stderr,"NEWL\n");}
-[A-Za-z][A-Za-z_0-9]* printf("Contenu %s", yytext) ;
-[0-9]+ {printf("Int trouvé %s",yytext);}
-[0-9]+[.][0-9]+ {printf("décimal trouvé %s",yytext);}
-[0-9]+e[0-9]+ {printf("exponentielle trouvée  %s",yytext);}
+[A-Za-z][A-Za-z_0-9]* printf("Contenu %s \n", yytext) ;
+[0-9]+ {printf("Int trouvé %s \n",yytext);}
+[0-9]+[.][0-9]+ {printf("décimal trouvé %s \n",yytext);}
+[0-9]+e[0-9]+ {printf("exponentielle trouvée  %s \n",yytext);}
 %%
-    main()
-        {
-            yylex();
-            return 1;
-        }
+int main()
+{
+    yylex();
+    return 1;
+}
 
