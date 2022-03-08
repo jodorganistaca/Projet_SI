@@ -88,7 +88,9 @@ extern int yydebug;
     tAPOS = 294,
     tCHARACTER = 295,
     tINTEGER = 296,
-    tERROR = 297
+    tERROR = 297,
+    tTRUE = 298,
+    tFALSE = 299
   };
 #endif
 /* Tokens.  */
@@ -132,6 +134,8 @@ extern int yydebug;
 #define tCHARACTER 295
 #define tINTEGER 296
 #define tERROR 297
+#define tTRUE 298
+#define tFALSE 299
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
