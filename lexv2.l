@@ -2,7 +2,10 @@
 #include "y.tab.h"
 #include <stdio.h>
 #include <stdlib.h>
-int c;
+char char_val;
+int int_val;
+double double_val;
+char* str_val;
 %}
 
 %option noyywrap
@@ -49,11 +52,15 @@ int c;
 "\n"   printf("\n");
 "true"    {printf("tTRUE "); return tTRUE;}
 "false"    {printf("tFALSE "); return tFALSE;}
-[A-Za-z][A-Za-z_0-9]* {printf("tVARNAME "); c=yytext[0]; yylval.str = c - 'a'; return tVARNAME;}
-[0-9]+ {printf("tINTEGER "); yylval=atoi(yytext); return tINTEGER;}
-[0-9]+[.][0-9]+ {printf("tDEC "); yylval=atoi(yytext); return tDEC;}
+[A-Za-z][A-Za-z_0-9]* {
+    printf("tVARNAME "); 
+    yylval.str_val = malloc(yyleng * sizeof(char)); 
+    strcpy(yylval.str_val, yytext); return tVARNAME;
+}
+[0-9]+ {printf("tINTEGER "); yylval.int_val = atoi(yytext); return tINTEGER;}
+[0-9]+[.][0-9]+ {printf("tDEC "); yylval.double_val = atof(yytext); return tDEC;}
 [0-9]+e[0-9]+ {printf("tEXPO "); return tEXPO;}
-[A-Za-z_0-9] {printf("tCHARACTER "); return tCHARACTER;}
+[A-Za-z_0-9] {printf("tCHARACTER "); yylval.char_val = yytext[0]; return tCHARACTER;}
 . {printf("tERROR "); return tERROR;}
 %%
 /*
