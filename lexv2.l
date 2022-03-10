@@ -2,6 +2,7 @@
 #include "y.tab.h"
 #include <stdio.h>
 #include <stdlib.h>
+int c;
 %}
 
 %option noyywrap
@@ -48,9 +49,9 @@
 "\n"   printf("\n");
 "true"    {printf("tTRUE "); return tTRUE;}
 "false"    {printf("tFALSE "); return tFALSE;}
-[A-Za-z][A-Za-z_0-9]* {printf("tVARNAME "); return tVARNAME;}
-[0-9]+ {printf("tINTEGER "); return tINTEGER;}
-[0-9]+[.][0-9]+ {printf("tDEC "); return tDEC;}
+[A-Za-z][A-Za-z_0-9]* {printf("tVARNAME "); c=yytext[0]; yylval.str = c - 'a'; return tVARNAME;}
+[0-9]+ {printf("tINTEGER "); yylval=atoi(yytext); return tINTEGER;}
+[0-9]+[.][0-9]+ {printf("tDEC "); yylval=atoi(yytext); return tDEC;}
 [0-9]+e[0-9]+ {printf("tEXPO "); return tEXPO;}
 [A-Za-z_0-9] {printf("tCHARACTER "); return tCHARACTER;}
 . {printf("tERROR "); return tERROR;}

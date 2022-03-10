@@ -3,6 +3,7 @@
 #include <stdlib.h>
 void yyerror(char *s);
 %}
+%union { int a; }
 %token tIF tELSE tTHEN tWHILE tINT tPRINTF tCHAR tMAIN tCONST tVOID tPLUS tMOINS tMULT tDIV tPOW tEQUAL tAND tOR tPOPEN tPCLOSE tAOPEN tACLOSE tCOPEN tCCLOSE tSPACE tTAB tBACKSPACE tCOMA tSEMICOLON tGEQ tLEQ tBE tINF tSUP tNEWL tDEC tEXPO tVARNAME tAPOS tCHARACTER tINTEGER tERROR tTRUE tFALSE
 %start go
 %%
@@ -36,7 +37,7 @@ init_var
     ;
 
 variable_multiple
-    : tVARNAME
+    : tVARNAME { printf("%s\n", $1); }
     | tVARNAME tEQUAL value_variable
     | tVARNAME tEQUAL value_variable  tCOMA variable_multiple
     | tVARNAME tEQUAL value_variable operation value_variable 

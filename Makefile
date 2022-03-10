@@ -1,6 +1,6 @@
-GRM=parser.y
-LEX=lexer.l
-BIN=Pars
+GRM=parsv2.y
+LEX=lexv2.l
+BIN=Parsv2
 
 CC=gcc
 CFLAGS=-Wall -g
