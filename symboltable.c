@@ -8,7 +8,22 @@ struct DataItem {
 };
 
 struct DataItem* hashArray [SIZE];
+struct DataItem* dummyItem;
 
+//to allocate a new empty symbol table 
+void allocate(){
+
+}
+
+//to remove all entries and free storage of symbol table
+void free(){
+
+}
+
+//to search for a name and return pointer to its entry
+void lookup(){
+
+}
 
 int hashCode(int key){
     return key % SIZE;
@@ -60,5 +75,26 @@ struct DataItem* delete(struct DataItem* item){
     int key = item -> key;
 
     //get the hash 
-    int hashIndex()
+    int hashIndex = hashCode(key);
+
+    //find and empty space
+    while(hashArray[hashIndex] != NULL){
+        
+        //found the element to delete
+        if(hashArray[hashIndex]->key == key){
+            struct DataItem* temp = hashArray[hashIndex];
+
+            //assign a dummy item at deleted position
+            hashArray[hashIndex] = dummyItem;
+            return temp;
+        }
+
+        //next cell
+        ++hashIndex;
+
+        //wrap around the table
+        hashIndex %= SIZE;
+    }
+
+    return NULL;
 };
