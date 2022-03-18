@@ -24,6 +24,5 @@ int main() {
         int i = 0;
     }else{
         char a = 'b';
-        
     }
 }
