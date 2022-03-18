@@ -32,7 +32,7 @@ expression
     ;
 
 expression_arithmetic
-    : tCHAR tVARNAME tEQUAL tAPOS tVARNAME tAPOS tSEMICOLON
+    : tCHAR tVARNAME tEQUAL tAPOS tVARNAME tAPOS tSEMICOLON {printf("%s\n", $2);}
     | init_var variable_multiple tSEMICOLON 
     | variable_multiple tSEMICOLON /* Pour plus tard on rajoutera une boucle qui permettra de succéder plusieurs opérations*/
     ;
@@ -48,10 +48,10 @@ init_var
 
 variable_multiple
     : tVARNAME {printf("%s\n", yylval.str_val);}
-    | tVARNAME tEQUAL value_variable {printf("%s\n", $1.str_val);}
-    | tVARNAME tEQUAL value_variable  tCOMA variable_multiple
-    | tVARNAME tEQUAL value_variable operation value_variable 
-     | tVARNAME tEQUAL value_variable operation value_variable tCOMA variable_multiple
+    | tVARNAME tEQUAL value_variable {printf("%s\n", $1);}
+    | tVARNAME tEQUAL value_variable  tCOMA variable_multiple {printf("%s\n", $1);}
+    | tVARNAME tEQUAL value_variable operation value_variable {printf("%s\n", $1);}
+    | tVARNAME tEQUAL value_variable operation value_variable tCOMA variable_multiple {printf("%s\n", $1);}
     | tVARNAME tCOMA variable_multiple
     ;
 iteration_statement
