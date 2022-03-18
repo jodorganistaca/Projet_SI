@@ -7,7 +7,8 @@
 %option noyywrap
 
 %%
-
+[*][A-Za-z][A-Za-z_0-9]* {printf("tPOINTER"); 
+     return tPOINTER;}
 "if"    {printf("tIF "); return tIF;}
 "else"    {printf("tELSE "); return tELSE;}
 "then"    {printf("tTHEN "); return tTHEN;}
@@ -53,6 +54,8 @@
 [0-9]+[.][0-9]+ {printf("tDEC "); return tDEC;}
 [0-9]+e[0-9]+ {printf("tEXPO "); return tEXPO;}
 [A-Za-z_0-9] {printf("tCHARACTER "); return tCHARACTER;}
+. {printf("tERROR "); return tERROR;}
+
 . {printf("tERROR "); return tERROR;}
 %%
 /*

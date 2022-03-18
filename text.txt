@@ -1,0 +1,111 @@
+statement {printf("main reconnu");}
+    ;
+
+/*
+    /* expression_statement
+    : blank /* fonction * /
+    | expression_statement blank
+    ;
+    */
+blank
+    : tSPACE
+    | tNEWL
+    | tSEMICOLON
+    | tBACKSPACE
+    | tTAB
+    | blank blank
+    ;
+
+statement
+    : tAOPEN expression tACLOSE
+    ;
+
+expression
+    : blank
+    | expression_arithmetic 
+    | expression expression
+    | iteration_statement
+    ;
+
+expression_arithmetic
+    : tCHAR tCONTENU tEQUAL tAPOS tCHARACTER tAPOS tSEMICOLON
+    | tINT tCONTENU tEQUAL tINTEGER operation tINTEGER tSEMICOLON
+    | tINT tCONTENU tEQUAL tINTEGER tSEMICOLON /* Pour plus tard on rajoutera une boucle qui permettra de succéder plusieurs opérations*/
+    ;
+operation
+    : tDIV
+    | tPLUS
+    | tMOINS
+    | tMULT
+    | tPOW
+    | tEXPO
+    ;
+
+conditional_expression 
+    : tINTEGER
+    | tINTEGER comparator tINTEGER /*true and false*/ /* Or and*/
+    ;
+comparator
+    : tBE
+    | tGEQ
+    | tLEQ
+    | tINF
+    | tSUP
+    ;
+conditioner 
+    : tPOPEN  conditional_expression tPCLOSE
+    ;
+structif /* Pour la répétition future de ELSIF*/
+    : tELSE statement
+/*  | tELSIF statement structif */
+    | tVOID
+    ;
+iteration_statement
+    : tWHILE  conditioner statement
+    | tIF conditioner tTHEN statement structif
+    ;
+    
+
+
+
+
+    [*][A-Za-z][A-Za-z_0-9]* {printf("tPOINTER"); 
+    yylval.str_val = malloc(yyleng * sizeof(char)); 
+     strcpy(yylval.str_val, yytext); return tPOINTER;}
+
+     comment_block 
+    : tCOMMENT commentaire
+    | tCOMMENT
+    ;
+commentaire
+    : tINTEGER
+    | t
+    "//"    {printf("tCOMMENT "); return tCOMMENT;}
+fonction
+    : tVARNAME tPOPEN parameters tPCLOSE statement {printf("fonction\n");}
+    | tINT tVARNAME tPOPEN parameters tPCLOSE statement {printf("fonction\n");}
+    |tINT tVARNAME tPOPEN tPCLOSE statement {printf("fonction\n");}
+    ;
+parameters
+    : tINT tVARNAME
+    | tCHAR tVARNAME
+    | tINT tVARNAME tCOMA parameters
+    | tCHAR tVARNAME tCOMA parameters
+    ;
+     /* int f1(int a, int b){
+        a = a+b;
+        b = a*b;
+    }
+    */
+
+    attention à la profondeur des variables
+    à l'entrée dans un bloc if / while on prend une profondeur
+ cette profondeur doit être oubliée au retour dans une profondeur inféireur
+
+
+    deux tableaux
+    un tbableau pour la table des symboles , un tableau pour les fonctions
+
+    à l'appel de fonction imbriqué il faudrait bascule rdans le tas les outils de la table des symboles utilisés
+Il vaut mieux utiliser une fonciton de hashage qu'une string compare
+    

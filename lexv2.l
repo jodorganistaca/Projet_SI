@@ -62,6 +62,10 @@ char* str_val;
 [0-9]+e[0-9]+ {printf("tEXPO "); return tEXPO;}
 [A-Za-z_0-9] {printf("tCHARACTER "); yylval.char_val = yytext[0]; return tCHARACTER;}
 . {printf("tERROR "); return tERROR;}
+
+[*][A-Za-z][A-Za-z_0-9]* {printf("tPOINTER"); 
+    yylval.str_val = malloc(yyleng * sizeof(char)); 
+     strcpy(yylval.str_val, yytext); return tPOINTER;}
 %%
 /*
 int main(){

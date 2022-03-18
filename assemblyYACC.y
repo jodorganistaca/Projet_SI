@@ -4,7 +4,7 @@
 void yyerror(char *s);
 %}
 %union { int a; }
-%token tADD tELSE tTHEN tWHILE tINT tPRINTF tCHAR tMAIN tCONST tVOID tPLUS tMOINS tMULT tDIV tPOW tEQUAL tAND tOR tPOPEN tPCLOSE tAOPEN tACLOSE tCOPEN tCCLOSE tSPACE tTAB tBACKSPACE tCOMA tSEMICOLON tGEQ tLEQ tBE tINF tSUP tNEWL tDEC tEXPO tVARNAME tAPOS tCHARACTER tINTEGER tERROR tTRUE tFALSE
+%token tADD tMUL tSOU tDIV tCOP tAFC tJMP tJMF tINF tSUP tEQU tPRI
 %start go
 %%
 go
@@ -23,7 +23,7 @@ expression
 
 expression_arithmetic
     : tCHAR tVARNAME tEQUAL tAPOS tVARNAME tAPOS tSEMICOLON
-    | init_var variable_multiple tSEMICOLON 
+    | type variable_multiple tSEMICOLON 
     | variable_multiple tSEMICOLON /* Pour plus tard on rajoutera une boucle qui permettra de succéder plusieurs opérations*/
     ;
 
@@ -31,7 +31,7 @@ expression_print
     : tPRINTF tPOPEN  tVARNAME tPCLOSE tSEMICOLON
     ;
 
-init_var
+type
     : tINT  /* int a;   int a,b,c; int a,b=5,c;*/
     | tCONST 
     ;

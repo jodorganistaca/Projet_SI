@@ -7,7 +7,7 @@ main(){
     int expo = 1e3;
     while (0) {
         ;;;;;   
-
+        int *p;
     
         if (1) {
 

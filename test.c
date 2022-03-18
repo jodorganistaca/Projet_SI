@@ -1,5 +1,10 @@
-main() {
+int main() {
     int i = 10;
+
+    int *p;
+    int *aok = 100;
+
+  
     int x = 2+1;
     char a = 'a';
     const q = 19;
@@ -10,7 +15,7 @@ main() {
     {
         int j = 10;
         a = a - 1;
-
+        
     }
     if(i>0 & x<0){
         int i = 0;
