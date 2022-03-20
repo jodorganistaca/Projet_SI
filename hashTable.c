@@ -1,29 +1,22 @@
 #include <stdlib.h>
+#include <string.h>
 
-#define SIZE 20
+#define SIZE 10000009
+
+struct DataLine {
+    char data[200];
+    int address;
+    char type[20];
+    int deep;
+};
 
 struct DataItem {
-    int data;
+    struct DataLine* data;
     int key;
 };
 
 struct DataItem* hashArray [SIZE];
 struct DataItem* dummyItem;
-
-//to allocate a new empty symbol table 
-void allocate(){
-
-}
-
-//to remove all entries and free storage of symbol table
-void free(){
-
-}
-
-//to search for a name and return pointer to its entry
-void lookup(){
-
-}
 
 int hashCode(int key){
     return key % SIZE;
