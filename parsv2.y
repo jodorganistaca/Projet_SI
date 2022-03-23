@@ -1,7 +1,10 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include "linkedList.h"
 void yyerror(char *s);
+int depth = 0;
+char type[20];
 %}
 %union
 {
@@ -10,11 +13,12 @@ void yyerror(char *s);
 	double double_val;
     char* str_val;
 }
-%token <int_val> tINT tIF tELSE tTHEN tWHILE tPRINTF tCHAR tMAIN tCONST tINTEGER tSPACE tTAB tBACKSPACE tCOMA tSEMICOLON tGEQ tLEQ tBE tINF tSUP tNEWL  tEXPO tCOMMENT
+%token <int_val> tIF tELSE tTHEN tWHILE tPRINTF tCHAR tMAIN tCONST tINTEGER tSPACE tTAB tBACKSPACE tCOMA tSEMICOLON tGEQ tLEQ tBE tINF tSUP tNEWL  tEXPO tCOMMENT
 %token <int_val> tVOID tPLUS tMOINS tMULT tDIV tPOW tEQUAL tAND tOR tPOPEN tPCLOSE tAOPEN tACLOSE tCOPEN tCCLOSE tERROR tTRUE tFALSE
-%token <double_val> tDEC tAPOS
+%token <double_val> tDEC tAPOS 
 %token  <char_val> tCHARACTER
-%token <str_val> tVARNAME tPOINTER
+%token <str_val> tVARNAME tPOINTER tFLOAT tINT
+%type <str_val> type
 %start go
 %%
 go
@@ -46,8 +50,11 @@ parameters
     ;
 */
 expression_arithmetic
-    : tCHAR tVARNAME tEQUAL tAPOS tVARNAME tAPOS tSEMICOLON
+    : type tVARNAME tEQUAL tAPOS tVARNAME tAPOS tSEMICOLON
     | type variable_multiple tSEMICOLON 
+    {
+        //printf("%s\n", $1);
+    }
     | variable_multiple tSEMICOLON /* Pour plus tard on rajoutera une boucle qui permettra de succéder plusieurs opérations*/
     | declaration_pointeur tSEMICOLON;
     ;
@@ -60,14 +67,48 @@ expression_print
     : tPRINTF tPOPEN  tVARNAME tPCLOSE tSEMICOLON
     ;
 
+/* int a;   int a,b,c; int a,b=5,c;*/
 type
-    : tINT  /* int a;   int a,b,c; int a,b=5,c;*/
+    : tINT 
+    {
+        $$ = $1;
+        //printf("%s\n", $1);
+        strcpy(type, "int");
+    }
     | tCONST 
+    {
+        //strcpy(type, $1);
+    }
+    | tFLOAT 
+    {
+        //strcpy(type, $1);
+    }
+    | tCHAR 
+    {
+        //strcpy(type, $1);
+    }
     ;
 
 variable_multiple
-    : tVARNAME {printf("%s\n", yylval.str_val);}
-    | tVARNAME tEQUAL value_variable {printf("%s\n", $1);}
+    : tVARNAME 
+    {
+        insertNode($1,type,depth);
+        printf("insertioooon %s\n", yylval.str_val);
+        printList();
+    }
+    | tVARNAME tEQUAL value_variable 
+    {
+        //depth++;
+        printf("typeeeeee %s\n", type);
+        printf("varName %s\n", $1);
+        printf("Depth %s\n", depth);
+        insertNode($1,type,0);
+        printList();
+        /*printf("teeesst %s\n", yylval.str_val);
+        insertNode(yylval.str_val,type,depth);
+        printf("insertioooon %s\n", yylval.str_val);
+        printList();*/
+    }
     | tVARNAME tEQUAL value_variable  tCOMA variable_multiple {printf("%s\n", $1);}
     | tVARNAME tEQUAL value_variable operation value_variable {printf("%s\n", $1);}
     | tVARNAME tEQUAL value_variable operation value_variable tCOMA variable_multiple {printf("%s\n", $1);}

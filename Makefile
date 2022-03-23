@@ -5,7 +5,7 @@ BIN=Parsv2
 CC=gcc
 CFLAGS=-Wall -g
 
-OBJ=y.tab.o lex.yy.o
+OBJ=y.tab.o lex.yy.o linkedList.o
 
 all: $(BIN)
 

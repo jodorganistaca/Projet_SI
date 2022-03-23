@@ -1,20 +1,4 @@
-
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
 #include "linkedList.h"
-
-struct Data {
-    char identifier[200];
-    int address;
-    char type[20];
-    int deep;
-};
-
-struct Node {
-    struct Data* data;  
-    struct Node* next;
-};
 
 struct Node *head = NULL;
 struct Node *current = NULL;

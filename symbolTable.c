@@ -1,6 +1,8 @@
-#include <stdlib.h>
-#include <string.h>
 #include "linkedList.h"
+
+struct symbolTable {
+    
+};
 
 //to allocate a new empty symbol table 
 void allocate(){

@@ -17,6 +17,7 @@ char* str_val;
 "then"    {printf("tTHEN "); return tTHEN;}
 "while"    {printf("tWHILE "); return tWHILE;}
 "int"    {printf("tINT "); return tINT;}
+"float"    {printf("tFLOAT "); return tFLOAT;}
 "const"    {printf("tCONST "); return tCONST;}
 "char"    {printf("tCHAR "); return tCHAR;}
 "main"    {printf("tMAIN "); return tMAIN;}
