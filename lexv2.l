@@ -12,57 +12,237 @@ char* str_val;
 
 %%
 
-"if"    {printf("tIF "); return tIF;}
-"else"    {printf("tELSE "); return tELSE;}
-"then"    {printf("tTHEN "); return tTHEN;}
-"while"    {printf("tWHILE "); return tWHILE;}
-"int"    {printf("tINT "); return tINT;}
-"float"    {printf("tFLOAT "); return tFLOAT;}
-"const"    {printf("tCONST "); return tCONST;}
-"char"    {printf("tCHAR "); return tCHAR;}
-"main"    {printf("tMAIN "); return tMAIN;}
-"void"    {printf("tVOID "); return tVOID;}
-"printf"    {printf("tPRINTF "); return tPRINTF;}
-"+"    {printf("tPLUS "); return tPLUS;}
-"&"    {printf("tAND "); return tAND;}
-"|"    {printf("tOR "); return tOR;}
-"-"    {printf("tMOINS "); return tMOINS;}
-"*"    {printf("tMULT "); return tMULT;}
-"/"    {printf("tDIV "); return tDIV;}
-"**"    {printf("tPOW "); return tPOW;}
-"="    {printf("tEQUAL "); return tEQUAL;}
-"("    {printf("tPOPEN "); return tPOPEN;}
-")"    {printf("tPCLOSE "); return tPCLOSE;}
-"{"    {printf("tAOPEN "); return tAOPEN;}
-"}"    {printf("tACLOSE "); return tACLOSE;}
-"["    {printf("tCOPEN "); return tCOPEN;}
-"]"    {printf("tCCLOSE "); return tCCLOSE;}
-"'"    {printf("tAPOS "); return tAPOS;}
-"\t"    {printf("tTAB "); return tTAB;}
+"if"    {
+        #ifdef DEBUG 
+            printf("tIF "); 
+        #endif 
+        return tIF;
+        }
+"else"  {
+        #ifdef DEBUG 
+            printf("tELSE "); 
+        #endif    
+        return tELSE;
+        }
+"then"  {
+        #ifdef DEBUG 
+            printf("tTHEN "); 
+        #endif    
+        return tTHEN;
+        }
+"while" {
+        #ifdef DEBUG 
+            printf("tWHILE "); 
+        #endif    
+        return tWHILE;
+        }
+"int"   {
+        #ifdef DEBUG 
+            printf("tINT "); 
+        #endif    
+        return tINT;
+        }
+"float"    {
+        #ifdef DEBUG 
+            printf("tFLOAT "); 
+        #endif    
+        return tFLOAT;}
+"const"    {
+        #ifdef DEBUG 
+            printf("tCONST "); 
+        #endif    
+        return tCONST;}
+"char"    {
+        #ifdef DEBUG 
+            printf("tCHAR "); 
+        #endif    
+        return tCHAR;}
+"main"    {
+        #ifdef DEBUG 
+            printf("tMAIN "); 
+        #endif    
+        return tMAIN;}
+"void"    {
+        #ifdef DEBUG 
+            printf("tVOID "); 
+        #endif    
+        return tVOID;}
+"printf"    {
+        #ifdef DEBUG 
+            printf("tPRINTF "); 
+        #endif    
+        return tPRINTF;}
+"+"    {
+        #ifdef DEBUG 
+            printf("tPLUS "); 
+        #endif    
+        return tPLUS;}
+"&"    {
+        #ifdef DEBUG 
+            printf("tAND "); 
+        #endif    
+        return tAND;}
+"|"    {
+        #ifdef DEBUG 
+            printf("tOR "); 
+        #endif    
+        return tOR;}
+"-"    {
+        #ifdef DEBUG 
+            printf("tMOINS "); 
+        #endif    
+        return tMOINS;}
+"*"    {
+        #ifdef DEBUG 
+            printf("tMULT "); 
+        #endif    
+        return tMULT;}
+"/"    {
+        #ifdef DEBUG 
+            printf("tDIV "); 
+        #endif    
+        return tDIV;}
+"**"    {
+        #ifdef DEBUG 
+            printf("tPOW "); 
+        #endif    
+        return tPOW;}
+"="    {
+        #ifdef DEBUG 
+            printf("tEQUAL "); 
+        #endif    
+        return tEQUAL;}
+"("    {
+        #ifdef DEBUG 
+            printf("tPOPEN "); 
+        #endif    
+        return tPOPEN;}
+")"    {
+        #ifdef DEBUG 
+            printf("tPCLOSE "); 
+        #endif    
+        return tPCLOSE;}
+"{"    {
+        #ifdef DEBUG 
+            printf("tAOPEN "); 
+        #endif    
+        return tAOPEN;}
+"}"    {
+        #ifdef DEBUG 
+            printf("tACLOSE "); 
+        #endif    
+        return tACLOSE;}
+"["    {
+        #ifdef DEBUG 
+            printf("tCOPEN "); 
+        #endif    
+        return tCOPEN;}
+"]"    {
+        #ifdef DEBUG 
+            printf("tCCLOSE "); 
+        #endif    
+        return tCCLOSE;
+        }
+"'"    {
+        #ifdef DEBUG 
+            printf("tAPOS "); 
+        #endif    
+        return tAPOS;
+        }
+"\t"    {
+        #ifdef DEBUG 
+            printf("tTAB "); 
+        #endif    
+        return tTAB;
+        }
 " "    printf("");
 [ \t]+$ ;
 [ \t]+ printf(" ");
-"\b"    {printf("tBACKSPACE "); return tBACKSPACE;}
-","    {printf("tCOMA "); return tCOMA;}
-";"    {printf("tSEMICOLON \n"); return tSEMICOLON;}
-"=>"    {printf("tGEQ "); return tGEQ;}
-"=<"    {printf("tLEQ "); return tLEQ;}
-"=="    {printf("tBE "); return tBE;}
-"<"    {printf("tINF "); return tINF;}
-">"    {printf("tSUP "); return tSUP;}
+"\b"    {
+    #ifdef DEBUG 
+        printf("tBACKSPACE "); 
+    #endif
+    return tBACKSPACE;}
+","    {
+    #ifdef DEBUG 
+        printf("tCOMA "); 
+    #endif
+    return tCOMA;}
+";"    {
+    #ifdef DEBUG printf
+        ("tSEMICOLON \n");
+    #endif
+    return tSEMICOLON;}
+"=>"    {
+    #ifdef DEBUG 
+        printf("tGEQ "); 
+    #endif
+    return tGEQ;}
+"=<"    {
+    #ifdef DEBUG 
+        printf("tLEQ "); 
+    #endif
+    return tLEQ;}
+"=="    {
+    #ifdef DEBUG 
+        printf("tBE "); 
+    #endif
+    return tBE;}
+"<"    {
+    #ifdef DEBUG 
+        printf("tINF "); 
+    #endif
+    return tINF;}
+">"    {
+    #ifdef DEBUG 
+        printf("tSUP "); 
+    #endif
+    return tSUP;}
 "\n"   printf("\n");
-"true"    {printf("tTRUE "); return tTRUE;}
-"false"    {printf("tFALSE "); return tFALSE;}
+"true"    {
+    #ifdef DEBUG 
+        printf("tTRUE "); 
+    #endif
+    return tTRUE;}
+"false"    {
+    #ifdef DEBUG 
+        printf("tFALSE "); 
+    #endif
+    return tFALSE;}
 [A-Za-z][A-Za-z_0-9]* {
-    printf("tVARNAME "); 
+    
+    #ifdef DEBUG 
+        printf("tVARNAME "); 
+    #endif
+    
     yylval.str_val = malloc(yyleng * sizeof(char)); 
     strcpy(yylval.str_val, yytext); return tVARNAME;
 }
-[0-9]+ {printf("tINTEGER "); yylval.int_val = atoi(yytext); return tINTEGER;}
-[0-9]+[.][0-9]+ {printf("tDEC "); yylval.double_val = atof(yytext); return tDEC;}
-[0-9]+e[0-9]+ {printf("tEXPO "); return tEXPO;}
-[A-Za-z_0-9] {printf("tCHARACTER "); yylval.char_val = yytext[0]; return tCHARACTER;}
-. {printf("tERROR "); return tERROR;}
+[0-9]+ {
+    #ifdef DEBUG 
+        printf("tINTEGER "); 
+    #endif
+    yylval.int_val = atoi(yytext); return tINTEGER;}
+[0-9]+[.][0-9]+ {
+    #ifdef DEBUG 
+        printf("tDEC "); 
+    #endif
+    yylval.double_val = atof(yytext); return tDEC;}
+[0-9]+e[0-9]+ {
+    #ifdef DEBUG 
+        printf("tEXPO "); 
+    #endif
+    return tEXPO;}
+[A-Za-z_0-9] {
+    #ifdef DEBUG 
+        printf("tCHARACTER "); 
+    #endif
+    yylval.char_val = yytext[0]; return tCHARACTER;}
+. {
+    #ifdef DEBUG 
+        printf("tERROR "); 
+    #endif
+    return tERROR;}
 
 [*][A-Za-z][A-Za-z_0-9]* {printf("tPOINTER"); 
     yylval.str_val = malloc(yyleng * sizeof(char)); 

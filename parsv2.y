@@ -23,7 +23,6 @@ FILE *fp;
 %token  <char_val> tCHARACTER
 %token <str_val> tVARNAME tPOINTER tFLOAT tINT 
 %type <str_val> type 
-%type <str_val> operation
 %type <str_val> variable_multiple
 %start go
 %%
@@ -115,8 +114,7 @@ variable_multiple
     }
     | tVARNAME tEQUAL value_variable  tCOMA variable_multiple {printf("%s\n", $1);}
     | tVARNAME tEQUAL value_variable operation value_variable 
-    {   
-        printf("identifier1: %s operation: %s \n", $3);
+    {
         printf("%s\n", $1);
     }
     | tVARNAME tEQUAL value_variable operation value_variable tCOMA variable_multiple {printf("%s\n", $1);}
