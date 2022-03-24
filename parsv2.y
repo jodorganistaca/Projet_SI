@@ -7,6 +7,7 @@ int depth = 0;
 int add;
 char type[20];
 char value[20];
+char operat[4];
 int valueInt;
 FILE *fp;
 %}
@@ -24,6 +25,7 @@ FILE *fp;
 %token <str_val> tVARNAME tPOINTER tFLOAT tINT 
 %type <str_val> type 
 %type <str_val> variable_multiple
+%type <int_val> value_variable
 %start go
 %%
 go
@@ -105,7 +107,7 @@ variable_multiple
         printf("Depth %d\n", depth);*/
         add = insertNode($1,type,value,0);
         printList();
-        fprintf(fp,"AFC %d %d\n", add, valueInt);
+        fprintf(fp,"AFC %d %d\n", add, valueInt); // add 0 1 temp
 
         /*printf("teeesst %s\n", yylval.str_val);
         insertNode(yylval.str_val,type,depth);
@@ -116,6 +118,11 @@ variable_multiple
     | tVARNAME tEQUAL value_variable operation value_variable 
     {
         printf("%s\n", $1);
+        fprintf(fp,"AFC %d %d\n", 0, $2); // on veut récupérer la valeur de value variable num 1
+        fprintf(fp,"AFC %d %d\n", 1, $4);// on veut récupérer la valeur de value variable num 2
+        fprintf(fp,operat);
+        // 
+        fprintf(fp, " %d %d\n",0,1)
     }
     | tVARNAME tEQUAL value_variable operation value_variable tCOMA variable_multiple {printf("%s\n", $1);}
     | tVARNAME tCOMA variable_multiple
@@ -138,15 +145,19 @@ conditional_expression
 value_variable
     : tINTEGER 
     { 
+
         printf("%d\n", yylval.int_val);
         valueInt = $1;
         printf("value integer %d\n", $1);
         sprintf(value,"%d",$1);
+        $$ = $1;
+        
     }
     | tVARNAME 
     {
         printf("tVARNAME %s\n", $1);
-        printf("value integer %d\n", findByID($1));        
+        printf("value integer %d\n", findByID($1));   
+        $$ = $1;     
     }
     | tDEC {printf("%.2f\n", yylval.double_val);}
     ;
@@ -170,11 +181,17 @@ comparator
 
 operation
     : tDIV
+    {
+        strcpy(operat, "DIV");
+    }
     | tPLUS 
-    | tMOINS
+    {
+        strcpy(operat, "ADD");
+    }
+    /*| tMOINS
     | tMULT
     | tPOW
-    | tEXPO
+    | tEXPO*/
     ;
 %%
 yyerror(char *s)

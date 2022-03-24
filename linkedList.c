@@ -2,7 +2,7 @@
 
 struct Node *head = NULL;
 struct Node *current = NULL;
-int pos = 0;
+int pos = 2;
 
 void printNode(struct Node *node){
     printf("%s | %d | %s | %s | %d \n", 
@@ -39,6 +39,27 @@ int insertNode(char identifier[200], char type[20], char value[20], int deep){
     return data->address;
 }
 
+/*void changeValueadd(int address,int value){
+    struct Node *node = find(address);
+    if (node != NULL){
+        
+        Node -> data = data;
+
+    }
+    //Asing the data elements
+    strcpy(data->type, type);
+    strcpy(data->value, value);
+    data->deep = deep;
+    //Malloc the space for the new Node that's going to be insert
+    struct Node *Node = (struct Node*)malloc(sizeof(struct Node));
+    //Insert the Node in the first position
+    
+    Node -> next = head;
+    head = Node;
+    return data->address;
+
+}
+*/
 void deleteFirstNode(){
     if(head!=NULL){
         struct Node *tempPtr = head;
