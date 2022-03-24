@@ -5,13 +5,14 @@ struct Node *current = NULL;
 int pos = 0;
 
 void printNode(struct Node *node){
-    printf("%s | %d | %s | %d \n", node->data->identifier,node->data->address, node->data->type, node->data->deep);
+    printf("%s | %d | %s | %s | %d \n", 
+    node->data->identifier,node->data->address, node->data->type, node->data->value, node->data->deep);
 }
 
 void printList(){
     struct Node *ptr = head;
 
-    printf(" id | add | type | deep \n");
+    printf(" id | add | type | value | deep \n");
     //Go through the list
     while(ptr != NULL){
         printNode(ptr);
@@ -20,13 +21,14 @@ void printList(){
     }
 }
 
-void insertNode(char identifier[200], char type[20], int deep){
+int insertNode(char identifier[200], char type[20], char value[20], int deep){
     //Malloc the space for the new data that's going to be insert
     struct Data *data = (struct Data*)malloc(sizeof(struct Data));
     //Asing the data elements
     strcpy(data->identifier, identifier);
     data->address = pos++;
     strcpy(data->type, type);
+    strcpy(data->value, value);
     data->deep = deep;
     //Malloc the space for the new Node that's going to be insert
     struct Node *Node = (struct Node*)malloc(sizeof(struct Node));
@@ -34,6 +36,7 @@ void insertNode(char identifier[200], char type[20], int deep){
     Node -> data = data;
     Node -> next = head;
     head = Node;
+    return data->address;
 }
 
 void deleteFirstNode(){
@@ -70,6 +73,22 @@ struct Node* find(int address){
     }
 
     return NULL;    
+}
+
+int findByID(char identifier[20]){
+    struct Node *current = head;
+
+    if(isEmpty())
+        return -1;
+
+    while (current != NULL){
+        if(strcmp(current->data->value, identifier)){
+            return current->data->address;
+        }
+        current = current -> next;
+    }
+
+    return -1;    
 }
 
 void deleteNode(int address){

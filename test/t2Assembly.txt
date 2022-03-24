@@ -1,0 +1,7 @@
+mov R0 #1
+mov R1 #2
+add R2 R1 R0
+
+----
+a 0 int 0 1
+b 1 int 0 2

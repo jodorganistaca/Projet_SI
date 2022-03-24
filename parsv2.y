@@ -4,7 +4,11 @@
 #include "linkedList.h"
 void yyerror(char *s);
 int depth = 0;
+int add;
 char type[20];
+char value[20];
+int valueInt;
+FILE *fp;
 %}
 %union
 {
@@ -17,8 +21,10 @@ char type[20];
 %token <int_val> tVOID tPLUS tMOINS tMULT tDIV tPOW tEQUAL tAND tOR tPOPEN tPCLOSE tAOPEN tACLOSE tCOPEN tCCLOSE tERROR tTRUE tFALSE
 %token <double_val> tDEC tAPOS 
 %token  <char_val> tCHARACTER
-%token <str_val> tVARNAME tPOINTER tFLOAT tINT
-%type <str_val> type
+%token <str_val> tVARNAME tPOINTER tFLOAT tINT 
+%type <str_val> type 
+%type <str_val> operation
+%type <str_val> variable_multiple
 %start go
 %%
 go
@@ -91,26 +97,28 @@ type
 
 variable_multiple
     : tVARNAME 
-    {
-        insertNode($1,type,depth);
-        printf("insertioooon %s\n", yylval.str_val);
-        printList();
-    }
     | tVARNAME tEQUAL value_variable 
     {
         //depth++;
-        printf("typeeeeee %s\n", type);
+       /* printf("typeeeeee %s\n", type);
         printf("varName %s\n", $1);
-        printf("Depth %s\n", depth);
-        insertNode($1,type,0);
+        printf("Value %d\n",valueInt);
+        printf("Depth %d\n", depth);*/
+        add = insertNode($1,type,value,0);
         printList();
+        fprintf(fp,"AFC %d %d\n", add, valueInt);
+
         /*printf("teeesst %s\n", yylval.str_val);
         insertNode(yylval.str_val,type,depth);
         printf("insertioooon %s\n", yylval.str_val);
         printList();*/
     }
     | tVARNAME tEQUAL value_variable  tCOMA variable_multiple {printf("%s\n", $1);}
-    | tVARNAME tEQUAL value_variable operation value_variable {printf("%s\n", $1);}
+    | tVARNAME tEQUAL value_variable operation value_variable 
+    {   
+        printf("identifier1: %s operation: %s \n", $3);
+        printf("%s\n", $1);
+    }
     | tVARNAME tEQUAL value_variable operation value_variable tCOMA variable_multiple {printf("%s\n", $1);}
     | tVARNAME tCOMA variable_multiple
     ;
@@ -130,8 +138,18 @@ conditional_expression
     ;
 /* 1.024 == 2*/
 value_variable
-    : tINTEGER {printf("%d\n", yylval.int_val);}
+    : tINTEGER 
+    { 
+        printf("%d\n", yylval.int_val);
+        valueInt = $1;
+        printf("value integer %d\n", $1);
+        sprintf(value,"%d",$1);
+    }
     | tVARNAME 
+    {
+        printf("tVARNAME %s\n", $1);
+        printf("value integer %d\n", findByID($1));        
+    }
     | tDEC {printf("%.2f\n", yylval.double_val);}
     ;
 
@@ -154,7 +172,7 @@ comparator
 
 operation
     : tDIV
-    | tPLUS
+    | tPLUS 
     | tMOINS
     | tMULT
     | tPOW
@@ -172,9 +190,10 @@ yywrap()
 }
 
 int main(){
+  fp = fopen("./output/file.txt","w");
   printf("Start analysis \n");
   yyparse();
+  fclose(fp);
   /* yylex(); */
   return(0);
-  
 }
