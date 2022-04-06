@@ -119,10 +119,10 @@ variable_multiple
     {
         printf("%s\n", $1);
         fprintf(fp,"AFC %d %d\n", 0, $2); // on veut récupérer la valeur de value variable num 1
-        fprintf(fp,"AFC %d %d\n", 1, $4);// on veut récupérer la valeur de value variable num 2
+        //fprintf(fp,"AFC %d %d\n", 1, $4);// on veut récupérer la valeur de value variable num 2
         fprintf(fp,operat);
         // 
-        fprintf(fp, " %d %d\n",0,1)
+        fprintf(fp, " %d %d\n",0,1);
     }
     | tVARNAME tEQUAL value_variable operation value_variable tCOMA variable_multiple {printf("%s\n", $1);}
     | tVARNAME tCOMA variable_multiple
