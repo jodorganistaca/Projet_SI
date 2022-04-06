@@ -24,6 +24,8 @@ int insertNode(char identifier[200], char type[20], char value[20], int deep);
 
 void deleteFirstNode();
 
+void changeValueadd(char identifier[200],char type[20], char value[20]);
+
 bool isEmpty();
 
 struct Node* find(int address);

@@ -21,14 +21,18 @@ void printList(){
     }
 }
 
-int insertNode(char identifier[200], char type[20], char value[20], int deep){
+int insertNode(char identifier[200], char type[20], char value[20], int deep){ // gerer le type CONST ou la variable ne doit pas bouger
     //Malloc the space for the new data that's going to be insert
     struct Data *data = (struct Data*)malloc(sizeof(struct Data));
     //Asing the data elements
     strcpy(data->identifier, identifier);
     data->address = pos++;
     strcpy(data->type, type);
-    strcpy(data->value, value);
+    char v[20]="n";
+    if (value != v){
+
+        strcpy(data->value, value);
+    }
     data->deep = deep;
     //Malloc the space for the new Node that's going to be insert
     struct Node *Node = (struct Node*)malloc(sizeof(struct Node));
@@ -39,27 +43,21 @@ int insertNode(char identifier[200], char type[20], char value[20], int deep){
     return data->address;
 }
 
-/*void changeValueadd(int address,int value){
-    struct Node *node = find(address);
-    if (node != NULL){
+void changeValueadd(char identifier[200],char type[20], char value[20]){
+    char t[20] = "const";
+    if (type!=t){
+        int add = findByID(identifier);
+        struct Node *node = find(add);
         
-        Node -> data = data;
+        if (node != NULL){
+            struct Data *data = node->data;
+            strcpy(data->value, value);
 
+        }
     }
-    //Asing the data elements
-    strcpy(data->type, type);
-    strcpy(data->value, value);
-    data->deep = deep;
-    //Malloc the space for the new Node that's going to be insert
-    struct Node *Node = (struct Node*)malloc(sizeof(struct Node));
-    //Insert the Node in the first position
-    
-    Node -> next = head;
-    head = Node;
-    return data->address;
 
 }
-*/
+
 void deleteFirstNode(){
     if(head!=NULL){
         struct Node *tempPtr = head;

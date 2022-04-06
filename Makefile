@@ -1,6 +1,6 @@
-GRM=parsv2.y
+GRM=parsv3expression.y
 LEX=lexv2.l
-BIN=Parsv2
+BIN=Parsv3
 
 CC=gcc
 CFLAGS=-Wall -g

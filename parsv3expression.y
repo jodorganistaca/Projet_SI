@@ -8,6 +8,7 @@ int add;
 char type[20];
 char value[20];
 char operat[4];
+int temp =0;
 int valueInt;
 FILE *fp;
 %}
@@ -26,11 +27,14 @@ FILE *fp;
 %type <str_val> type 
 %type <int_val> calcul_multiple
 %type <str_val> variable_multiple
+
 %start go
 %%
+// $first priorité sur les parenthèse et division multiplier
 go
     : tMAIN tPOPEN tPCLOSE statement {printf("GO\n");}
-    | tINT tMAIN tPOPEN tPCLOSE statement {printf("GO\n");}
+    | tINT tMAIN tPOPEN tPCLOSE statement {printf("GO\n"); fprintf(fp,"GO\n");}
+
     ;
 
 statement
@@ -57,29 +61,17 @@ parameters
     | tCHAR tVARNAME tCOMA parameters
     ;
 */
-expression_arithmetic
-    : type tVARNAME tEQUAL tAPOS tVARNAME tAPOS tSEMICOLON
-    | type variable_multiple tSEMICOLON //prendre en compte le cas int a=2, b=4 , c=5;
-    {
-        //depth++;
-       /* printf("typeeeeee %s\n", type);
-        printf("varName %s\n", $1);
-        printf("Value %d\n",valueInt);
-        printf("Depth %d\n", depth);*/
-        add = insertNode($1,type,$3,0);
-        printList();
-        fprintf(fp,"AFC %d %d\n", add, $3); // add 0 1 temp
-
-        /*printf("teeesst %s\n", yylval.str_val);
-        insertNode(yylval.str_val,type,depth);
-        printf("insertioooon %s\n", yylval.str_val);
-        printList();*/
-    }
+    //: type tVARNAME tEQUAL tAPOS tVARNAME tAPOS tSEMICOLON // string dans file, on peut transformer en ascii sur un registre et le traduire lorsqu'appelé
+// ok ?
+expression_arithmetic 
+    :type variable_multiple tSEMICOLON //prendre en compte le cas int a=2, b=4 , c=5;
+   //{type=$1;}
     
     | tVARNAME tEQUAL calcul_multiple tSEMICOLON  /* cas où l'on change la value d'une variable existante  a = 1+7+a-b*/
     {
-       add= findByID($0);
-       fprintf(fp,"AFC %d %d\n", add, $2);
+       add= findByID($1);
+       changeValueadd($1,type,$3);
+       fprintf(fp,"COP %d %d\n", add, $3);
     }
     // | declaration_pointeur tSEMICOLON;
     ;
@@ -89,7 +81,7 @@ expression_arithmetic
     ;
 */  
 expression_print
-    : tPRINTF tPOPEN  tVARNAME tPCLOSE tSEMICOLON
+    : tPRINTF tPOPEN  tVARNAME tPCLOSE tSEMICOLON //{printf($2);}
     ;
 
 /* int a;   int a,b,c; int a,b=5,c;*/
@@ -102,24 +94,43 @@ type
     }
     | tCONST 
     {
+        $$ = $1;
         //strcpy(type, $1);
     }
-    | tFLOAT 
+    /*| tFLOAT 
     {
         //strcpy(type, $1);
-    }
-    | tCHAR 
+    }*/
+    /*| tCHAR 
     {
         //strcpy(type, $1);
-    }
+    }*/
     ;
 
+// OK ?
+variable_multiple 
+    : tVARNAME tEQUAL calcul_multiple 
+     {
+        //depth++;
+       /* printf("typeeeeee %s\n", type);
+        printf("varName %s\n", $1);
+        printf("Value %d\n",valueInt);
+        printf("Depth %d\n", depth);*/
+        print("%s",type);
+        add = insertNode($1,type,$3,0);
+        
+        printList();
+       // add = findByID($1);
+        fprintf(fp,"COP %d %d\n", add, $3); // add 0 1 temp
 
-variable_multiple
-    : tVARNAME tEQUAL calcul_multiple tCOMA variable_multiple {printf("%s\n", $1);}
-    | tVARNAME tEQUAL calcul_multiple //cas triviaux a= 2;
-    | tVARNAME tCOMA variable_multiple
-    | tVARNAME // cas triviaux a
+        /*printf("teeesst %s\n", yylval.str_val);
+        insertNode(yylval.str_val,type,depth);
+        printf("insertioooon %s\n", yylval.str_val);
+        printList();*/
+    }
+    | variable_multiple tCOMA variable_multiple 
+    | tVARNAME 
+    {add = insertNode($1,type,"n",0);}// cas triviaux a
     ;
 
 calcul_multiple
@@ -127,18 +138,21 @@ calcul_multiple
     : calcul_multiple tPLUS  calcul_multiple
     {
         printf("%s\n", $1);
-        add = insertNode($1,type,$2+$4,0);
-        $$ = add;
-        fprintf(fp,"ADD %d %d %d\n", add, $2, $4); // Add des deux var // renvoyer l'adresse add en $
-    
+        //add = insertNode($1,type,$1+$3,0);
+
+        temp = (temp+1)%2;
+        
+        fprintf(fp,"ADD %d %d %d\n", temp, $1, $3); // Add des deux var // renvoyer l'adresse add en $
+        $$=temp;
     }
     | calcul_multiple tMOINS  calcul_multiple
     {
         printf("%s\n", $1);
        // fprintf(fp,"AFC %d ")
-        add = insertNode($1,type,$2+$4,0);
-        $$=add;
-        fprintf(fp,"SOU %d %d %d\n", add, $2, $4);; // Add des deux var
+        temp = (temp+1)%2;
+        
+        fprintf(fp,"SOU %d %d %d\n", temp, $1, $3); // Add des deux var // renvoyer l'adresse add en $
+        $$=temp;
     
     }
     //Cas triviaux Integer / Variable pré déf ou decimal
@@ -149,14 +163,16 @@ calcul_multiple
         valueInt = $1;
         printf("value integer %d\n", $1);
         sprintf(value,"%d",$1);
-        $$ = $1;
+        temp = (temp +1)%2;
+        fprintf(fp,"AFC %d %d\n", temp, $1); // affecter à une valeur temporaire, trouver un moyen d'avoir une adresse différente en adresse temporaire
+        $$ = temp;
         
     }
     | tVARNAME 
     {
         printf("tVARNAME %s\n", $1);
         printf("value integer %d\n", findByID($1));   
-        $$ = $1;     
+        $$ =findByID($1);
     }
     | tDEC {printf("%.2f\n", yylval.double_val);}
     ;
