@@ -1,5 +1,7 @@
 main(){
-    int a = 1;
-    int b = a;
-    
+    int a = 5+1+3+4;
+    a=9-6-3+9-9+a;
+    int b= a-a+a-a-a+a+404;
+    int c = b-a;
+    c=203;
 }

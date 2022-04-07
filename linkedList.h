@@ -8,7 +8,7 @@ struct Data {
     int address;
     char type[20];
     int deep;
-    char value[20]; // char / string enregistrement , integer string to int , decimal  compter à quel endroit est la virgule  0,0201  2 * 10^-2 1*10^-4 
+    int value; // char / string enregistrement , integer string to int , decimal  compter à quel endroit est la virgule  0,0201  2 * 10^-2 1*10^-4 
 };
 
 struct Node {
@@ -20,13 +20,17 @@ void printNode(struct Node *node);
 
 void printList();
 
-int insertNode(char identifier[200], char type[20], char value[20], int deep);
+int insertNode(char identifier[200], char type[20], int value, int deep);
 
 void deleteFirstNode();
 
-void changeValueadd(char identifier[200],char type[20], char value[20]);
+void changeValueadd(char identifier[200],char type[20], int value);
+
+void changeValuebyadd(int address,char type[20], int value);
 
 bool isEmpty();
+
+int Value();
 
 struct Node* find(int address);
 // Find by ID renvoi l'adresse associé à l'id

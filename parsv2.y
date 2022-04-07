@@ -27,6 +27,8 @@ FILE *fp;
 %type <str_val> variable_multiple
 %type <int_val> value_variable
 %start go
+%left tPLUS tMOINS
+%left 
 %%
 go
     : tMAIN tPOPEN tPCLOSE statement {printf("GO\n");}
