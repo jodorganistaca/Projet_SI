@@ -1,6 +1,4 @@
-AFC 1 1
-AFC 0 2
 AFC 1 2
-MUL 0 0 1
-ADD 1 1 0
 COP 2 1
+AFC 0 1
+COP 3 0

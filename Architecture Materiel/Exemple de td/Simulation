@@ -1,0 +1,95 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 01.04.2022 16:31:12
+-- Design Name: 
+-- Module Name: Test_Compteur - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity Test_Compteur is
+    
+end Test_Compteur;
+
+architecture Behavioral of Test_Compteur is
+
+COMPONENT Compteur_16bits
+Port ( CK : in STD_LOGIC;
+       RST : in STD_LOGIC;
+       SENS : in STD_LOGIC;
+       LOAD : in STD_LOGIC;
+       EN : in STD_LOGIC;
+       Din : in STD_LOGIC_VECTOR (15 downto 0);
+       Dout : out STD_LOGIC_VECTOR (15 downto 0));
+END COMPONENT;
+
+-- Inputs
+signal CK_Test: STD_LOGIC := '0';
+signal RST_Test : STD_LOGIC :='1';
+signal SENS_Test : STD_LOGIC :='1';
+signal LOAD_Test : STD_LOGIC :='0';
+signal EN_Test : STD_LOGIC :='0';
+signal Din_Test : STD_LOGIC_VECTOR (15 downto 0):= ( others => '0');
+
+--output
+signal Dout_Test : STD_LOGIC_VECTOR (15 downto 0):= ( others => '0');
+
+-- Clock period definitions
+-- Si 100 MHz
+constant Clock_period : time := 10 ns;
+
+begin
+
+-- Instantiate the Unit Under Test (UUT)
+Label_uut: Compteur_16bits PORT MAP (
+    CK => CK_Test,
+    RST => RST_Test,
+    SENS => SENS_Test,
+    LOAD => LOAD_Test,
+    EN => EN_Test,
+    Din => Din_Test,
+    Dout => Dout_Test
+    );
+    
+--Clock process definitions
+Clock_process : process
+begin
+    CK_Test <= not(CK_Test);
+    wait for Clock_period/2;
+end process;
+
+-- Stimulus process
+-- T1 < T2 et T3 < T4
+LOAD_TEST <= '0' after 0 ns, '1' after 900 ns;
+EN_TEST <= '1' after 550 ns, '0' after 650 ns;
+RST_TEST <= '0' after 500 ns, '1' after 600 ns;
+SENS_TEST <= '0' after 100 ns, '1' after 500 ns;
+Din_TEST <= X"CAAA" after 1000 ns, X"A000" after 800 ns;
+
+end Behavioral;
+

@@ -40,7 +40,7 @@ go
     ;
 
 statement
-    : tAOPEN expression tACLOSE
+    : tAOPEN expression tACLOSE {depth++; printf("Profondeur %d",depth);}
     ;
 
 expression
@@ -117,11 +117,11 @@ variable_multiple
         //depth++;
        /* printf("typeeeeee %s\n", type);
         printf("varName %s\n", $1);
-        printf("Value %d\n",valueInt);
-        printf("Depth %d\n", depth);*/
+        printf("Value %d\n",valueInt);*/
+        printf("Depth !!!%d\n", depth);
         // print("%s",type);
         //if (!($3 ==1 || $3 ==0)) {
-        add = insertNode($1,type,Value($3),0);
+        add = insertNode($1,type,Value($3),depth);
         printf("ma val %d",Value($3));
         printList();
        // add = findByID($1);
@@ -137,7 +137,7 @@ variable_multiple
     }
     | variable_multiple tCOMA variable_multiple 
     | tVARNAME 
-    {add = insertNode($1,type,0,0);}// cas triviaux a
+    {add = insertNode($1,type,0,depth);}// cas triviaux a
     ;
 // problème dans l'ordre de calcul
 calcul_multiple
@@ -146,7 +146,7 @@ calcul_multiple
     {
         printf("--------------------ADDITION---------------\n"); //test correct
         printf("%d ++++++ %d\n", Value($1),Value($3));
-        //add = insertNode($1,type,$1+$3,0);
+        //add = insertNode($1,type,$1+$3,depth);
 
         temp = (temp+1)%2;
         valueInt= Value($1)+Value($3);
@@ -159,7 +159,7 @@ calcul_multiple
     {
        printf("--------------------SOUSTRACTION---------------\n"); //test correct 
         printf("    %d - %d\n", Value($1),Value($3)); 
-        //add = insertNode($1,type,$1+$3,0);        
+        //add = insertNode($1,type,$1+$3,depth);        
 
         temp = (temp+1)%2;
         valueInt= Value($1)-Value($3);
@@ -175,7 +175,7 @@ calcul_multiple
     {
        printf("--------------------Multiplication---------------\n"); 
         printf("    %d * %d\n", Value($1),Value($3)); 
-        //add = insertNode($1,type,$1+$3,0);        
+        //add = insertNode($1,type,$1+$3,depth);        
 
         temp = (temp+1)%2;
         valueInt= Value($1)*Value($3);
@@ -188,7 +188,7 @@ calcul_multiple
     {
        printf("--------------------Division---------------\n");  
         printf("    %d / %d\n", Value($1),Value($3)); 
-        //add = insertNode($1,type,$1+$3,0);        
+        //add = insertNode($1,type,$1+$3,depth);        
 
         temp = (temp+1)%2;
         valueInt= Value($1)/Value($3);
@@ -200,7 +200,7 @@ calcul_multiple
     //Cas triviaux Integer / Variable pré déf ou decimal
     | tINTEGER 
     { 
-
+        
         printf("%d\n", yylval.int_val);
         printf("value integer %d\n", $1);
         //sprintf(value,"%d",$1);
@@ -224,10 +224,10 @@ calcul_multiple
     ;
 
 iteration_statement
-    : tWHILE  conditioner statement
-    | tIF conditioner statement
-    | tIF conditioner statement tELSE statement
-    | tIF conditioner tTHEN statement;
+    : tWHILE  conditioner statement {depth-=1;}
+    | tIF conditioner statement {depth-=1;}
+    | tIF conditioner statement tELSE statement {depth-=1;}
+    | tIF conditioner tTHEN statement {depth-=1;};
 
 conditional_expression 
     : tFALSE

@@ -20,6 +20,7 @@ void printList(){
         printf(" ------------------ \n");
     }
 }
+
 void insertTemp(){ // On ajoute les valeur temporelle
     //Malloc the space for the new data that's going to be insert
     struct Data *data = (struct Data*)malloc(sizeof(struct Data));
@@ -51,6 +52,7 @@ void insertTemp(){ // On ajoute les valeur temporelle
     Node2 -> next = Node;
     head = Node2;
 }
+
 int insertNode(char identifier[200], char type[20], int value, int deep){ // gerer le type CONST ou la variable ne doit pas bouger
     //Malloc the space for the new data that's going to be insert
     struct Data *data = (struct Data*)malloc(sizeof(struct Data));
@@ -84,6 +86,8 @@ void changeValueadd(char identifier[200],char type[20], int value){
             data->value =value;
 
         }
+    }else{
+        printf("ERROR EXIT -1 A ECRIRE\n");
     }
 
 }
@@ -118,6 +122,41 @@ void deleteFirstNode(){
         
         free(tempPtr);
     
+    }
+}
+void deleteAll(){
+    while(head!=NULL){
+        struct Node *tempPtr = head;
+        
+        head = head -> next;
+
+        printf("Eliminated Node: \n");
+        printNode(tempPtr);
+        
+        free(tempPtr);
+    
+    }
+}
+void deletebyDepth(int depth){
+   struct Node *current = head;
+    if(!isEmpty()){
+        while(current->data->deep == depth){
+            current = current -> next;
+            deleteFirstNode();
+        }
+        while (current->next != NULL){
+            if(current->next->data->deep == depth){
+                struct Node *nodeToDelete = current->next;
+        
+                current -> next = current -> next -> next;
+
+                printf("Node to be deleted! \n");
+                printNode(nodeToDelete);
+                
+                free(nodeToDelete);           
+            }
+            current = current -> next;
+        }
     }
 }
 
