@@ -1,2 +1,2 @@
-INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Simulation_ALU.vhd" into library xil_defaultlib
-INFO: [VRFC 10-307] analyzing entity Simulation_ALU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/ALU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity ALU

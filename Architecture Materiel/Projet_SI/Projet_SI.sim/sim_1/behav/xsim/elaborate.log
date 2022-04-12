@@ -3,5 +3,16 @@ Copyright 1986-1999, 2001-2018 Xilinx, Inc. All Rights Reserved.
 Running: /usr/local/insa/Xilinx.VIVADO/Vivado/2018.2/bin/unwrapped/lnx64.o/xelab -wto a1930c5de3264d199e48c8b14d2692ce --incr --debug typical --relax --mt 8 -L xil_defaultlib -L secureip --snapshot Simulation_ALU_behav xil_defaultlib.Simulation_ALU -log elaborate.log 
 Using 8 slave threads.
 Starting static elaboration
-ERROR: [VRFC 10-664] expression has 8 elements ; expected 3 [/home/organist/Documents/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Simulation_ALU.vhd:76]
-ERROR: [XSIM 43-3321] Static elaboration of top level VHDL design unit simulation_alu in library work failed.
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package std.standard
+Compiling package std.textio
+Compiling package ieee.std_logic_1164
+Compiling package ieee.std_logic_arith
+Compiling package ieee.std_logic_unsigned
+Compiling package ieee.numeric_std
+Compiling architecture behavioral of entity xil_defaultlib.ALU [alu_default]
+Compiling architecture behavioral of entity xil_defaultlib.simulation_alu
+Built simulation snapshot Simulation_ALU_behav

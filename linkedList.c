@@ -138,6 +138,8 @@ void deleteAll(){
     }
 }
 void deletebyDepth(int depth){
+    //Test the depth 
+    //modify the register to have more temporal variables
    struct Node *current = head;
     if(!isEmpty()){
         while(current->data->deep == depth){

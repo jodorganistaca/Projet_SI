@@ -1,8 +1,8 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.2 (lin64) Build 2258646 Thu Jun 14 20:02:38 MDT 2018
-| Date         : Thu Apr  7 10:53:08 2022
-| Host         : insa-09145 running 64-bit Ubuntu 20.04.3 LTS
+| Date         : Tue Apr 12 12:11:52 2022
+| Host         : insa-20549 running 64-bit Ubuntu 20.04.4 LTS
 | Command      : report_utilization -file ALU_utilization_synth.rpt -pb ALU_utilization_synth.pb
 | Design       : ALU
 | Device       : 7a35tcpg236-1
@@ -33,9 +33,9 @@ Table of Contents
 | Slice LUTs*             |    9 |     0 |     20800 |  0.04 |
 |   LUT as Logic          |    9 |     0 |     20800 |  0.04 |
 |   LUT as Memory         |    0 |     0 |      9600 |  0.00 |
-| Slice Registers         |    8 |     0 |     41600 |  0.02 |
+| Slice Registers         |   25 |     0 |     41600 |  0.06 |
 |   Register as Flip Flop |    0 |     0 |     41600 |  0.00 |
-|   Register as Latch     |    8 |     0 |     41600 |  0.02 |
+|   Register as Latch     |   25 |     0 |     41600 |  0.06 |
 | F7 Muxes                |    0 |     0 |     16300 |  0.00 |
 | F8 Muxes                |    0 |     0 |      8150 |  0.00 |
 +-------------------------+------+-------+-----------+-------+
@@ -55,7 +55,7 @@ Table of Contents
 | 0     |            _ |       Reset |            - |
 | 0     |          Yes |           - |            - |
 | 0     |          Yes |           - |          Set |
-| 8     |          Yes |           - |        Reset |
+| 25    |          Yes |           - |        Reset |
 | 0     |          Yes |         Set |            - |
 | 0     |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
@@ -149,15 +149,13 @@ Table of Contents
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
+| LDCE     |   25 |        Flop & Latch |
 | IBUF     |   19 |                  IO |
-| OBUF     |    8 |                  IO |
-| LDCE     |    8 |        Flop & Latch |
-| LUT5     |    7 |                 LUT |
-| OBUFT    |    4 |                  IO |
+| OBUF     |   10 |                  IO |
+| LUT2     |    8 |                 LUT |
+| OBUFT    |    2 |                  IO |
 | CARRY4   |    2 |          CarryLogic |
 | LUT3     |    1 |                 LUT |
-| LUT2     |    1 |                 LUT |
-| LUT1     |    1 |                 LUT |
 +----------+------+---------------------+
 
 

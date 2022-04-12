@@ -22,7 +22,7 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
-
+use IEEE.NUMERIC_STD.ALL;
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 --use IEEE.NUMERIC_STD.ALL;
@@ -73,7 +73,7 @@ Label_uut: ALU PORT MAP (
    end process;
  
     --Stimulus process
-    Ctrl_Alu_Test <= X"02";
-    A_Test <= X"15";
+    Ctrl_Alu_Test <= "010";
+    A_Test <= X"FF";
     B_Test <= X"05";
 end Behavioral;
