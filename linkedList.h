@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#define INITAL_SIZE 20
+#define INITAL_DEPTH 0
+#define INITAL_VALUE 0
 
 struct Data {
     char identifier[200];

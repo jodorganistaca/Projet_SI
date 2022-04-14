@@ -2,7 +2,7 @@
 
 struct Node *head = NULL;
 struct Node *current = NULL;
-int pos = 2;
+int pos = INITAL_SIZE;
 
 void printNode(struct Node *node){
     printf("%s | %d | %s | %d | %d \n", 
@@ -23,34 +23,22 @@ void printList(){
 
 void insertTemp(){ // On ajoute les valeur temporelle
     //Malloc the space for the new data that's going to be insert
-    struct Data *data = (struct Data*)malloc(sizeof(struct Data));
-    struct Data *data2 = (struct Data*)malloc(sizeof(struct Data));
-    //Asing the data elements
-    strcpy(data->identifier,"temp" );
-    data->address = 0;
-    strcpy(data->type, "int");
-     strcpy(data2->identifier, "temp2");
-    data2->address = 1;
-    strcpy(data2->type, "int");
-    int value =0;
-   
-
-    data->value =value;
-    
-    data2->value = value;
-    data->deep = 0;
-    data2->deep = 0;
-    //Malloc the space for the new Node that's going to be insert
-    struct Node *Node = (struct Node*)malloc(sizeof(struct Node));
-     struct Node *Node2 = (struct Node*)malloc(sizeof(struct Node));
-    //Insert the Node in the first position
-    Node -> data = data;
-    
-    Node -> next = NULL;
-    Node2 -> data = data2;
-   // printf("dans mon data je mets %d",Node2->data->value);
-    Node2 -> next = Node;
-    head = Node2;
+    int i;
+    for(i = 0; i<INITAL_SIZE; i++){
+        //Asing the data elements
+        struct Data *data = (struct Data*)malloc(sizeof(struct Data));
+        strcpy(data->identifier,"Temp");
+        strcpy(data->type, "int");
+        data->address = i;
+        data->value =INITAL_VALUE;
+        data->deep = INITAL_DEPTH;
+        //Malloc the space for the new Node that's going to be insert
+        struct Node *Node = (struct Node*)malloc(sizeof(struct Node));
+        //Insert the Node in the first position
+        Node -> data = data;
+        Node -> next = NULL;
+        head = Node;
+    }    
 }
 
 int insertNode(char identifier[200], char type[20], int value, int deep){ // gerer le type CONST ou la variable ne doit pas bouger
