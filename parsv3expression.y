@@ -19,7 +19,7 @@ FILE *fp;
 	double double_val;
     char* str_val;
 }
-%token <int_val> tIF tELSE tELSIF tWHILE tPRINTF tCHAR tMAIN tCONST tINTEGER tSPACE tTAB tBACKSPACE tCOMA tSEMICOLON tGEQ tLEQ tBE tINF tSUP tNEWL  tEXPO tCOMMENT
+%token <int_val> tIF tELSE tTHEN tELSIF tWHILE tPRINTF tCHAR tMAIN tCONST tINTEGER tSPACE tTAB tBACKSPACE tCOMA tSEMICOLON tGEQ tLEQ tBE tINF tSUP tNEWL  tEXPO tCOMMENT
 %token <int_val> tVOID tPLUS tMOINS tMULT tDIV tPOW tEQUAL tAND tOR tPOPEN tPCLOSE tAOPEN tACLOSE tCOPEN tCCLOSE tERROR tTRUE tFALSE
 %token <double_val> tDEC tAPOS 
 %token  <char_val> tCHARACTER
@@ -34,13 +34,13 @@ FILE *fp;
 %%
 // $first priorité sur les parenthèse et division multiplier
 go
-    : tMAIN tPOPEN tPCLOSE statement {printf("Bien lu\n");printList();}
+    : tMAIN tPOPEN tPCLOSE statement {printList();}
     | tINT tMAIN tPOPEN tPCLOSE statement {printList();}
 
     ;
 
 statement
-    : tAOPEN expression tACLOSE { printf("Profondeur %d",depth);}
+    : tAOPEN expression tACLOSE
     ;
 
 expression
@@ -117,11 +117,11 @@ variable_multiple
         //depth++;
        /* printf("typeeeeee %s\n", type);
         printf("varName %s\n", $1);
-        printf("Value %d\n",valueInt);*/
-        printf("Depth !!!%d\n", depth);
+        printf("Value %d\n",valueInt);
+        printf("Depth %d\n", depth);*/
         // print("%s",type);
         //if (!($3 ==1 || $3 ==0)) {
-        add = insertNode($1,type,Value($3),depth);
+        add = insertNode($1,type,Value($3),0);
         printf("ma val %d",Value($3));
         printList();
        // add = findByID($1);
@@ -137,7 +137,7 @@ variable_multiple
     }
     | variable_multiple tCOMA variable_multiple 
     | tVARNAME 
-    {add = insertNode($1,type,0,depth);}// cas triviaux a
+    {add = insertNode($1,type,0,0);}// cas triviaux a
     ;
 // problème dans l'ordre de calcul
 calcul_multiple
@@ -146,9 +146,9 @@ calcul_multiple
     {
         printf("--------------------ADDITION---------------\n"); //test correct
         printf("%d ++++++ %d\n", Value($1),Value($3));
-        //add = insertNode($1,type,$1+$3,depth);
+        //add = insertNode($1,type,$1+$3,0);
 
-        temp = (temp+1)%20;
+        temp = (temp+1)%2;
         valueInt= Value($1)+Value($3);
         printf("======= %d\n",valueInt);
         changeValuebyadd(temp,"int",valueInt);
@@ -159,7 +159,7 @@ calcul_multiple
     {
        printf("--------------------SOUSTRACTION---------------\n"); //test correct 
         printf("    %d - %d\n", Value($1),Value($3)); 
-        //add = insertNode($1,type,$1+$3,depth);        
+        //add = insertNode($1,type,$1+$3,0);        
 
         temp = (temp+1)%2;
         valueInt= Value($1)-Value($3);
@@ -175,7 +175,7 @@ calcul_multiple
     {
        printf("--------------------Multiplication---------------\n"); 
         printf("    %d * %d\n", Value($1),Value($3)); 
-        //add = insertNode($1,type,$1+$3,depth);        
+        //add = insertNode($1,type,$1+$3,0);        
 
         temp = (temp+1)%2;
         valueInt= Value($1)*Value($3);
@@ -188,7 +188,7 @@ calcul_multiple
     {
        printf("--------------------Division---------------\n");  
         printf("    %d / %d\n", Value($1),Value($3)); 
-        //add = insertNode($1,type,$1+$3,depth);        
+        //add = insertNode($1,type,$1+$3,0);        
 
         temp = (temp+1)%2;
         valueInt= Value($1)/Value($3);
@@ -222,45 +222,33 @@ calcul_multiple
     }
     | tDEC {printf("%.2f\n", yylval.double_val);}
     ;
-/* free tous les depth */
+
 iteration_statement
-    : tWHILE  conditioner {printf("t1\n");depth++;} statement {depth--;} //rajouter JMP au debut du while avec test condition à chaque fin de while 
-    | tIF conditioner {printf("t4\n");depth++;} statement {printf("Je supprime %d\n",depth--);} // free depth
-    | tIF conditioner {printf("t2\n");depth++;} statement tELSE statement {depth--;}
-    | tIF conditioner {printf("t3\n");depth++;} statement  elsif {depth--;}
-    ;
-    
-elsif
-    : tELSIF conditioner statement elsif
-    | tELSIF conditioner  statement tELSE statement
-    | tELSIF conditioner statement
-    ;
+    : tWHILE  conditioner statement
+    | tIF conditioner statement
+    | tIF conditioner statement tELSE statement
+    | tIF conditioner tTHEN statement;
+
 conditional_expression 
-    : condition // valeur 0 ou 1 
-    | condition tOR conditional_expression // faire une addition des deux conditions
-    | condition tAND conditional_expression // faire une multiplication des deux conditions
-    ;
-condition
-    : calcul_multiple tBE calcul_multiple {fprintf(fp,"EQU %d %d\n", $1, $3);}
-   /* |calcul_multiple tGEQ calcul_multiple {fprintf(fp,"EQU %d %d\n", $1, $3);
-    
-    } // jump si vrai sinon tester greater
-    | calcul_multiple tLEQ calcul_multiple // 0 si faux , 1 si vrai  */ 
-    |calcul_multiple tINF calcul_multiple {fprintf(fp,"INF %d %d\n", $1, $3);}
-    |calcul_multiple tSUP calcul_multiple {fprintf(fp,"SUP %d %d\n", $1, $3);}
+    : tFALSE
+    | tTRUE
     | calcul_multiple
-   // | calcul_multiple 
+    | calcul_multiple comparator calcul_multiple
+    | conditional_expression logical_connector conditional_expression
     ;
 /* 1.024 == 2*/
 
     
 
+logical_connector
+    : tAND
+    | tOR
+    ;
 
 conditioner 
     : tPOPEN  conditional_expression tPCLOSE
-    | tPOPEN calcul_multiple tPCLOSE // value($2) == 0 renvoyer ne pas lire statement  vrai si valeur != 0
     ;
-/*
+
 comparator
     : tBE
     | tGEQ
@@ -268,7 +256,7 @@ comparator
     | tINF
     | tSUP
     ;
-*/
+
 
 %%
 yyerror(char *s)

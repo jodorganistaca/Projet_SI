@@ -24,12 +24,13 @@ char* str_val;
         #endif    
         return tELSE;
         }
-"then"  {
+"else if"  {
         #ifdef DEBUG 
-            printf("tTHEN "); 
+            printf("tELSE IF"); 
         #endif    
-        return tTHEN;
+        return tELSIF;
         }
+        
 "while" {
         #ifdef DEBUG 
             printf("tWHILE "); 
@@ -77,12 +78,12 @@ char* str_val;
             printf("tPLUS "); 
         #endif    
         return tPLUS;}
-"&"    {
+"&&"    {
         #ifdef DEBUG 
             printf("tAND "); 
         #endif    
         return tAND;}
-"|"    {
+"||"    {
         #ifdef DEBUG 
             printf("tOR "); 
         #endif    
@@ -107,6 +108,11 @@ char* str_val;
             printf("tPOW "); 
         #endif    
         return tPOW;}
+"=="    {
+        #ifdef DEBUG 
+            printf("tBE "); 
+        #endif
+        return tBE;}
 "="    {
         #ifdef DEBUG 
             printf("tEQUAL "); 
@@ -183,11 +189,6 @@ char* str_val;
         printf("tLEQ "); 
     #endif
     return tLEQ;}
-"=="    {
-    #ifdef DEBUG 
-        printf("tBE "); 
-    #endif
-    return tBE;}
 "<"    {
     #ifdef DEBUG 
         printf("tINF "); 

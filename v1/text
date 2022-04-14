@@ -65,3 +65,15 @@ iteration_statement
     | tIF conditioner tTHEN statement structif
     ;
     
+
+
+
+    if (true){
+            int d =4
+        }
+        if (true) {
+            int e =5;
+        }
+    }
+    a = 1+1;
+    b = d+e;

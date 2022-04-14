@@ -1,6 +1,8 @@
 int main(){
-    int a=1+2*2;
-    int b=1+(2*2);
-    
-
+    int a,b;
+    if(1){
+        a = 1;
+    }else if(0){
+        b = 0;
+    }
 }
