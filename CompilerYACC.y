@@ -35,6 +35,8 @@ FILE *fp;
 %right tEQUAL
 %left tMOINS tPLUS
 %left tMULT tDIV
+%right tPOPEN
+%left tPCLOSE
 %start go
 %%
 // $first priorité sur les parenthèse et division multiplier
@@ -100,10 +102,12 @@ expression_arithmetic
 */  
 expression_print
     : tPRINTF tPOPEN  tVARNAME tPCLOSE tSEMICOLON {
-         fprintf(fp,"PRI %s\n", $1);
+        printf("AAAAAAAAAAA");
+        // fprintf(fp,"PRI %s\n", $3);
         instructions[compteurinstructions][0]="PRI";
         instructions[compteurinstructions][1]=malloc(1);
-        strcpy(instructions[compteurinstructions][1],$1);
+        snprintf( si, 4, "%d", findByID($3));
+        strcpy(instructions[compteurinstructions][1],si);
         
         compteurinstructions++;
         
@@ -272,6 +276,7 @@ calcul_multiple
         strcpy(instructions[compteurinstructions][3],si);
         compteurinstructions++;
     }
+    | tPOPEN calcul_multiple tPCLOSE {$$=$2;}
     //Cas triviaux Integer / Variable pré déf ou decimal
     | tINTEGER 
     { 
