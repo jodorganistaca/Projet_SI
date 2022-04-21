@@ -73,7 +73,7 @@ Label_uut: ALU PORT MAP (
    end process;
  
     --Stimulus process
-    Ctrl_Alu_Test <= "010";
+    Ctrl_Alu_Test <= "011";
     A_Test <= X"FF";
-    B_Test <= X"05";
+    B_Test <= X"00";
 end Behavioral;

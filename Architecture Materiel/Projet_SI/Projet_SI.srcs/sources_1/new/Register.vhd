@@ -21,6 +21,8 @@
 ---A rename
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -32,7 +34,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 -- VOIR GENERIC OPTION generic (N:integer : = 8); port ( E in std_logic_vector (N-1 downto 0); S : out std_logic_vector (N-1 DOWNTO 0)); end register;
 entity Registers is
-    Port ( addA : in STD_LOGIC_VECTOR (3 downto 0);
+    Port ( addA : in STD_LOGIC_VECTOR (3 downto 0); 
            addB : in STD_LOGIC_VECTOR (3 downto 0);
            addW : in STD_LOGIC_VECTOR (3 downto 0);
            W : in STD_LOGIC;
@@ -43,9 +45,48 @@ entity Registers is
            QB : out STD_LOGIC_VECTOR (7 downto 0));
 end Registers;
 
-architecture Behavioral of Registers is
 
+architecture Behavioral of Registers is
+type registersArray is array (0 to 15) of std_logic_vector(7 downto 0);
+signal BankRegisters : registersArray;
+signal ValueA: STD_LOGIC_VECTOR (7 downto 0);
+signal ValueB: STD_LOGIC_VECTOR (7 downto 0);
+-- A 0 -> 31 
+-- B 32 -> 63
+-- W 64 - 95
+-- Data 96 - 103
+-- W - 104
+-- RST -105
+-- 
 begin
 
 
+process(CLK)
+begin
+-- HORLOGE A METTRE
+    for i in 0 to 15 loop
+         BankRegisters(i) <= ( others => '0');   
+    end loop;
+    if(RST/='0') then 
+        if(W='1') then 
+          --  if (addW = addA or addW = addB) then ValueA<=DATA; --Lecture en même temps que registre => Lecture donne DATA
+           -- else
+                BankRegisters(to_integer(unsigned(addW)))<= DATA;
+                ValueA<=BankRegisters(to_integer(unsigned(addA)));
+                ValueB<=BankRegisters(to_integer(unsigned(addB)));
+          --  end if;
+           --- BankRegisters(to_integer(unsigned(addA)))<= DATA;
+           -- BankRegisters(to_integer(unsigned(addB)))<= DATA;
+           -- Value <= DATA;
+         
+         
+        end if;
+    
+    end if;
+
+end process;
+
+
+QA<=BankRegisters(to_integer(unsigned(addA)));
+QB<=BankRegisters(to_integer(unsigned(addB)));
 end Behavioral;
