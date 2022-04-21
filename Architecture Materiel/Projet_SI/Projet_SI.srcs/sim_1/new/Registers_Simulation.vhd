@@ -72,4 +72,6 @@ Label_uut: Registers PORT MAP (
     process
     begin
     end process;
+    
+    
  end Behavioral;   

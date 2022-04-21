@@ -24,21 +24,33 @@ void printList(){
 void insertTemp(){ // On ajoute les valeur temporelle
     //Malloc the space for the new data that's going to be insert
     int i;
-    for(i = 0; i<INITAL_SIZE; i++){
+    Node[0]=(struct Node*)malloc(sizeof(struct Node));
+    data[0]=(struct Data*)malloc(sizeof(struct Data));
+    data[0]->address = 0;
+    data[0]->value =INITAL_VALUE;
+    data[0]->deep = INITAL_DEPTH;
+    strcpy(data[0]->identifier,"0");
+    strcpy(data[0]->type, "int");
+    Node[0]-> data = data[0];
+    Node[0] -> next = NULL;
+    for(i = 1; i<INITAL_SIZE; i++){
         //Asing the data elements
-        struct Data *data = (struct Data*)malloc(sizeof(struct Data));
-        strcpy(data->identifier,"Temp");
-        strcpy(data->type, "int");
-        data->address = i;
-        data->value =INITAL_VALUE;
-        data->deep = INITAL_DEPTH;
+        Node[i]=(struct Node*)malloc(sizeof(struct Node));
+        data[i]=(struct Data*)malloc(sizeof(struct Data));
+        char si[2]="";
+        snprintf( si, 3, "%d", i);
+        strcpy(data[i]->identifier,si);
+        strcpy(data[i]->type, "int");
+        data[i]->address = i;
+        data[i]->value =INITAL_VALUE;
+        data[i]->deep = INITAL_DEPTH;
         //Malloc the space for the new Node that's going to be insert
-        struct Node *Node = (struct Node*)malloc(sizeof(struct Node));
         //Insert the Node in the first position
-        Node -> data = data;
-        Node -> next = NULL;
-        head = Node;
-    }    
+        Node[i] -> data = data[i];
+        Node[i] -> next = Node[i-1];
+        
+    }   
+    head = Node[INITAL_SIZE-1]; 
 }
 
 int insertNode(char identifier[200], char type[20], int value, int deep){ // gerer le type CONST ou la variable ne doit pas bouger

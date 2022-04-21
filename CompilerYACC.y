@@ -8,6 +8,7 @@ int add;
 char type[20];
 char value[20];
 char operat[4];
+char instructions[][3];
 int temp =0;
 int valueInt;
 FILE *fp;
@@ -161,7 +162,7 @@ calcul_multiple
         printf("    %d - %d\n", Value($1),Value($3)); 
         //add = insertNode($1,type,$1+$3,depth);        
 
-        temp = (temp+1)%2;
+        temp = (temp+1)%20;
         valueInt= Value($1)-Value($3);
         printf("======= %d\n",valueInt);
         changeValuebyadd(temp,"int",valueInt);
@@ -177,7 +178,7 @@ calcul_multiple
         printf("    %d * %d\n", Value($1),Value($3)); 
         //add = insertNode($1,type,$1+$3,depth);        
 
-        temp = (temp+1)%2;
+        temp = (temp+1)%20;
         valueInt= Value($1)*Value($3);
         printf("======= %d\n",valueInt);
         changeValuebyadd(temp,"int",valueInt);
@@ -190,7 +191,7 @@ calcul_multiple
         printf("    %d / %d\n", Value($1),Value($3)); 
         //add = insertNode($1,type,$1+$3,depth);        
 
-        temp = (temp+1)%2;
+        temp = (temp+1)%20;
         valueInt= Value($1)/Value($3);
         printf("======= %d\n",valueInt);
         changeValuebyadd(temp,"int",valueInt);
@@ -204,7 +205,7 @@ calcul_multiple
         printf("%d\n", yylval.int_val);
         printf("value integer %d\n", $1);
         //sprintf(value,"%d",$1);
-        temp = (temp +1)%2;
+        temp = (temp +1)%20;
         changeValuebyadd(temp,"int",$1);
         
         //printList();
@@ -281,6 +282,7 @@ yywrap()
   return(1);
 }
 
+
 int main(){
   insertTemp();
   printList();
@@ -289,5 +291,15 @@ int main(){
   yyparse();
   fclose(fp);
   /* yylex(); */
+  /*
+  finstructions=fopen("./output/filetableau.txt","w") 
+  for (int i =0; i<Size(Instructions[]);i++){
+        for(int j=0; j<3,j++){
+            fprintf(instructions[i][j]);
+            fprintf( ' ');
+
+        }
+        fprintf("\n");
+      }*/
   return(0);
 }

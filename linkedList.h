@@ -6,6 +6,7 @@
 #define INITAL_DEPTH 0
 #define INITAL_VALUE 0
 
+
 struct Data {
     char identifier[200];
     int address;
@@ -18,6 +19,9 @@ struct Node {
     struct Data* data;  
     struct Node* next;
 };
+struct Node *Node[INITAL_SIZE];
+struct Data *data[INITAL_SIZE];
+
 
 void printNode(struct Node *node);
 
