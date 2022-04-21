@@ -8,9 +8,13 @@ int add;
 char type[20];
 char value[20];
 char operat[4];
-char instructions[][3];
+char* instructions[256][4];
+int compteurinstructions=0;
+int FinStruct=0;
 int temp =0;
 int valueInt;
+char si[3]="";
+FILE *finstructions;
 FILE *fp;
 %}
 %union
@@ -76,6 +80,16 @@ expression_arithmetic
        printf("l'adresse %d\n",add);
        changeValuebyadd(add,type,Value($3));
        fprintf(fp,"COP %d %d\n", add, $3);
+    
+        instructions[compteurinstructions][0]="COP";
+        snprintf( si, 4, "%d", add);
+        instructions[compteurinstructions][1]=malloc(1);
+        strcpy(instructions[compteurinstructions][1],si);
+        snprintf( si, 4, "%d", $3);
+        instructions[compteurinstructions][2]=malloc(1);
+        strcpy(instructions[compteurinstructions][2],si);
+        compteurinstructions++;
+     //   compteurinstructions++;
     }
     // | declaration_pointeur tSEMICOLON;
     ;
@@ -85,7 +99,15 @@ expression_arithmetic
     ;
 */  
 expression_print
-    : tPRINTF tPOPEN  tVARNAME tPCLOSE tSEMICOLON //{printf($2);}
+    : tPRINTF tPOPEN  tVARNAME tPCLOSE tSEMICOLON {
+         fprintf(fp,"PRI %s\n", $1);
+        instructions[compteurinstructions][0]="PRI";
+        instructions[compteurinstructions][1]=malloc(1);
+        strcpy(instructions[compteurinstructions][1],$1);
+        
+        compteurinstructions++;
+        
+        }//{printf($2);}
     ;
 
 /* int a;   int a,b,c; int a,b=5,c;*/
@@ -131,6 +153,14 @@ variable_multiple
         }*/
         fprintf(fp,"COP %d %d\n", add, $3); // add 0 1 temp
 
+        instructions[compteurinstructions][0]="COP";
+        snprintf( si, 4, "%d", add);
+        instructions[compteurinstructions][1]=malloc(1);
+        strcpy(instructions[compteurinstructions][1],si);
+        snprintf( si, 4, "%d", $3);
+        instructions[compteurinstructions][2]=malloc(1);
+         strcpy(instructions[compteurinstructions][2],si);
+        compteurinstructions++;
         /* printf("teeesst %s\n", yylval.str_val);
         insertNode(yylval.str_val,type,depth);
         printf("insertioooon %s\n", yylval.str_val);
@@ -155,6 +185,20 @@ calcul_multiple
         changeValuebyadd(temp,"int",valueInt);
         fprintf(fp,"ADD %d %d %d\n", temp, $1, $3); // Add des deux var // renvoyer l'adresse add en $
         $$=temp;
+
+        instructions[compteurinstructions][0]="ADD";
+        snprintf( si, 4, "%d", temp);
+        instructions[compteurinstructions][1]=malloc(1);
+        strcpy(instructions[compteurinstructions][1],si);
+        snprintf( si, 4, "%d", $1);
+        instructions[compteurinstructions][2]=malloc(1);
+        strcpy(instructions[compteurinstructions][2],si);
+        snprintf( si, 4, "%d", $3);
+        instructions[compteurinstructions][3]=malloc(1);
+        strcpy(instructions[compteurinstructions][3],si);
+        compteurinstructions++;
+
+
     }
     | calcul_multiple tMOINS  calcul_multiple
     {
@@ -168,11 +212,19 @@ calcul_multiple
         changeValuebyadd(temp,"int",valueInt);
         fprintf(fp,"SOU %d %d %d\n", temp, $1, $3); // Add des deux var // renvoyer l'adresse add en $
         $$=temp;
+         instructions[compteurinstructions][0]="SOU";
+        snprintf( si, 4, "%d", temp);
+        instructions[compteurinstructions][1]=malloc(1);
+        strcpy(instructions[compteurinstructions][1],si);
+        snprintf( si, 4, "%d", $1);
+        instructions[compteurinstructions][2]=malloc(1);
+        strcpy(instructions[compteurinstructions][2],si);
+        snprintf( si, 4, "%d", $3);
+        instructions[compteurinstructions][3]=malloc(1);
+        strcpy(instructions[compteurinstructions][3],si);
+        compteurinstructions++;
     }
-    | calcul_multiple tMULT  calcul_multiple // Besoin de priorité PROBLEME A REGLER Il va effectivement rentrer dans la multiplication en premier 
-    //mais aura déjà affecté la valeur de gauche ce qui fait que cette valeur sera perdue 
-    // solution possible oublier les valeurs temporaires et repartir sur des valeurs qui s'attribuerait et s'effacerai après utilisations (à chaque étage en distinguant valeur int de variable?) risque de pas marcher
-    // 
+    | calcul_multiple tMULT  calcul_multiple 
     {
        printf("--------------------Multiplication---------------\n"); 
         printf("    %d * %d\n", Value($1),Value($3)); 
@@ -184,8 +236,19 @@ calcul_multiple
         changeValuebyadd(temp,"int",valueInt);
         fprintf(fp,"MUL %d %d %d\n", temp, $1, $3); // Add des deux var // renvoyer l'adresse add en $
         $$=temp;
+         instructions[compteurinstructions][0]="MUL";
+        snprintf( si, 4, "%d", temp);
+        instructions[compteurinstructions][1]=malloc(1);
+        strcpy(instructions[compteurinstructions][1],si);
+        snprintf( si, 4, "%d", $1);
+        instructions[compteurinstructions][2]=malloc(1);
+        strcpy(instructions[compteurinstructions][2],si);
+        snprintf( si, 4, "%d", $3);
+        instructions[compteurinstructions][3]=malloc(1);
+        strcpy(instructions[compteurinstructions][3],si);
+        compteurinstructions++;
     }
-    | calcul_multiple tDIV  calcul_multiple // Besoin de priorité PROBLEME A REGLER 
+    | calcul_multiple tDIV  calcul_multiple 
     {
        printf("--------------------Division---------------\n");  
         printf("    %d / %d\n", Value($1),Value($3)); 
@@ -197,6 +260,17 @@ calcul_multiple
         changeValuebyadd(temp,"int",valueInt);
         fprintf(fp,"DIV %d %d %d\n", temp, $1, $3); // Add des deux var // renvoyer l'adresse add en $
         $$=temp;
+         instructions[compteurinstructions][0]="DIV";
+        snprintf( si, 4, "%d", temp);
+        instructions[compteurinstructions][1]=malloc(1);
+        strcpy(instructions[compteurinstructions][1],si);
+        snprintf( si, 4, "%d", $1);
+        instructions[compteurinstructions][2]=malloc(1);
+        strcpy(instructions[compteurinstructions][2],si);
+        snprintf( si, 4, "%d", $3);
+        instructions[compteurinstructions][3]=malloc(1);
+        strcpy(instructions[compteurinstructions][3],si);
+        compteurinstructions++;
     }
     //Cas triviaux Integer / Variable pré déf ou decimal
     | tINTEGER 
@@ -212,6 +286,15 @@ calcul_multiple
         fprintf(fp,"AFC %d %d\n", temp, $1); // affecter à une valeur temporaire, trouver un moyen d'avoir une adresse différente en adresse temporaire
         printf("temp val integer %d\n",temp);
         $$ = temp;
+        
+        instructions[compteurinstructions][0]="AFC";
+        snprintf( si, 4, "%d", temp);
+        instructions[compteurinstructions][1]=malloc(1);
+        strcpy(instructions[compteurinstructions][1],si);
+        snprintf( si, 4, "%d", $1);
+        instructions[compteurinstructions][2]=malloc(1);
+         strcpy(instructions[compteurinstructions][2],si);
+        compteurinstructions++;
         
     }
     | tVARNAME 
@@ -242,13 +325,40 @@ conditional_expression
     | condition tAND conditional_expression // faire une multiplication des deux conditions
     ;
 condition
-    : calcul_multiple tBE calcul_multiple {fprintf(fp,"EQU %d %d\n", $1, $3);}
+    : calcul_multiple tBE calcul_multiple {
+        fprintf(fp,"EQU %d %d\n", $1, $3);
+        instructions[compteurinstructions][0]="EQU";
+        snprintf( si, 4, "%d", $1);
+        instructions[compteurinstructions][1]=malloc(1);
+        strcpy(instructions[compteurinstructions][1],si);
+        snprintf( si, 4, "%d", $3);
+        instructions[compteurinstructions][2]=malloc(1);
+        strcpy(instructions[compteurinstructions][2],si);
+        compteurinstructions++;
+    }
    /* |calcul_multiple tGEQ calcul_multiple {fprintf(fp,"EQU %d %d\n", $1, $3);
     
     } // jump si vrai sinon tester greater
     | calcul_multiple tLEQ calcul_multiple // 0 si faux , 1 si vrai  */ 
-    |calcul_multiple tINF calcul_multiple {fprintf(fp,"INF %d %d\n", $1, $3);}
-    |calcul_multiple tSUP calcul_multiple {fprintf(fp,"SUP %d %d\n", $1, $3);}
+    |calcul_multiple tINF calcul_multiple {fprintf(fp,"INF %d %d\n", $1, $3);
+    
+        instructions[compteurinstructions][0]="INF";
+        snprintf( si, 4, "%d", $1);
+        instructions[compteurinstructions][1]=malloc(1);
+        strcpy(instructions[compteurinstructions][1],si);
+        snprintf( si, 4, "%d", $3);
+        instructions[compteurinstructions][2]=malloc(1);
+        strcpy(instructions[compteurinstructions][2],si);
+        compteurinstructions++;}
+    |calcul_multiple tSUP calcul_multiple {fprintf(fp,"SUP %d %d\n", $1, $3);
+        instructions[compteurinstructions][0]="SUP";
+        snprintf( si, 4, "%d", $1);
+        instructions[compteurinstructions][1]=malloc(1);
+        strcpy(instructions[compteurinstructions][1],si);
+        snprintf( si, 4, "%d", $3);
+        instructions[compteurinstructions][2]=malloc(1);
+        strcpy(instructions[compteurinstructions][2],si);
+        compteurinstructions++;}
     | calcul_multiple
    // | calcul_multiple 
     ;
@@ -291,15 +401,21 @@ int main(){
   yyparse();
   fclose(fp);
   /* yylex(); */
-  /*
-  finstructions=fopen("./output/filetableau.txt","w") 
-  for (int i =0; i<Size(Instructions[]);i++){
-        for(int j=0; j<3,j++){
-            fprintf(instructions[i][j]);
-            fprintf( ' ');
-
+  
+  finstructions=fopen("./output/filetableau.txt","w");
+ // printf("COMPTEUR DINSTRUCTIONS %d \n",compteurinstructions);
+  for (int i =0; i<compteurinstructions;i++){
+        for(int j=0; j<4;j++){
+            printf("JEUX d'instructions------------------------\n");
+            printf(instructions[i][j]);
+            printf("\n");
+            fprintf(finstructions,instructions[i][j]);
+            fprintf(finstructions," ");
+            printf("Fin boucle %d\n",j);
+            
         }
-        fprintf("\n");
-      }*/
+        fprintf(finstructions,"\n");
+      }
+     fclose(finstructions);
   return(0);
 }
