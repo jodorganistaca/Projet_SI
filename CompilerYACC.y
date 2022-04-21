@@ -35,8 +35,7 @@ FILE *fp;
 %right tEQUAL
 %left tMOINS tPLUS
 %left tMULT tDIV
-%right tPOPEN
-%left tPCLOSE
+%left tPOPEN tPCLOSE
 %start go
 %%
 // $first priorité sur les parenthèse et division multiplier
