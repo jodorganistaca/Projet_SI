@@ -109,3 +109,18 @@ parameters
     à l'appel de fonction imbriqué il faudrait bascule rdans le tas les outils de la table des symboles utilisés
 Il vaut mieux utiliser une fonciton de hashage qu'une string compare
     
+      |tINT tVARNAME tEQUAL tINTEGER tSEMICOLON 
+    {
+       printf("Depth !!!%d\n", depth);
+        add = insertNode($2,type,Value($4),depth);
+        printf("ma val %d",Value($3));
+        printList();
+        fprintf(fp,"AFC %d %d\n", add, $4); // add 0 1 temp
+        instructions[compteurinstructions][0]="AFC";
+        snprintf( si, 4, "%d", add);
+        instructions[compteurinstructions][1]=malloc(1);
+        strcpy(instructions[compteurinstructions][1],si);
+        snprintf( si, 4, "%d", $4);
+        instructions[compteurinstructions][2]=malloc(1);
+         strcpy(instructions[compteurinstructions][2],si);
+        compteurinstructions++;}

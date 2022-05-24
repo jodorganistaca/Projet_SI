@@ -1,8 +1,9 @@
-int main(){
-    int a,b;
-    if(1){
-        a = 1;
-    }else if(0){
-        b = 0;
+int function (int a , int b , int c){
+        d= 0;
+        return d;
     }
+int main(){
+    int a,b,d;
+    function (a,b,d);
+    
 }

@@ -217,6 +217,22 @@ int findByID(char identifier[20]){ //deep à ajouter pour plus tard
     return -1;    
 }
 
+char* TypeByID(char identifier[20]){ //deep à ajouter pour plus tard
+    struct Node *current = head;
+
+    if(isEmpty())
+        return "";
+
+    while (current != NULL){
+        if(strcmp(current->data->identifier, identifier)==0){
+            return current->data->type;
+        }
+        current = current -> next;
+    }
+
+    return "";    
+}
+
 void deleteNode(int address){
     struct Node *current = head;
 
