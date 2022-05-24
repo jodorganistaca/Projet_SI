@@ -9,9 +9,9 @@ char type[20];
 char value[20];
 char operat[4];
 int d = -1;
-//int o = -1;
+int o = -1;
 int compteurdeif[20];
-//int constantif[20];
+int constantif[20];
 int error = 0;
  
 int boolean;
@@ -23,7 +23,7 @@ int valueInt;
 char si[38]=""; // Taille d'un integer
 FILE *finstructions;
 FILE *fp;
-// ELSIF + FUNCTION + INF EQ + SUP EQ 
+// ELSIF + FUNCTION
 %}
 %union
 {
@@ -65,9 +65,9 @@ expression
     | expression_arithmetic     
     | iteration_statement
     | expression_print
-    | expression_fonction
+   // | expression_fonction
     ;
-
+/*
 expression_fonction
     : tVARNAME tPOPEN parameters tPCLOSE statement {printf("fonction\n");} // $statement =/tINT yyerror("Mauvais type en return")
     | tINT tVARNAME tPOPEN parameters tPCLOSE statement {printf("fonction\n");}
@@ -79,7 +79,7 @@ parameters
     | tINT tVARNAME tCOMA parameters
     | tCHAR tVARNAME tCOMA parameters
     ;
-
+*/
     // : type tVARNAME tEQUAL tAPOS tVARNAME tAPOS tSEMICOLON // string dans file, on peut transformer en ascii sur un registre et le traduire lorsqu'appelé
 // ok ?
 expression_arithmetic 
@@ -125,6 +125,7 @@ expression_print
     : tPRINTF tPOPEN  tVARNAME tPCLOSE tSEMICOLON {
         printf("AAAAAAAAAAA");
         // fprintf(fp,"PRI %s\n", $3);
+        add= findByID($3);
         instructions[compteurinstructions][0]="PRI";
         instructions[compteurinstructions][1]=malloc(1);
         if (add==-1){
@@ -132,12 +133,8 @@ expression_print
            error = 1;
            break;
        }
-       if (TypeByID($1)=="CONST"){
-           yyerror("Constante inmodifiable\n");
-           error = 1;
-           break;
-       }
-        snprintf( si, 39, "%d", findByID($3));
+      
+        snprintf( si, 39, "%d", add);
         strcpy(instructions[compteurinstructions][1],si);
         
         compteurinstructions++;
@@ -290,6 +287,7 @@ calcul_multiple
         //add = insertNode($1,type,$1+$3,depth);        
 
         temp = (temp+1)%20;
+        
         valueInt= Value($1)/Value($3);
         printf("======= %d\n",valueInt);
         changeValuebyadd(temp,"int",valueInt);
@@ -398,7 +396,7 @@ BlocIf
         compteurinstructions++;
         snprintf( si, 39, "%d", compteurinstructions+1);
         strcpy(instructions[compteurdeif[d-1]][2],si);} tELSE statement {snprintf( si, 39, "%d", compteurinstructions+1);strcpy(instructions[compteurdeif[d]][1],si); deletebyDepth(depth);d=d-2; depth--;}
-   /* |statement {o++;instructions[compteurinstructions][0]="JMP"; // Faire un ELSIF OPTIONNEL
+   /* |statement {o++;instructions[compteurinstructions][0]="JMP"; // Faire un ELSIF
        snprintf( si, 39, "%d", compteurinstructions);
         instructions[compteurinstructions][1]=malloc(1);
         strcpy(instructions[compteurinstructions][1],si);
@@ -520,21 +518,23 @@ int main(){
   finstructions=fopen("./output/assembleur.asm","w");
  // printf("COMPTEUR DINSTRUCTIONS %d \n",compteurinstructions);
  // Rajouter Si Error alors on le lit pas le for 
- if (error == 0)  {
-  for (int i =0; i<compteurinstructions;i++){
-        for(int j=0; j<4;j++){
-            //printf("JEUX d'instructions------------------------\n");
-            //printf(instructions[i][j]);
-            //printf("\n");
-            fprintf(finstructions,instructions[i][j]);
-            fprintf(finstructions," ");
-            //printf("Fin boucle %d\n",j);
-            
+  
+    if (error == 0)  {
+        for (int i =0; i<compteurinstructions;i++){
+            for(int j=0; j<4;j++){
+                //printf("JEUX d'instructions------------------------\n");
+                //printf(instructions[i][j]);
+                //printf("\n");
+                fprintf(finstructions,instructions[i][j]);
+                fprintf(finstructions," ");
+                //printf("Fin boucle %d\n",j);
+                
+            }
+            fprintf(finstructions,"\n");
         }
-        fprintf(finstructions,"\n");
-      }
- }
-     fclose(finstructions);
-     deleteAll();
-  return(0);
+    }
+
+    fclose(finstructions);
+    deleteAll();
+    return(0);
 }
