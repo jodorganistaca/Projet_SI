@@ -34,7 +34,7 @@ use IEEE.NUMERIC_STD.ALL;
 --use UNISIM.VComponents.all;
 
 entity ALU is
-    Port ( A : in STD_LOGIC_VECTOR (7 downto 0);
+    Port ( A : in STD_LOGIC_VECTOR (7 downto 0); 
            B : in STD_LOGIC_VECTOR (7 downto 0);
            Ctrl_Alu : in STD_LOGIC_VECTOR (2 downto 0);
            S : out STD_LOGIC_VECTOR (7 downto 0);
@@ -106,7 +106,7 @@ begin
             flagZ<='0';
         end if;
     --Value<=std_logic_vector(to_signed(to_integer(signed(A) + signed(B)),16));
-   elsif  (Ctrl_Alu=X"01") then
+    elsif  (Ctrl_Alu=X"01") then
          Value16<=std_logic_vector(to_signed(to_integer(unsigned(A) * unsigned(B)),16));
          Value8 <=std_logic_vector(resize(unsigned(Value16),8));
   --      Value <= a_new * b_new;
@@ -122,8 +122,8 @@ begin
       else
           flagZ<='0';
       end if;
-        
-   elsif  (Ctrl_Alu=X"3") then 
+    --DIV    
+    elsif  (Ctrl_Alu=X"03") then 
      --   Value <= a_new / b_new;
       if (unsigned(B)=0) then flagO<='1'; 
          Value8<=std_logic_vector(to_signed(0,8));

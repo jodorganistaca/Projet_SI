@@ -49,13 +49,17 @@ end COMPONENT;
 --inputs
 signal Test_addA : STD_LOGIC_VECTOR (3 downto 0):= ( others => '0');-- instancier à 0
 signal Test_addB :  STD_LOGIC_VECTOR (3 downto 0):= ( others => '0');
-signal  Test_addW : STD_LOGIC_VECTOR (3 downto 0):= ( others => '0');
-signal   Test_W :  STD_LOGIC:='0';
-signal  Test_DATA :  STD_LOGIC_VECTOR (7 downto 0):= ( others => '0');
-signal  Test_RST :  STD_LOGIC:='1';
-signal Test_CLK :  STD_LOGIC:='0';
+signal Test_addW : STD_LOGIC_VECTOR (3 downto 0):= ( others => '0');
+signal Test_W :  STD_LOGIC:='1';
+signal Test_DATA :  STD_LOGIC_VECTOR (7 downto 0):= ( others => '0');
+signal Test_RST :  STD_LOGIC:='1';
+signal Test_CLK :  STD_LOGIC:='1';
+--output
 signal Test_QA :  STD_LOGIC_VECTOR (7 downto 0):= ( others => '0');
 signal Test_QB :  STD_LOGIC_VECTOR (7 downto 0):= ( others => '0');
+-- Clock period definitions
+-- Si 100 MHz
+constant Clock_period : time := 10 ns;
 
 begin
 Label_uut: Registers PORT MAP (
@@ -69,9 +73,20 @@ Label_uut: Registers PORT MAP (
     QA => Test_QA,
     QB=>Test_QB
     );
-    process
-    begin
-    end process;
-    
-    
+--Clock process definitions
+Clock_process : process
+begin
+    Test_CLK <= not(Test_CLK);
+    wait for Clock_period/2;
+end process;
+
+ --Stimulus process
+Test_DATA <= X"FF" after 0 ns, X"AA" after 100 ns, X"A0" after 300 ns, X"CA" after 700 ns, X"AB" after 800 ns;
+
+Test_addW <= X"2" after 0 ns, X"3" after 100 ns, X"0" after 450 ns, X"1" after 500 ns;
+Test_addA <= X"0" after 0 ns, X"1" after 600 ns;
+Test_addB <= X"2", X"3" after 150 ns;
+Test_RST <= '0' after 200 ns, '1' after 300 ns;
+Test_W <= '0' after 100 ns, '1' after 250 ns;
+
  end Behavioral;   
