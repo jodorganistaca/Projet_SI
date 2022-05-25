@@ -1,6 +1,6 @@
 Vivado Simulator 2018.2
 Copyright 1986-1999, 2001-2018 Xilinx, Inc. All Rights Reserved.
-Running: /usr/local/insa/Xilinx.VIVADO/Vivado/2018.2/bin/unwrapped/lnx64.o/xelab -wto a1930c5de3264d199e48c8b14d2692ce --incr --debug typical --relax --mt 8 -L xil_defaultlib -L secureip --snapshot Simulation_ALU_behav xil_defaultlib.Simulation_ALU -log elaborate.log 
+Running: /usr/local/insa/Xilinx.VIVADO/Vivado/2018.2/bin/unwrapped/lnx64.o/xelab -wto a1930c5de3264d199e48c8b14d2692ce --incr --debug typical --relax --mt 8 -L xil_defaultlib -L secureip --snapshot Processor_Simulation_behav xil_defaultlib.Processor_Simulation -log elaborate.log 
 Using 8 slave threads.
 Starting static elaboration
 Completed static elaboration
@@ -13,6 +13,10 @@ Compiling package ieee.std_logic_1164
 Compiling package ieee.std_logic_arith
 Compiling package ieee.std_logic_unsigned
 Compiling package ieee.numeric_std
+Compiling architecture behavioral of entity xil_defaultlib.Instructions_Memory [instructions_memory_default]
+Compiling architecture behavioral of entity xil_defaultlib.Registers [registers_default]
 Compiling architecture behavioral of entity xil_defaultlib.ALU [alu_default]
-Compiling architecture behavioral of entity xil_defaultlib.simulation_alu
-Built simulation snapshot Simulation_ALU_behav
+Compiling architecture behavioral of entity xil_defaultlib.RISC_SI [risc_si_default]
+Compiling architecture behavioral of entity xil_defaultlib.processor [processor_default]
+Compiling architecture behavioral of entity xil_defaultlib.processor_simulation
+Built simulation snapshot Processor_Simulation_behav
