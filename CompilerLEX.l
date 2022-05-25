@@ -179,12 +179,12 @@ char* str_val;
         ("tSEMICOLON \n");
     #endif
     return tSEMICOLON;}
-"=>"    {
+">="    {
     #ifdef DEBUG 
         printf("tGEQ "); 
     #endif
     return tGEQ;}
-"=<"    {
+"<="    {
     #ifdef DEBUG 
         printf("tLEQ "); 
     #endif

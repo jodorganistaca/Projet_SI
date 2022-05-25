@@ -42,5 +42,5 @@ int Value();
 struct Node* find(int address);
 // Find by ID renvoi l'adresse associé à l'id
 int findByID(char identifier[20]);
-
+char* TypeByID(char identifier[20]);
 void deleteNode(int address);

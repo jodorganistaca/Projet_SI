@@ -87,7 +87,7 @@ void changeValueadd(char identifier[200],char type[20], int value){
 
         }
     }else{
-        printf("ERROR EXIT -1 A ECRIRE\n");
+        printf("ERROR EXIT -1 CONSTANT CHANGED VALUE\n");
     }
 
 }
@@ -99,8 +99,8 @@ void changeValuebyadd(int address,char type[20], int value){
 
     while (current != NULL){
         if(current->data->address == address){
-            printf("Node found! \n");
-            printNode(current);
+           // printf("Node found! \n");
+            //printNode(current);
             current->data->value =value;
             break;
         }
@@ -117,8 +117,8 @@ void deleteFirstNode(){
         
         head = head -> next;
 
-        printf("Eliminated Node: \n");
-        printNode(tempPtr);
+        //printf("Eliminated Node: \n");
+        //printNode(tempPtr);
         
         free(tempPtr);
     
@@ -130,8 +130,8 @@ void deleteAll(){
         
         head = head -> next;
 
-        printf("Eliminated Node: \n");
-        printNode(tempPtr);
+       // printf("Eliminated Node: \n");
+       // printNode(tempPtr);
         
         free(tempPtr);
     
@@ -152,7 +152,7 @@ void deletebyDepth(int depth){
         
                 current -> next = current -> next -> next;
 
-                printf("Node to be deleted! \n");
+             //   printf("Node to be deleted! \n");
                 printNode(nodeToDelete);
                 
                 free(nodeToDelete);           
@@ -174,7 +174,7 @@ struct Node* find(int address){
 
     while (current != NULL){
         if(current->data->address == address){
-            printf("Node found! \n");
+           // printf("Node found! \n");
             printNode(current);
             return current;
         }
@@ -191,7 +191,7 @@ int Value(int address){
 
     while (current != NULL){
         if(current->data->address == address){
-            printf("Node found! \n");
+            //printf("Node found! \n");
             printNode(current);
             return current->data->value;
         }
@@ -246,8 +246,8 @@ void deleteNode(int address){
             
                     current -> next = current -> next -> next;
 
-                    printf("Node to be deleted! \n");
-                    printNode(nodeToDelete);
+                   // printf("Node to be deleted! \n");
+                    //printNode(nodeToDelete);
                     
                     free(nodeToDelete);           
                 }

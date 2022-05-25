@@ -8,7 +8,7 @@ int add;
 char type[20];
 char value[20];
 char operat[4];
-int d = -1;
+int d = -1; // rajouter une erreur s'il n'est pas à -1 à la fin { } non fermée
 int o = -1;
 int compteurdeif[20];
 int constantif[20];
@@ -51,13 +51,16 @@ FILE *fp;
 %%
 // $first priorité sur les parenthèse et division multiplier
 go
-    : tMAIN tPOPEN tPCLOSE statement {printf("Bien lu\n");printList();}
+    : tMAIN tPOPEN tPCLOSE statement {printList(); 
+    if(d !=-1){
+        yyerror("Curly brace error in your statement \n");
+    }} //printf("Bien lu\n");
     | tINT tMAIN tPOPEN tPCLOSE statement {printList();}
 
     ;
 
 statement
-    : tAOPEN expression tACLOSE { printf("Profondeur %d",depth);}
+    : tAOPEN expression tACLOSE //{ printf("Profondeur %d",depth);}
     ;
 
 expression
@@ -89,7 +92,7 @@ expression_arithmetic
     | tVARNAME tEQUAL calcul_multiple tSEMICOLON  /* cas où l'on change la value d'une variable existante  a = 1+7+a-b*/
     {
        add= findByID($1);
-       printf("l'adresse %d\n",add);
+       //printf("l'adresse %d\n",add);
        if (add==-1){
            yyerror("Variable non définie\n");
            error = 1;
@@ -123,7 +126,7 @@ expression_arithmetic
 */  
 expression_print
     : tPRINTF tPOPEN  tVARNAME tPCLOSE tSEMICOLON {
-        printf("AAAAAAAAAAA");
+       // printf("AAAAAAAAAAA");
         // fprintf(fp,"PRI %s\n", $3);
         add= findByID($3);
         instructions[compteurinstructions][0]="PRI";
@@ -173,12 +176,12 @@ variable_multiple
        /* printf("typeeeeee %s\n", type);
         printf("varName %s\n", $1);
         printf("Value %d\n",valueInt);*/
-        printf("Depth !!!%d\n", depth);
+     //   printf("Depth !!!%d\n", depth);
         // print("%s",type);
         //if (!($3 ==1 || $3 ==0)) {
         add = insertNode($1,type,Value($3),depth);
-        printf("ma val %d",Value($3));
-        printList();
+      //  printf("ma val %d",Value($3));
+       // printList();
        // add = findByID($1);
         /*}else{
             add = insertNode($1,type,Value($3),0);
@@ -207,13 +210,13 @@ calcul_multiple
     
     : calcul_multiple tPLUS  calcul_multiple
     {
-        printf("--------------------ADDITION---------------\n"); //test correct
-        printf("%d ++++++ %d\n", Value($1),Value($3));
+      //  printf("--------------------ADDITION---------------\n"); //test correct
+       // printf("%d ++++++ %d\n", Value($1),Value($3));
         //add = insertNode($1,type,$1+$3,depth);
 
         temp = (temp+1)%20;
         valueInt= Value($1)+Value($3);
-        printf("======= %d\n",valueInt);
+      //  printf("======= %d\n",valueInt);
         changeValuebyadd(temp,"int",valueInt);
         fprintf(fp,"ADD %d %d %d\n", temp, $1, $3); // Add des deux var // renvoyer l'adresse add en $
         $$=temp;
@@ -234,13 +237,13 @@ calcul_multiple
     }
     | calcul_multiple tMOINS  calcul_multiple
     {
-       printf("--------------------SOUSTRACTION---------------\n"); //test correct 
-        printf("    %d - %d\n", Value($1),Value($3)); 
+      // printf("--------------------SOUSTRACTION---------------\n"); //test correct 
+       // printf("    %d - %d\n", Value($1),Value($3)); 
         //add = insertNode($1,type,$1+$3,depth);        
 
         temp = (temp+1)%20;
         valueInt= Value($1)-Value($3);
-        printf("======= %d\n",valueInt);
+     //   printf("======= %d\n",valueInt);
         changeValuebyadd(temp,"int",valueInt);
         fprintf(fp,"SOU %d %d %d\n", temp, $1, $3); // Add des deux var // renvoyer l'adresse add en $
         $$=temp;
@@ -258,15 +261,15 @@ calcul_multiple
     }
     | calcul_multiple tMULT  calcul_multiple 
     {
-       printf("--------------------Multiplication---------------\n"); 
-        printf("    %d * %d\n", Value($1),Value($3)); 
+     //  printf("--------------------Multiplication---------------\n"); 
+       // printf("    %d * %d\n", Value($1),Value($3)); 
         //add = insertNode($1,type,$1+$3,depth);        
 
         temp = (temp+1)%20;
         valueInt= Value($1)*Value($3);
-        printf("======= %d\n",valueInt);
+      //  printf("======= %d\n",valueInt);
         changeValuebyadd(temp,"int",valueInt);
-        fprintf(fp,"MUL %d %d %d\n", temp, $1, $3); // Add des deux var // renvoyer l'adresse add en $
+        //fprintf(fp,"MUL %d %d %d\n", temp, $1, $3); // Add des deux var // renvoyer l'adresse add en $
         $$=temp;
         instructions[compteurinstructions][0]="MUL";
         snprintf( si, 39, "%d", temp);
@@ -282,14 +285,14 @@ calcul_multiple
     }
     | calcul_multiple tDIV  calcul_multiple 
     {
-       printf("--------------------Division---------------\n");  
-        printf("    %d / %d\n", Value($1),Value($3)); 
+      // printf("--------------------Division---------------\n");  
+       // printf("    %d / %d\n", Value($1),Value($3)); 
         //add = insertNode($1,type,$1+$3,depth);        
 
         temp = (temp+1)%20;
         
         valueInt= Value($1)/Value($3);
-        printf("======= %d\n",valueInt);
+    //    printf("======= %d\n",valueInt);
         changeValuebyadd(temp,"int",valueInt);
         fprintf(fp,"DIV %d %d %d\n", temp, $1, $3); // Add des deux var // renvoyer l'adresse add en $
         $$=temp;
@@ -310,15 +313,15 @@ calcul_multiple
     | tINTEGER 
     { 
         
-        printf("%d\n", yylval.int_val);
-        printf("value integer %d\n", $1);
+     //   printf("%d\n", yylval.int_val);
+       // printf("value integer %d\n", $1);
         //sprintf(value,"%d",$1);
         temp = (temp +1)%20;
         changeValuebyadd(temp,"int",$1);
         
         //printList();
         fprintf(fp,"AFC %d %d\n", temp, $1); // affecter à une valeur temporaire, trouver un moyen d'avoir une adresse différente en adresse temporaire
-        printf("temp val integer %d\n",temp);
+       // printf("temp val integer %d\n",temp);
         $$ = temp;
         
         instructions[compteurinstructions][0]="AFC";
@@ -333,16 +336,17 @@ calcul_multiple
     }
     | tVARNAME 
     {
-        printf("tVARNAME %s\n", $1);
-        printf("value integer %d\n", findByID($1));   
+     //   printf("tVARNAME %s\n", $1);
+       // printf("value integer %d\n", findByID($1));   
         $$ =findByID($1);
-        printf("Le varName :%d",$1);
+        //printf("Le varName :%d",$1);
     }
     | tDEC {printf("%.2f\n", yylval.double_val);}
     ;
 /* free tous les depth */
 iteration_statement
     : tWHILE  conditioner {boolean=$2;
+        d++;
         compteurdeif[d]=compteurinstructions; 
         instructions[compteurinstructions][0]="JMF";
         snprintf( si, 39, "%d", boolean);
@@ -386,7 +390,8 @@ BlocIf
     strcpy(instructions[compteurdeif[d]][2],si); 
     d--; 
     deletebyDepth(depth);
-    printf("Je supprime %d\n",depth--);} // free depth
+    // printf("Je supprime %d\n",depth); 
+     depth--;} // free depth
     |statement{instructions[compteurinstructions][0]="JMP";
         snprintf( si, 39, "%d", compteurinstructions);
         instructions[compteurinstructions][1]=malloc(1);
@@ -471,6 +476,38 @@ condition
         instructions[compteurinstructions][3]=malloc(1);
         strcpy(instructions[compteurinstructions][3],si);
         compteurinstructions++;}
+    |calcul_multiple tGEQ calcul_multiple {//fprintf(fp,"SUP %d %d %d\n", temp, $1, $3);
+        instructions[compteurinstructions][0]="SUPE";
+        temp = (temp+1)%20;
+        $$=temp;
+        snprintf( si, 39, "%d", temp);
+        instructions[compteurinstructions][1]=malloc(1);
+        strcpy(instructions[compteurinstructions][1],si);
+        snprintf( si, 39, "%d", $1);
+        instructions[compteurinstructions][2]=malloc(1);
+        strcpy(instructions[compteurinstructions][2],si);
+        snprintf( si, 39, "%d", $3);
+        instructions[compteurinstructions][3]=malloc(1);
+        strcpy(instructions[compteurinstructions][3],si);
+        compteurinstructions++;
+
+        }
+    |calcul_multiple tLEQ calcul_multiple {//fprintf(fp,"SUP %d %d %d\n", temp, $1, $3);
+        instructions[compteurinstructions][0]="INFE";
+        temp = (temp+1)%20;
+        $$=temp;
+        snprintf( si, 39, "%d", temp);
+        instructions[compteurinstructions][1]=malloc(1);
+        strcpy(instructions[compteurinstructions][1],si);
+        snprintf( si, 39, "%d", $1);
+        instructions[compteurinstructions][2]=malloc(1);
+        strcpy(instructions[compteurinstructions][2],si);
+        snprintf( si, 39, "%d", $3);
+        instructions[compteurinstructions][3]=malloc(1);
+        strcpy(instructions[compteurinstructions][3],si);
+        compteurinstructions++;
+
+    }
     | calcul_multiple
    // | calcul_multiple 
     ;
@@ -508,7 +545,7 @@ yywrap()
 
 int main(){
   insertTemp();
-  printList();
+  //printList();
   fp = fopen("./output/file.txt","w");
   printf("Start analysis \n");
   yyparse();
