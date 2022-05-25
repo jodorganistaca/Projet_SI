@@ -1,9 +1,15 @@
 int main(){
+    int a;
     if(5==5){
-        int a=2;
+
+
+        a=5;
         int i =0;
-        while(i<4){
+        while(i<a){
             i=i+1;
+            if (a<4){
+                a=a+1;
+            }
             printf(i);
             if(i==3){
                 a = 2;

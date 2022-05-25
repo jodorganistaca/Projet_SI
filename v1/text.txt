@@ -124,3 +124,7 @@ Il vaut mieux utiliser une fonciton de hashage qu'une string compare
         instructions[compteurinstructions][2]=malloc(1);
          strcpy(instructions[compteurinstructions][2],si);
         compteurinstructions++;}
+tPointer
+        [*][A-Za-z][A-Za-z_0-9]* {printf("tPOINTER"); 
+    yylval.str_val = malloc(yyleng * sizeof(char)); 
+     strcpy(yylval.str_val, yytext); return tPOINTER;}

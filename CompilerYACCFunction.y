@@ -38,7 +38,7 @@ FILE *fp;
 %token <int_val> tVOID tPLUS tMOINS tMULT tDIV tPOW tEQUAL tAND tOR tPOPEN tPCLOSE tAOPEN tACLOSE tCOPEN tCCLOSE tERROR tTRUE tFALSE
 %token <double_val> tDEC tAPOS 
 %token  <char_val> tCHARACTER
-%token <str_val> tVARNAME tPOINTER tFLOAT tINT 
+%token <str_val> tVARNAME tFLOAT tINT 
 %type <str_val> type 
 %type <int_val> calcul_multiple
 %type <int_val> conditional_expression
@@ -47,6 +47,7 @@ FILE *fp;
 %type <int_val> main
 %type <int_val> statement
 %type <int_val> expression
+%type <int_val> declaration_pointeur 
 %type <str_val> variable_multiple
 %type <str_val> expression_arithmetic
 %right tEQUAL
@@ -108,10 +109,49 @@ parameters
 
     // : type tVARNAME tEQUAL tAPOS tVARNAME tAPOS tSEMICOLON // string dans file, on peut transformer en ascii sur un registre et le traduire lorsqu'appelé
 // ok ?
+// peut être rentré dans variable multiple 
+declaration_pointeur 
+    : tINT tMULT tVARNAME {
+
+        add = insertNode($3,"Pointer",1,depth); //sans adresse
+    }
+    | tINT tMULT tVARNAME tEQUAL calcul_multiple{
+    printf("Cas de pointeur %d \n",$5);
+    temp=temp+1%20;
+    add = insertNode($3,"Pointer",$5,depth);
+    
+    instructions[compteurinstructions][0]="AFC";
+    snprintf( si, 39, "%d", add);
+    instructions[compteurinstructions][1]=malloc(1);
+    strcpy(instructions[compteurinstructions][1],si);
+    snprintf( si, 39, "%d", $5);
+    instructions[compteurinstructions][2]=malloc(1);
+    strcpy(instructions[compteurinstructions][2],si);
+    compteurinstructions++;
+    $$=0;
+    }
+    |tMULT tVARNAME   tEQUAL calcul_multiple {
+        printf("TEST %d %s",$4,$2);
+        add = Value(findByID($2));
+        changeValuebyadd(add,type,Value($4));
+        instructions[compteurinstructions][0]="COP";
+        snprintf( si, 39, "%d", add);
+        instructions[compteurinstructions][1]=malloc(1);
+        strcpy(instructions[compteurinstructions][1],si);
+        snprintf( si, 39, "%d", $4);
+        instructions[compteurinstructions][2]=malloc(1);
+        strcpy(instructions[compteurinstructions][2],si);
+        compteurinstructions++;
+        $$=0;
+
+    }
+    ;
+
 expression_arithmetic 
-    :type variable_multiple tSEMICOLON //prendre en compte le cas int a=2, b=4 , c=5;
+    :type variable_multiple tSEMICOLON {$$=0;} //prendre en compte le cas int a=2, b=4 , c=5;
    //{type=$1;}
     //VARNAME DONNE 
+   
     | tVARNAME tEQUAL calcul_multiple tSEMICOLON  /* cas où l'on change la value d'une variable existante  a = 1+7+a-b*/
     {
        add= findByID($1);
@@ -121,14 +161,14 @@ expression_arithmetic
            error = 1;
            break;
        }
-       if (TypeByID($1)=="CONST"){
+       char t[20] = "const";
+       if (strcmp(t,TypeByID($1))==0){
            yyerror("Constante inmodifiable\n");
            error = 1;
            break;
        }
        changeValuebyadd(add,type,Value($3));
        
-       fprintf(fp,"COP %d %d\n", add, $3);
     
         instructions[compteurinstructions][0]="COP";
         snprintf( si, 39, "%d", add);
@@ -138,15 +178,13 @@ expression_arithmetic
         instructions[compteurinstructions][2]=malloc(1);
         strcpy(instructions[compteurinstructions][2],si);
         compteurinstructions++;
+        $$=0;
      //   compteurinstructions++;
     }
-    // | declaration_pointeur tSEMICOLON;
+    | declaration_pointeur tSEMICOLON;
     ;
-/*declaration_pointeur // peut être rentré dans variable multiple 
-    : tINT tPOINTER
-    | tINT tPOINTER tEQUAL tINTEGER
-    ;
-*/  
+
+
 expression_print
     : tPRINTF tPOPEN  tVARNAME tPCLOSE tSEMICOLON {
        // printf("AAAAAAAAAAA");
@@ -170,15 +208,23 @@ expression_print
 type
     : tINT 
     {
-        $$ = $1;
         // printf("%s\n", $1);
         strcpy(type, "int");
+        $$ = type;
     }
+    
     | tCONST 
     {
-        $$ = $1;
-        //strcpy(type, $1);
+        
+        strcpy(type, "const");
+        $$ = type;
     }
+   /* | tINT tMULT tVARNAME
+    {
+        $$ = $2;
+
+    }
+    */
     /*| tFLOAT 
     {
         //strcpy(type, $1);
@@ -361,6 +407,9 @@ calcul_multiple
         //printf("Le varName :%d",$1);
     }
     | tDEC {printf("%.2f\n", yylval.double_val);}
+    | tMULT tVARNAME {
+        $$ = Value(findByID($2));
+    }
     ;
 
 iteration_statement

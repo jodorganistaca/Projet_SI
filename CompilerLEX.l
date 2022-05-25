@@ -246,9 +246,7 @@ char* str_val;
     #endif
     return tERROR;}
 
-[*][A-Za-z][A-Za-z_0-9]* {printf("tPOINTER"); 
-    yylval.str_val = malloc(yyleng * sizeof(char)); 
-     strcpy(yylval.str_val, yytext); return tPOINTER;}
+
 %%
 /*
 int main(){
