@@ -63,6 +63,10 @@ end component;
 --end component;
 --- Proccessor
 signal Processor_CLK_Test : STD_LOGIC := '1';
+signal A_Test : STD_LOGIC_VECTOR (7 downto 0);
+signal OP_Test : STD_LOGIC_VECTOR (7 downto 0);
+signal B_Test : STD_LOGIC_VECTOR (7 downto 0);
+signal C_Test : STD_LOGIC_VECTOR (7 downto 0);
 --- Memory instructions
 --inputs
 signal Instructions_Memory_add_test : STD_LOGIC_VECTOR (31 downto 0):= ( others => '0');-- instancier à 0
@@ -93,7 +97,7 @@ end process;
  --IP   32 bits XX XX XX XX
  --Out 4*8 bits A  OP  B  C    
  --Stimulus process  <= X"00051544" after 0 ns, x"00052244" after 100 ns, x"00052444" after 300 ns;
- Instructions_Memory_add_test <= X"00051544" after 0 ns, x"24050144" after 100 ns, x"00042444" after 300 ns;
+ Instructions_Memory_add_test <= X"00050800" after 0 ns, x"00050144" after 100 ns, x"00050400" after 300 ns, x"01050400" after 300 ns;
  -- FINIR LA CREATION DU STEST AFC 
  
 
