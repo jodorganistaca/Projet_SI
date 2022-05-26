@@ -16,7 +16,7 @@ int compteurfonction[20];
 
 int compteurELSIF[20];
 int error = 0;
- 
+int x=0;
 int boolean;
 char* instructions[256][4];
 int compteurinstructions=0;
@@ -48,6 +48,7 @@ FILE *fp;
 %type <int_val> main
 %type <int_val> statement
 %type <int_val> expression
+%type <int_val> elsif
 %type <int_val> declaration_pointeur 
 %type <str_val> variable_multiple
 %type <str_val> expression_arithmetic
@@ -479,7 +480,8 @@ iteration_statement
         compteurinstructions++;
         snprintf( si, 39, "%d", compteurinstructions+1);
         strcpy(instructions[compteurdeif[d]][2],si);deletebyDepth(depth); d=d-2; depth--;} //rajouter JMP au debut du while avec test condition à chaque fin de while 
-    | tIF conditioner {boolean=$2;
+    | tIF conditioner {
+        boolean=$2;
         instructions[compteurinstructions][0]="JMF";
         snprintf( si, 39, "%d", boolean);
         instructions[compteurinstructions][1]=malloc(1);
@@ -491,22 +493,51 @@ iteration_statement
         compteurdeif[d]=compteurinstructions; 
        // printf("LE COMPTEUR AFFICHE %d \n",compteurdeif[d]);
         compteurinstructions++;
-        depth++;} statement BlocIf 
+        depth++;} statement elsif {
+        depth--;}
     //| tIF conditioner {printf("t3\n");depth++;} statement  elsif {deletebyDepth(depth); depth--;}
         // je retiens d pour jump au prochain elsif j'efface ce d et le réutilise pour le prochain jump elsif ? 
         // on peut utiliser un tableau qui retient une vingtaine de d pour les elsif imbriqués
         // en même temps je créé un d+1 d+2 d+3 pour le jump vers fin du bloc if-elsif à la fin de chaque statement
     ;
-BlocIf
-    :
-        {snprintf( si, 39, "%d", compteurinstructions+1);
+
+
+   
+// + Null , + else ,  + elsif, +elsif +else
+
+elsif
+    :tELSIF { x=1;
+            o++;
+            debuto[depth]=o; 
+            instructions[compteurinstructions][0]="JMP"; 
+            instructions[compteurinstructions][1]=malloc(1); 
+            compteurELSIF[o]=compteurinstructions;
+            compteurinstructions++;
+            snprintf( si, 39, "%d", compteurinstructions+1);
+            strcpy(instructions[compteurdeif[d]][2],si);
+            d--; } conditioner {
+        
+            boolean = $1; instructions[compteurinstructions][0]="JMF";
+            snprintf( si, 39, "%d", boolean);
+            instructions[compteurinstructions][1]=malloc(1);
+            strcpy(instructions[compteurinstructions][1],si);
+            snprintf( si, 39, "%d", compteurinstructions);
+            instructions[compteurinstructions][2]=malloc(1);
+            d++;
+            compteurdeif[d]=compteurinstructions;
+            compteurinstructions++;
+        }   
+    statement 
+        {o++;instructions[compteurinstructions][0]="JMP"; // Faire un ELSIF
+       compteurELSIF[o]=compteurinstructions;
+        compteurinstructions++;
+        snprintf( si, 39, "%d", compteurinstructions+1);
+        strcpy(instructions[compteurdeif[d]][2],si);
+        d--; } 
+     elsif {snprintf( si, 39, "%d", compteurinstructions+1);
         strcpy(instructions[compteurdeif[d]][2],si); 
-        d--; 
-        deletebyDepth(depth);
-        // printf("Je supprime %d\n",depth); 
-        depth--;} // free depth
-    |
-        {instructions[compteurinstructions][0]="JMP";
+        d--; }
+    |tELSE {instructions[compteurinstructions][0]="JMP";
         snprintf( si, 39, "%d", compteurinstructions);
         instructions[compteurinstructions][1]=malloc(1);
         strcpy(instructions[compteurinstructions][1],si);
@@ -516,63 +547,30 @@ BlocIf
         compteurinstructions++;
         snprintf( si, 39, "%d", compteurinstructions+1);
         strcpy(instructions[compteurdeif[d-1]][2],si);
-        } 
-    tELSE statement 
+        }  statement 
         {
         snprintf( si, 39, "%d", compteurinstructions+1);strcpy(instructions[compteurdeif[d]][1],si); deletebyDepth(depth);d=d-2; depth--;
-        }
-    |
-
-    {
-        deletebyDepth(depth);depth--;o++;
-      debuto[depth]=o; 
-      instructions[compteurinstructions][0]="JMP"; 
-      instructions[compteurinstructions][1]=malloc(1); 
-       compteurELSIF[o]=compteurinstructions;
-        compteurinstructions++;
-        snprintf( si, 39, "%d", compteurinstructions+1);
-        strcpy(instructions[compteurdeif[d]][2],si);
-        d--; } 
-    elsif {depth--;} 
-        
-    ;
-
-   
-
-elsif
-    : tELSIF conditioner 
-        {
-        boolean = $2; instructions[compteurinstructions][0]="JMF";
-        snprintf( si, 39, "%d", boolean);
-        instructions[compteurinstructions][1]=malloc(1);
-        strcpy(instructions[compteurinstructions][1],si);
-        snprintf( si, 39, "%d", compteurinstructions);
-        instructions[compteurinstructions][2]=malloc(1);
-        d++;
-        compteurdeif[d]=compteurinstructions;
-        compteurinstructions++;}  
-    statement 
-        {o++;instructions[compteurinstructions][0]="JMP"; // Faire un ELSIF
-       compteurELSIF[o]=compteurinstructions;
-        compteurinstructions++;
-        snprintf( si, 39, "%d", compteurinstructions+1);
-        strcpy(instructions[compteurdeif[d]][2],si);
-        d--; } 
-    elsif
-    |tELSE statement finelsif 
+        } finelsif 
     | finelsif
     
     ;
 finelsif 
-    :   { for (o; o>debuto[depth]-1;o--){
+    :   { 
+        if (x=1){
+
+       
+            for (o; o>debuto[depth]-1;o--){
+                
+            //  printf("ça c'est o :%d et debuto depth %d\n",o,debuto[depth]);
+            // printf("cpt %d\n",compteurELSIF[o]);
+                instructions[compteurELSIF[o]][1]=malloc(1);
+                snprintf( si, 39, "%d", compteurinstructions+1);
+                strcpy(instructions[compteurELSIF[o]][1],si);
             
-          //  printf("ça c'est o :%d et debuto depth %d\n",o,debuto[depth]);
-           // printf("cpt %d\n",compteurELSIF[o]);
-            instructions[compteurELSIF[o]][1]=malloc(1);
-            snprintf( si, 39, "%d", compteurinstructions+1);
-            strcpy(instructions[compteurELSIF[o]][1],si);
-         }
+            }
+            x=0;
         }
+     }
     ;
     //non opti avec JMP en trop
     // tELSIF conditioner statement
@@ -750,6 +748,7 @@ int main(){
   finstructions=fopen("./output/assembleur.asm","w");
  // printf("COMPTEUR DINSTRUCTIONS %d \n",compteurinstructions);
  // Rajouter Si Error alors on le lit pas le for 
+  
     if (error == 0)  {
         for (int i =0; i<compteurinstructions;i++){
             for(int j=0; j<4;j++){
@@ -762,7 +761,7 @@ int main(){
                 
             }
             fprintf(finstructions,"\n");
-        }   
+        }
     }
 
     fclose(finstructions);

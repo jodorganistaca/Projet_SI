@@ -4,7 +4,7 @@ lines = file1.readlines()
 Data_Memory={}
 #While not end of line
 i = 0
-print(len(lines))
+#print(len(lines))
 while (i<len(lines)) :
     
     arr = lines[i].split(" ")

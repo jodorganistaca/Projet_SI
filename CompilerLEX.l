@@ -79,6 +79,11 @@ char* str_val;
             printf("tPLUS "); 
         #endif    
         return tPLUS;}
+"&"    {
+        #ifdef DEBUG 
+            printf("tET "); 
+        #endif    
+        return tET;}
 "&&"    {
         #ifdef DEBUG 
             printf("tAND "); 

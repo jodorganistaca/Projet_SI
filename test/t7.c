@@ -1,7 +1,8 @@
 int main()
 {  
     int * a = 5;
-    int b=2;
-    b = *a;
-    *a=4;
+    int b=5;
+    const c=5;
+    c=4;
+
 }
