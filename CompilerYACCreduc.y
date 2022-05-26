@@ -26,7 +26,7 @@ int valueInt;
 char si[38]=""; // Taille d'un integer
 FILE *finstructions;
 FILE *fp;
-// FUNCTION 
+// FUNCTION + Problème de reduction 2 JUMP inutile et afc de valeur jump de fin
 %}
 %union
 {

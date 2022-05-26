@@ -53,7 +53,7 @@ begin
 -- B : 15 down to 8 addA
 -- C : 7 down to 0 addB
 --DataI <= (others =>((31 downto 24) => X"AF"));
-DataI <= (x"00052244", x"01058899",x"66738499", others => x"00000000");
+--DataI <= (x"00050144", x"01058899",x"66738499", others => x"00000000");
 process --(addA,addB,DATA,RST,W)
 begin
 -- HORLOGE A METTRE

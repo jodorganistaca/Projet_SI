@@ -66,7 +66,7 @@ begin
 -- HORLOGE A METTRE
     wait until CLK'Event and CLK='1';
     
-    if(RST/='0') then 
+    if(RST='1') then 
         if(W='1') then 
           --  if (addW = addA or addW = addB) then ValueA<=DATA; --Lecture en même temps que registre => Lecture donne DATA
            -- else
@@ -77,8 +77,6 @@ begin
            --- BankRegisters(to_integer(unsigned(addA)))<= DATA;
            -- BankRegisters(to_integer(unsigned(addB)))<= DATA;
            -- Value <= DATA;
-         
-         
         end if;
     else --RST à 0
         for i in 0 to 15 loop

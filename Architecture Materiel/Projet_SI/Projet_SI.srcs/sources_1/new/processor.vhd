@@ -88,6 +88,18 @@ component RISC_SI
            OUTPUT : out STD_LOGIC_VECTOR (7 downto 0));
 end component;
 
+component Buffer_Pipeline is
+    Port ( A : in STD_LOGIC_VECTOR (7 downto 0);
+         OP : in STD_LOGIC_VECTOR (7 downto 0);
+         B : in STD_LOGIC_VECTOR (7 downto 0);
+         C : in STD_LOGIC_VECTOR (7 downto 0);
+         CLK : in STD_LOGIC;
+         A_Out : out STD_LOGIC_VECTOR (7 downto 0);
+         OP_Out : out STD_LOGIC_VECTOR (7 downto 0);
+         B_Out : out STD_LOGIC_VECTOR (7 downto 0);
+         C_Out : out STD_LOGIC_VECTOR (7 downto 0));
+end component;
+
 --- Memory instructions
 --inputs
 signal Instructions_Memory_add : STD_LOGIC_VECTOR (7 downto 0):= ( others => '0');-- instancier à 0
@@ -133,10 +145,32 @@ signal RISC_SI_OUTPUT : STD_LOGIC_VECTOR (7 downto 0):= ( others => '0');
 --clk      
 -- Si 100 MHz
 constant Clock_period : time := 10 ns;
-signal A: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
-signal OP: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
-signal B: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
-signal C: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
+--Buffer Pipelines
+signal A: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0'); -- A : 31 downto 24
+signal OP: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0'); -- Op : 23 down to 16
+signal B: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0'); -- B : 15 down to 8 addA
+signal C: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0'); -- C : 7 down to 0 addB
+
+signal LI_DI_A: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
+signal LI_DI_OP: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
+signal LI_DI_B: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
+signal LI_DI_C: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
+
+signal DI_EX_A: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
+signal DI_EX_OP: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
+signal DI_EX_B: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
+signal DI_EX_C: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
+
+signal EX_MEM_A: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
+signal EX_MEM_OP: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
+signal EX_MEM_B: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
+signal EX_MEM_C: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
+
+signal MEM_RE_A: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
+signal MEM_RE_OP: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
+signal MEM_RE_B: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
+signal MEM_RE_C: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
+
 
 begin
 
@@ -144,6 +178,18 @@ Instructions_Memory_Port_Map:Instructions_Memory  PORT MAP (
     add => Instructions_Memory_add,
     CLK => CLK, 
     OUTPUT => Instructions_Memory_Output
+);
+
+LI_DI : Buffer_Pipeline PORT MAP (
+    A => A,
+    OP => OP,
+    B => B,
+    C => C,
+    CLK => CLK,
+    A_Out => LI_DI_A,
+    OP_Out => LI_DI_OP,
+    B_Out => LI_DI_B,
+    C_Out => LI_DI_C
 );
 
 Registers_Port_Map: Registers  PORT MAP (
@@ -158,6 +204,18 @@ Registers_Port_Map: Registers  PORT MAP (
     QB => Registers_QB
 );
 
+DI_EX : Buffer_Pipeline PORT MAP (
+    A => LI_DI_A,
+    OP => LI_DI_OP,
+    B => LI_DI_B,
+    C => LI_DI_C,
+    CLK => CLK,
+    A_Out => DI_EX_A,
+    OP_Out => DI_EX_OP,
+    B_Out => DI_EX_B,
+    C_Out => DI_EX_C
+);
+
 ALU_Port_Map: ALU  PORT MAP (
     A => ALU_A,
     B => ALU_A,
@@ -169,6 +227,18 @@ ALU_Port_Map: ALU  PORT MAP (
     C => ALU_C
 );
 
+EX_MEM : Buffer_Pipeline PORT MAP (
+    A => DI_EX_A,
+    OP => DI_EX_OP,
+    B => DI_EX_B,
+    C => DI_EX_C,
+    CLK => CLK,
+    A_Out => EX_MEM_A,
+    OP_Out => EX_MEM_OP,
+    B_Out => EX_MEM_B,
+    C_Out => EX_MEM_C
+);
+
 Data_Memory_Port_Map: RISC_SI  PORT MAP (
     add => RISC_SI_add,
     INPUT => RISC_SI_INPUT, --(7 downto 0);
@@ -178,50 +248,172 @@ Data_Memory_Port_Map: RISC_SI  PORT MAP (
     OUTPUT => RISC_SI_OUTPUT -- (7 downto 0));
 );
 
--- A : 31 downto 24
--- Op : 23 down to 16
--- B : 15 down to 8 addA
--- C : 7 down to 0 addB
+MEM_RE : Buffer_Pipeline PORT MAP (
+    A => EX_MEM_A,
+    OP => EX_MEM_OP,
+    B => EX_MEM_B,
+    C => EX_MEM_C,
+    CLK => CLK,
+    A_Out => MEM_RE_A,
+    OP_Out => MEM_RE_OP,
+    B_Out => MEM_RE_B
+);
  
-process
+process(CLK)
 begin
     
-    A  <= Instructions_Memory_Output(31 downto 24);
-    OP  <= Instructions_Memory_Output(23 downto 16);
-    B  <= Instructions_Memory_Output(15 downto 8);
-    C  <= Instructions_Memory_Output(7 downto 0);
+    A  <= IP(31 downto 24); -- A : 31 downto 24
+    OP  <= IP(23 downto 16); -- Op : 23 down to 16
+    B  <= IP(15 downto 8); -- B : 15 down to 8 addA
+    C  <= IP(7 downto 0); -- C : 7 down to 0 addB
     
-    wait until CLK'Event and CLK='1';
-    
-    
-    --AFC
-    if OP=x"05" then         
-        Registers_addW <= A(3 downto 0);     
-        Registers_W <= '1'; --OP AFC so Write (1) / Read (0)  
-        Registers_DATA <= B;            
+    --wait until CLK'Event and CLK='1';
+        
+    --if OP=x"05" then         
+    --    Registers_addW <= A(3 downto 0);     
+    --    Registers_W <= '1'; --OP AFC so Write (1) / Read (0)  
+    --    Registers_DATA <= B;            
     --COP
-    elsif OP=x"04" then
-        Registers_addW <= A(3 downto 0);
-        Registers_W <= '1'; --OP COP so Write (1) / Read (0)  
-        RISC_SI_add <= B;
-        Registers_DATA <= RISC_SI_OUTPUT;
+    --elsif OP=x"04" then
+    --    Registers_addW <= A(3 downto 0);
+    --    Registers_W <= '1'; --OP COP so Write (1) / Read (0)  
+    --    RISC_SI_add <= B;
+    --    Registers_DATA <= RISC_SI_OUTPUT;
     --DIV
     --elsif OP=x"03" then
     --    Registers_addW <= A(3 downto 0);
     --    Registers_W <= '1'; --OP COP so Write (1) / Read (0)  
     --    ALU_A <= Registers_QA;
-    --    ALU_B <= Registers_addB; 
-    --    ALU_Ctrl_Alu <= OP;
+    --    ALU_B <= Registers_QB; 
+    --    ALU_Ctrl_Alu <= OP(2 downto 0);
     --    Registers_DATA <= ALU_S;
     --SOU
-    elsif OP=x"02" then
+    --elsif OP=x"02" then
+        
     --MUL
-    elsif OP=x"01" then
+    --elsif OP=x"01" then
+        
     --ADD
-    elsif OP=x"00" then
-    end if;
+    --elsif OP=x"00" then
+        --LI/DI
+        --Registers_addA <= B(3 downto 0);
+        --Registers_addB <= C(3 downto 0);
+        --DI/EX
+        --ALU_A <= Registers_QA;
+        --ALU_B <= Registers_QB; 
+        --ALU_Ctrl_Alu <= OP(2 downto 0);
+        --Mem/Re
+        --Registers_DATA <= ALU_S;
+        --Registers_addW <= A(3 downto 0);
+        --Registers_W <= '1'; --OP ADD so Write (1) / Read (0)  
+    --end if;
 end process;
 
+--LI_DI_B <= Registers_QA when LI_DI_OP=x"04";
+
+Registers_addA <= 
+    LI_DI_B(3 downto 0) when OP=x"00" else --ADD
+    LI_DI_B(3 downto 0) when OP=x"01" else --MUL
+    LI_DI_B(3 downto 0) when OP=x"02" else --SOU
+    LI_DI_B(3 downto 0) when OP=x"03" else --DIV
+    LI_DI_B(3 downto 0) when OP=x"04" else --COP
+    --A(3 downto 0) when OP=x"05" else --AFC
+    --A(3 downto 0) when OP=x"06" else --LOAD
+    --A(3 downto 0) when OP=x"07" else --STORE
+    MEM_RE_A(3 downto 0);
+
+Registers_addB <= 
+    --A(3 downto 0) when OP=x"00" else --ADD
+    --A(3 downto 0) when OP=x"01" else --MUL
+    --A(3 downto 0) when OP=x"02" else --SOU
+    --A(3 downto 0) when OP=x"03" else --DIV
+    --A(3 downto 0) when OP=x"04" else --COP
+    --A(3 downto 0) when OP=x"05" else --AFC
+    --A(3 downto 0) when OP=x"06" else --LOAD
+    --A(3 downto 0) when OP=x"07" else --STORE
+    LI_DI_C(3 downto 0) when OP=x"00" else --ADD
+    LI_DI_C(3 downto 0) when OP=x"01" else --MUL
+    LI_DI_C(3 downto 0) when OP=x"02" else --SOU
+    LI_DI_C(3 downto 0) when OP=x"03" else --DIV
+    --LI_DI_C(3 downto 0) when OP=x"04" else --COP
+    X"0";
+    
+Registers_addW <= MEM_RE_A(3 downto 0);
+    --A(3 downto 0) when OP=x"00" else --ADD
+    --A(3 downto 0) when OP=x"01" else --MUL
+    --A(3 downto 0) when OP=x"02" else --SOU
+    --A(3 downto 0) when OP=x"03" else --DIV
+    --A(3 downto 0) when OP=x"04" else --COP
+    --A(3 downto 0) when OP=x"05" else --AFC
+    --A(3 downto 0) when OP=x"06" else --LOAD
+    --A(3 downto 0) when OP=x"07" else --STORE
+    --X"0";
+    
+Registers_W <= 
+    '1' when MEM_RE_OP=x"00" else --ADD
+    '1' when MEM_RE_OP=x"01" else --MUL
+    '1' when MEM_RE_OP=x"02" else --SOU
+    '1' when MEM_RE_OP=x"03" else --DIV
+    '1' when MEM_RE_OP=x"04" else --COP
+    '1' when MEM_RE_OP=x"05" else --AFC
+    '0' when MEM_RE_OP=x"06" else --LOAD
+    '0' when MEM_RE_OP=x"07" else --STORE
+    '0';
+        
+Registers_DATA <= 
+    ALU_S when DI_EX_OP=x"00" else --ADD
+    ALU_S when DI_EX_OP=x"01" else --MUL
+    ALU_S when DI_EX_OP=x"02" else --SOU
+    ALU_S when DI_EX_OP=x"03" else --DIV
+    MEM_RE_B;
+    --ALU_S when OP=x"00" else --ADD
+    --ALU_S when OP=x"01" else --MUL
+    --ALU_S when OP=x"02" else --SOU
+    --ALU_S when OP=x"03" else --DIV
+    --ALU_S when OP=x"04" else --COP
+    --B when OP=x"05" else --AFC
+    --ALU_S when OP=x"06" else --LOAD
+    --ALU_S when OP=x"07" else --STORE
+    --X"00";
+    
+ALU_Ctrl_Alu <= 
+    DI_EX_OP(2 downto 0) when DI_EX_OP=x"00" else --ADD
+    DI_EX_OP(2 downto 0) when DI_EX_OP=x"01" else --MUL
+    DI_EX_OP(2 downto 0) when DI_EX_OP=x"02" else --SOU
+    DI_EX_OP(2 downto 0) when DI_EX_OP=x"03" else --DIV
+    --OP when OP=x"04" else --COP
+    --OP when OP=x"05" else --AFC
+    --OP when OP=x"06" else --LOAD
+    --OP when OP=x"07" else --STORE
+    "000";
+    
+ALU_A <= 
+    Registers_QA when DI_EX_OP=x"00" else --ADD
+    Registers_QA when DI_EX_OP=x"01" else --MUL
+    Registers_QA when DI_EX_OP=x"02" else --SOU
+    Registers_QA when DI_EX_OP=x"03" else --DIV
+    --Registers_QA when OP=x"04" else --COP
+    ----Registers_QA when OP=x"05" else --AFC
+    --Registers_QA when OP=x"06" else --LOAD
+    --Registers_QA when OP=x"07" else --STORE
+    X"00";
+    
+ALU_B <= 
+    Registers_QB when DI_EX_OP=x"00" else --ADD
+    Registers_QB when DI_EX_OP=x"01" else --MUL
+    Registers_QB when DI_EX_OP=x"02" else --SOU
+    Registers_QB when DI_EX_OP=x"03" else --DIV
+    --Registers_QB when OP=x"04" else --COP
+    --Registers_QB when OP=x"05" else --AFC
+    --Registers_QB when OP=x"06" else --LOAD
+    --Registers_QB when OP=x"07" else --STORE
+    X"00";
+
+
+
+--MEM_RE_B <= Alu_S when DI_EX_OP=x"00" or DI_EX_OP=x"01" or DI_EX_OP=x"02" or DI_EX_OP=x"03" else MEM_RE_B;
+
+ 
 A_Test <= A;
 OP_Test <= OP;
 B_Test <= B;
