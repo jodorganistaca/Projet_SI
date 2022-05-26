@@ -82,7 +82,11 @@ constant Clock_period : time := 10 ns;
 begin
 processor_portmap: Processor PORT MAP (
     IP => Instructions_Memory_add_test,
-    CLK => Processor_CLK_Test
+    CLK => Processor_CLK_Test,
+    A_Test => A_Test,
+    OP_Test => OP_Test,
+    B_Test => B_Test,
+    C_Test => C_Test
 );
 
 
@@ -97,7 +101,12 @@ end process;
  --IP   32 bits XX XX XX XX
  --Out 4*8 bits A  OP  B  C    
  --Stimulus process  <= X"00051544" after 0 ns, x"00052244" after 100 ns, x"00052444" after 300 ns;
- Instructions_Memory_add_test <= X"00050800" after 0 ns, x"00050144" after 100 ns, x"00050400" after 300 ns, x"01050400" after 300 ns;
+                                -- COP 01 08           -- COP 02 02               --ADD 00 01 02 
+ Instructions_Memory_add_test <= X"01050800" after 0 ns, x"02050200" after 100 ns, x"00000102" after 200 ns;
+ --A_Test <= X"00" after 0 ns, X"00" after 100 ns, X"01" after 200 ns, X"02" after 300 ns, X"01" after 400 ns;
+ --OP_Test <= X"05" after 0 ns, X"05" after 100 ns, X"05" after 200 ns, X"05" after 300 ns, X"04" after 400 ns;
+ --B_Test <= X"01" after 0 ns, X"02" after 100 ns, X"02" after 200 ns, X"00" after 300 ns, X"02" after 400 ns;
+ --C_Test <= X"00" after 0 ns, X"AA" after 100 ns, X"A0" after 200 ns, X"01" after 300 ns, X"03" after 400 ns;
  -- FINIR LA CREATION DU STEST AFC 
  
 
