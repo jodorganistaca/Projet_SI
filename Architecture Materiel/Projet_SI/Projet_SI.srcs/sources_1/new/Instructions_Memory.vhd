@@ -45,15 +45,26 @@ architecture Behavioral of Instructions_Memory is
 
 signal addI : STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
 type dataInstructArray is array (0 to 255) of std_logic_vector(31 downto 0); --VERIFIER LA TAILLE DE DATAINSTRUCT
-signal DataI : dataInstructArray := (others=> ( others => '0'));
-
+signal DataI : dataInstructArray :=  
+    (0=> x"01060200", -- AFC 01 02
+     1=> x"02060400", -- AFC 02 04
+     2=> x"03060600", -- AFC 03 06
+     3=> x"04050100", -- COP 04 01
+     4=> x"05050200", -- COP 05 02
+     5=> x"06050300", -- COP 06 03
+     6=> x"07050100", -- COP 07 01
+     7=> x"08010102", -- ADD 08 01 02
+     8=> x"09020102", -- MUL 09 01 02
+     9=> x"10030201", -- SOU 10 02 01
+    10=> x"11040301", -- DIV 11 03 01
+     others => x"00000000");
 begin
 -- A : 31 downto 24
 -- Op : 23 down to 16
 -- B : 15 down to 8 addA
 -- C : 7 down to 0 addB
 --DataI <= (others =>((31 downto 24) => X"AF"));
---DataI <= (x"00050144", x"01058899",x"66738499", others => x"00000000");
+--
 process --(addA,addB,DATA,RST,W)
 begin
 -- HORLOGE A METTRE

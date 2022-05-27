@@ -62,7 +62,8 @@ begin
     b_new <= resize(unsigned(B), 16);
      -- S=0 => Z=1
     -- A+B Addition => S  prendre en compte les carry (C=1) si on a  S> 2^8 => Overflow (O=1)
-    if (Ctrl_Alu=X"0") then 
+    --ADD
+    if (Ctrl_Alu=X"01") then 
         -- (A||B > 4 &  bit 1 A&B) bit 8  de A || B == 1 & bit 7 A&B = 1 OR bit 8 A & B = 1  => C =1
         
         -- A+B=0 => Z=1 
@@ -89,8 +90,8 @@ begin
        --report "The value of 'VALUE' is " & integer'image(to_integer(Value));
        -- end if;
        
-    
-    elsif  (Ctrl_Alu=X"02") then 
+    --SOU
+    elsif  (Ctrl_Alu=X"03") then 
         Value <= a_new - b_new;
         Value8 <=std_logic_vector(resize(Value,8));
         if (unsigned(b_new)>unsigned(a_new)) then flagN<='1'; --report "The value of 'VALUE' is " & integer'image(to_integer(Value)); 
@@ -106,7 +107,8 @@ begin
             flagZ<='0';
         end if;
     --Value<=std_logic_vector(to_signed(to_integer(signed(A) + signed(B)),16));
-    elsif  (Ctrl_Alu=X"01") then
+    --MUL
+    elsif  (Ctrl_Alu=X"02") then
          Value16<=std_logic_vector(to_signed(to_integer(unsigned(A) * unsigned(B)),16));
          Value8 <=std_logic_vector(resize(unsigned(Value16),8));
   --      Value <= a_new * b_new;
@@ -123,7 +125,7 @@ begin
           flagZ<='0';
       end if;
     --DIV    
-    elsif  (Ctrl_Alu=X"03") then 
+    elsif  (Ctrl_Alu=X"04") then 
      --   Value <= a_new / b_new;
       if (unsigned(B)=0) then flagO<='1'; 
          Value8<=std_logic_vector(to_signed(0,8));
@@ -142,6 +144,8 @@ begin
              flagZ<='0';
          end if;
         end if;
+    else
+        Value8 <= ( others => '0');
     end if;
     -- A-B soustractiosn S<0 => N=1 
     --Value8 <= std_logic_vector(to_signed(to_integer(signed(Value)),8)); 
