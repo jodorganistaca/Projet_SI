@@ -1,5 +1,5 @@
 file1 = open('../output/assembleur.asm', 'r')
-
+file2=open('../output/crossassembleur.txt', 'w')
 lines = file1.readlines()
 Data_Memory={}
 #While not end of line
@@ -9,12 +9,16 @@ while (i<len(lines)) :
     
     arr = lines[i].split(" ")
     aro = arr[0]
+    print(int("15",2))
    # print(arr)
     if (aro=="AFC"):
         Data_Memory[str(arr[1])]=int(arr[2])
+        file2.write(hex(int(arr[1]))+"05"+hex(int(arr[2],16))+"00\n") 
             
     elif(aro=="COP") :
         Data_Memory[str(arr[1])]=Data_Memory[str(arr[2])]
+        file2.write(str(arr[1])+"04"+str(arr[2])+"00\n")  
+    #    Data_Memory[str(arr[1])]=Data_Memory[str(arr[2])]
             
     elif(aro=="ADD") :
         Data_Memory[str(arr[1])]=int(Data_Memory[str(arr[2])])+int(Data_Memory[str(arr[3])])
@@ -44,7 +48,9 @@ while (i<len(lines)) :
                 break
             else :
                 Data_Memory[str(arr[1])]=int(int(Data_Memory[str(arr[2])])/int(Data_Memory[str(arr[3])]))
-            
+    elif(aro=="PRI"):
+            print(Data_Memory[str(arr[1])])    
+       
     elif(aro=="EQU"):
             Data_Memory[str(arr[1])] = (int(Data_Memory[str(arr[2])])==int(Data_Memory[str(arr[3])]))
             
@@ -55,18 +61,18 @@ while (i<len(lines)) :
             Data_Memory[str(arr[1])] = (int(Data_Memory[str(arr[2])])>int(Data_Memory[str(arr[3])]))
    
     elif(aro=="SUPE"):
-        Data_Memory[str(arr[1])] = (int(Data_Memory[str(arr[2])])>=int(Data_Memory[str(arr[3])]))
+        Data_Memory[str(arr[1])] = (int(Data_Memory[str(arr[2])])>=int(Data_Memory[str(arr[3])])) 
    
     elif(aro=="INFE"):
-            Data_Memory[str(arr[1])] = (int(Data_Memory[str(arr[2])])<=int(Data_Memory[str(arr[3])]))
-                            
-    elif(aro=="PRI"):
-            print(Data_Memory[str(arr[1])])
+        Data_Memory[str(arr[1])] = (int(Data_Memory[str(arr[2])])<=int(Data_Memory[str(arr[3])]))
+    i+=1                         
+    
             
-    i+=1
-    #print(Data_Memory)
+    
+    print(Data_Memory)
    
 
     
 
 file1.close()
+file2.close()
