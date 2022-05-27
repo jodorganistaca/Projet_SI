@@ -102,7 +102,14 @@ end process;
  --Out 4*8 bits A  OP  B  C    
  --Stimulus process  <= X"00051544" after 0 ns, x"00052244" after 100 ns, x"00052444" after 300 ns;
                                 -- COP 01 08           -- COP 02 02               --ADD 00 01 02 
- Instructions_Memory_add_test <= X"01050800" after 0 ns, x"02050200" after 100 ns, x"00000102" after 200 ns;
+ --Instructions_Memory_add_test <= X"01050800" after 5 ns, x"02050200" after 155 ns, x"00000102" after 215 ns;
+                              -- AFC 01 02           -- COP 02 01               --ADD 00 01 02 
+--Instructions_Memory_add_test <= X"01050200" after 5 ns, x"02040100" after 155 ns, x"00000102" after 215 ns;
+                              -- AFC 01 02           -- COP 02 01               --STORE 00 01 02 
+--Instructions_Memory_add_test <= X"01050200" after 5 ns, x"02040100" after 155 ns, x"05070102" after 215 ns;
+                              -- AFC 01 02           --STORE 00 01 02            --LOAD 00 01 02 
+Instructions_Memory_add_test <= X"01050200" after 5 ns, x"05070102" after 155 ns, x"00060102" after 215 ns;
+
  --A_Test <= X"00" after 0 ns, X"00" after 100 ns, X"01" after 200 ns, X"02" after 300 ns, X"01" after 400 ns;
  --OP_Test <= X"05" after 0 ns, X"05" after 100 ns, X"05" after 200 ns, X"05" after 300 ns, X"04" after 400 ns;
  --B_Test <= X"01" after 0 ns, X"02" after 100 ns, X"02" after 200 ns, X"00" after 300 ns, X"02" after 400 ns;

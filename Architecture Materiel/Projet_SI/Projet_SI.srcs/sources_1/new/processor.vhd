@@ -175,7 +175,7 @@ signal MEM_RE_C: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
 begin
 
 Instructions_Memory_Port_Map:Instructions_Memory  PORT MAP (
-    add => Instructions_Memory_add,
+    add => A,
     CLK => CLK, 
     OUTPUT => Instructions_Memory_Output
 );
@@ -267,87 +267,33 @@ begin
     B  <= IP(15 downto 8); -- B : 15 down to 8 addA
     C  <= IP(7 downto 0); -- C : 7 down to 0 addB
     
-    --wait until CLK'Event and CLK='1';
-        
-    --if OP=x"05" then         
-    --    Registers_addW <= A(3 downto 0);     
-    --    Registers_W <= '1'; --OP AFC so Write (1) / Read (0)  
-    --    Registers_DATA <= B;            
-    --COP
-    --elsif OP=x"04" then
-    --    Registers_addW <= A(3 downto 0);
-    --    Registers_W <= '1'; --OP COP so Write (1) / Read (0)  
-    --    RISC_SI_add <= B;
-    --    Registers_DATA <= RISC_SI_OUTPUT;
-    --DIV
-    --elsif OP=x"03" then
-    --    Registers_addW <= A(3 downto 0);
-    --    Registers_W <= '1'; --OP COP so Write (1) / Read (0)  
-    --    ALU_A <= Registers_QA;
-    --    ALU_B <= Registers_QB; 
-    --    ALU_Ctrl_Alu <= OP(2 downto 0);
-    --    Registers_DATA <= ALU_S;
-    --SOU
-    --elsif OP=x"02" then
-        
-    --MUL
-    --elsif OP=x"01" then
-        
-    --ADD
-    --elsif OP=x"00" then
-        --LI/DI
-        --Registers_addA <= B(3 downto 0);
-        --Registers_addB <= C(3 downto 0);
-        --DI/EX
-        --ALU_A <= Registers_QA;
-        --ALU_B <= Registers_QB; 
-        --ALU_Ctrl_Alu <= OP(2 downto 0);
-        --Mem/Re
-        --Registers_DATA <= ALU_S;
-        --Registers_addW <= A(3 downto 0);
-        --Registers_W <= '1'; --OP ADD so Write (1) / Read (0)  
-    --end if;
 end process;
 
---LI_DI_B <= Registers_QA when LI_DI_OP=x"04";
+--with LI_DI_OP select
+--    LI_DI_B <= Registers_QA when x"04",
+--    IP(15 downto 8) when others;
+    
+--LI_DI_B <= Registers_QA when OP=x"04";
+--B <= Registers_QA when LI_DI_OP=x"04";
+
 
 Registers_addA <= 
-    LI_DI_B(3 downto 0) when OP=x"00" else --ADD
-    LI_DI_B(3 downto 0) when OP=x"01" else --MUL
-    LI_DI_B(3 downto 0) when OP=x"02" else --SOU
-    LI_DI_B(3 downto 0) when OP=x"03" else --DIV
-    LI_DI_B(3 downto 0) when OP=x"04" else --COP
-    --A(3 downto 0) when OP=x"05" else --AFC
-    --A(3 downto 0) when OP=x"06" else --LOAD
-    --A(3 downto 0) when OP=x"07" else --STORE
-    MEM_RE_A(3 downto 0);
+    B(3 downto 0) when LI_DI_OP=x"00" else --ADD
+    B(3 downto 0) when LI_DI_OP=x"01" else --MUL
+    B(3 downto 0) when LI_DI_OP=x"02" else --SOU
+    B(3 downto 0) when LI_DI_OP=x"03" else --DIV
+    B(3 downto 0) when LI_DI_OP=x"04" else --COP
+    X"0";
 
 Registers_addB <= 
-    --A(3 downto 0) when OP=x"00" else --ADD
-    --A(3 downto 0) when OP=x"01" else --MUL
-    --A(3 downto 0) when OP=x"02" else --SOU
-    --A(3 downto 0) when OP=x"03" else --DIV
-    --A(3 downto 0) when OP=x"04" else --COP
-    --A(3 downto 0) when OP=x"05" else --AFC
-    --A(3 downto 0) when OP=x"06" else --LOAD
-    --A(3 downto 0) when OP=x"07" else --STORE
-    LI_DI_C(3 downto 0) when OP=x"00" else --ADD
-    LI_DI_C(3 downto 0) when OP=x"01" else --MUL
-    LI_DI_C(3 downto 0) when OP=x"02" else --SOU
-    LI_DI_C(3 downto 0) when OP=x"03" else --DIV
+    C(3 downto 0) when LI_DI_OP=x"00" else --ADD
+    C(3 downto 0) when LI_DI_OP=x"01" else --MUL
+    C(3 downto 0) when LI_DI_OP=x"02" else --SOU
+    C(3 downto 0) when LI_DI_OP=x"03" else --DIV
     --LI_DI_C(3 downto 0) when OP=x"04" else --COP
     X"0";
     
 Registers_addW <= MEM_RE_A(3 downto 0);
-    --A(3 downto 0) when OP=x"00" else --ADD
-    --A(3 downto 0) when OP=x"01" else --MUL
-    --A(3 downto 0) when OP=x"02" else --SOU
-    --A(3 downto 0) when OP=x"03" else --DIV
-    --A(3 downto 0) when OP=x"04" else --COP
-    --A(3 downto 0) when OP=x"05" else --AFC
-    --A(3 downto 0) when OP=x"06" else --LOAD
-    --A(3 downto 0) when OP=x"07" else --STORE
-    --X"0";
     
 Registers_W <= 
     '1' when MEM_RE_OP=x"00" else --ADD
@@ -361,30 +307,21 @@ Registers_W <=
     '0';
         
 Registers_DATA <= 
-    ALU_S when DI_EX_OP=x"00" else --ADD
-    ALU_S when DI_EX_OP=x"01" else --MUL
-    ALU_S when DI_EX_OP=x"02" else --SOU
-    ALU_S when DI_EX_OP=x"03" else --DIV
+
+    ALU_S when MEM_RE_OP= x"00" else --ADD
+    ALU_S when MEM_RE_OP= x"01" else --MUL
+    ALU_S when MEM_RE_OP= x"02" else --SOU
+    ALU_S when MEM_RE_OP= x"03" else
+    Registers_QA when MEM_RE_OP=x"04" else --COP
+    RISC_SI_OUTPUT when MEM_RE_OP= x"06" else --LOAD
+    RISC_SI_OUTPUT when MEM_RE_OP= x"07" else --STORE
     MEM_RE_B;
-    --ALU_S when OP=x"00" else --ADD
-    --ALU_S when OP=x"01" else --MUL
-    --ALU_S when OP=x"02" else --SOU
-    --ALU_S when OP=x"03" else --DIV
-    --ALU_S when OP=x"04" else --COP
-    --B when OP=x"05" else --AFC
-    --ALU_S when OP=x"06" else --LOAD
-    --ALU_S when OP=x"07" else --STORE
-    --X"00";
     
 ALU_Ctrl_Alu <= 
     DI_EX_OP(2 downto 0) when DI_EX_OP=x"00" else --ADD
     DI_EX_OP(2 downto 0) when DI_EX_OP=x"01" else --MUL
     DI_EX_OP(2 downto 0) when DI_EX_OP=x"02" else --SOU
     DI_EX_OP(2 downto 0) when DI_EX_OP=x"03" else --DIV
-    --OP when OP=x"04" else --COP
-    --OP when OP=x"05" else --AFC
-    --OP when OP=x"06" else --LOAD
-    --OP when OP=x"07" else --STORE
     "000";
     
 ALU_A <= 
@@ -392,10 +329,6 @@ ALU_A <=
     Registers_QA when DI_EX_OP=x"01" else --MUL
     Registers_QA when DI_EX_OP=x"02" else --SOU
     Registers_QA when DI_EX_OP=x"03" else --DIV
-    --Registers_QA when OP=x"04" else --COP
-    ----Registers_QA when OP=x"05" else --AFC
-    --Registers_QA when OP=x"06" else --LOAD
-    --Registers_QA when OP=x"07" else --STORE
     X"00";
     
 ALU_B <= 
@@ -403,17 +336,28 @@ ALU_B <=
     Registers_QB when DI_EX_OP=x"01" else --MUL
     Registers_QB when DI_EX_OP=x"02" else --SOU
     Registers_QB when DI_EX_OP=x"03" else --DIV
-    --Registers_QB when OP=x"04" else --COP
-    --Registers_QB when OP=x"05" else --AFC
-    --Registers_QB when OP=x"06" else --LOAD
-    --Registers_QB when OP=x"07" else --STORE
     X"00";
+    
+RISC_SI_INPUT <= 
+        --ALU_S when MEM_RE_OP=x"06" else --LOAD Read
+        ALU_S when MEM_RE_OP=x"07" else --STORE Write
+        X"00";
+    
+RISC_SI_add <= 
+    EX_MEM_B when MEM_RE_OP=x"06" else --LOAD Read
+    EX_MEM_A when MEM_RE_OP=x"07" else --STORE Write
+    X"00";
+    
+RISC_SI_RW <= 
+    '1' when MEM_RE_OP=x"06" else --LOAD Read
+    '0' when MEM_RE_OP=x"07" else --STORE Write
+    '1';
 
 
 
 --MEM_RE_B <= Alu_S when DI_EX_OP=x"00" or DI_EX_OP=x"01" or DI_EX_OP=x"02" or DI_EX_OP=x"03" else MEM_RE_B;
 
- 
+--Instructions_Memory_Output <= A & OP & B & C;
 A_Test <= A;
 OP_Test <= OP;
 B_Test <= B;
