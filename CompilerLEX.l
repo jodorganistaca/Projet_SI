@@ -74,6 +74,11 @@ int cptline =1;
             printf("tPRINTF "); 
         #endif    
         return tPRINTF;}
+"return"    {
+        #ifdef DEBUG 
+            printf("tRETURN "); 
+        #endif    
+        return tRETURN;}
 
 "+"    {
         #ifdef DEBUG 

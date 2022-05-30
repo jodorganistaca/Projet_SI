@@ -1,9 +1,8 @@
-AFC 1 20  
-AFC 21 20  
-AFC 3 5  
-COP 20 3  
-AFC 4 4  
-COP 20 4  
-PRI 20   
-PRI 21   
-PRI 20   
+JMP 8   
+AFC 1 1  
+COP 20 1  
+AFC 2 2  
+COP 21 2  
+ADD 3 20 21 
+JMP LR   
+COP 22 0  

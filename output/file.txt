@@ -1,2 +1,3 @@
-AFC 3 5
-AFC 4 4
+AFC 1 1
+AFC 2 2
+ADD 3 20 21
