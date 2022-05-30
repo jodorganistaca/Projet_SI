@@ -1,10 +1,9 @@
 int main()
-{   int b ;
+{   int b;
+    b= 5;
     int *o=&b;
 
-    b =5;
-    *o =4;
-    printf(b);
-    printf(o);
+
     printf(*o);
+
 }

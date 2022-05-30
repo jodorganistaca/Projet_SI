@@ -189,7 +189,7 @@ int Value(int address){
     struct Node *current = head;
 
     if(isEmpty())
-        return NULL;
+        return -256;
 
     while (current != NULL){
         if(current->data->address == address){
@@ -200,7 +200,7 @@ int Value(int address){
         current = current -> next;
     }
 
-    return NULL;    
+    return -256;    
 }
 
 int findByID(char identifier[20]){ //deep à ajouter pour plus tard

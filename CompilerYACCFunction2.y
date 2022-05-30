@@ -123,7 +123,7 @@ parameters
 declaration_pointeur 
     : tINT tMULT tVARNAME {
         $$=0;
-        add = insertNode($3,"Pointer",1,depth); //sans adresse
+        add = insertNode($3,"Pointer",NULL,depth); //sans adresse
     }
     | tINT tMULT tVARNAME tEQUAL calcul_multiple{
     printf("Cas de pointeur %d \n",$5);
@@ -224,6 +224,12 @@ expression_print
            error = 1;
            break;
        }
+       if (Value(add)==-256){
+           printf("Valeur %s null non initée\n",$3);
+           yyerror("NULL\n");
+           error = 1;
+            break;
+       }
         instructions[compteurinstructions][0]="PRI";
         instructions[compteurinstructions][1]=malloc(1);
         snprintf( si, 39, "%d", add);
@@ -236,12 +242,19 @@ expression_print
        // printf("AAAAAAAAAAA");
         // fprintf(fp,"PRI %s\n", $3);
         add= Value(findByID($4));
-        
+        printf("CETTE VALEUR %d",add);
         if (add==-1){
             printf("variable %s non définie error ligne %d\n ", $4,compteurinstructions);
            yyerror("undefined\n");
            error = 1;
            break;
+       }
+        printf("Value(add) %d\n",Value(add));
+        if (Value(add)==(-256)){
+           printf("Valeur %s null non initée\n",$4);
+           yyerror("NULL\n");
+           error = 1;
+            break;
        }
         instructions[compteurinstructions][0]="PRI";
         instructions[compteurinstructions][1]=malloc(1);
@@ -327,7 +340,8 @@ variable_multiple
             error = 1;
             break;
         }
-        add = insertNode($1,type,0,depth);}// cas triviaux a
+        add = insertNode($1,type,-256,depth);
+        }// cas triviaux a
     ;
 
 calcul_multiple
@@ -487,7 +501,6 @@ calcul_multiple
     }
     | tET tVARNAME {
         add = findByID($2);
-        
         temp = (temp+1)%20;
         changeValuebyadd(temp,type,add);
         instructions[compteurinstructions][0]="AFC";

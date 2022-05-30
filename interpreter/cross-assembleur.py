@@ -20,31 +20,31 @@ while (i<len(lines)) :
         pt=str(int(int(arr[1])/16))+str(int(arr[1])%16)
         pt2=str(int(int(arr[2])/16))+str(int(arr[2])%16)
         Data_Memory[str(arr[1])]=int(arr[2])
-        file2.write(pt+"05"+pt2+"00\n") 
+        file2.write(pt+"06"+pt2+"00\n") 
         print(pt+"05"+pt2+"00\n")
             
     elif(aro=="COP") :
         Data_Memory[str(arr[1])]=Data_Memory[str(arr[2])]
         pt=str(int(int(arr[1])/16))+str(int(arr[1])%16)
         pt2=str(int(int(arr[2])/16))+str(int(arr[2])%16)
-        file2.write(pt+"04"+pt2+"00\n")  
+        file2.write(pt+"05"+pt2+"00\n")  
             
     elif(aro=="ADD") :
         Data_Memory[str(arr[1])]=int(Data_Memory[str(arr[2])])+int(Data_Memory[str(arr[3])])
         pt=str(int(int(arr[1])/16))+str(int(arr[1])%16)
         pt2=str(int(int(arr[2])/16))+str(int(arr[2])%16)
-        file2.write(pt+"0"+pt2+"00\n")     
+        file2.write(pt+"01"+pt2+"00\n")     
     elif(aro=="MUL"):
         Data_Memory[str(arr[1])]=int(Data_Memory[str(arr[2])])*int(Data_Memory[str(arr[3])])
         pt=str(int(int(arr[1])/16))+str(int(arr[1])%16)
         pt2=str(int(int(arr[2])/16))+str(int(arr[2])%16)
-        file2.write(pt+"0"+pt2+"00\n")              
+        file2.write(pt+"02"+pt2+"00\n")              
             
     elif(aro=="SOU"):
         Data_Memory[str(arr[1])]=int(Data_Memory[str(arr[2])])-int(Data_Memory[str(arr[3])])
         pt=str(int(int(arr[1])/16))+str(int(arr[1])%16)
         pt2=str(int(int(arr[2])/16))+str(int(arr[2])%16)
-        file2.write(pt+"0"+pt2+"00\n")      
+        file2.write(pt+"03"+pt2+"00\n")      
     elif(aro=="JMP"):
             i = int(arr[1])-2
             # -1 ++ à la fin
@@ -63,6 +63,9 @@ while (i<len(lines)) :
                 break
             else :
                 Data_Memory[str(arr[1])]=int(int(Data_Memory[str(arr[2])])/int(Data_Memory[str(arr[3])]))
+                pt=str(int(int(arr[1])/16))+str(int(arr[1])%16)
+                pt2=str(int(int(arr[2])/16))+str(int(arr[2])%16)
+                file2.write(pt+"03"+pt2+"00\n")     
     elif(aro=="PRI"):
             print(Data_Memory[str(arr[1])])    
        
