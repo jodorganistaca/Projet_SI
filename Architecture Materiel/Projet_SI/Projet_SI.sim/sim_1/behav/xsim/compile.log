@@ -376,3 +376,281 @@ INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/Projet_SI/Arch
 INFO: [VRFC 10-307] analyzing entity Processor_Simulation
 INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
 INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/ALU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity ALU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Data_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity RISC_SI
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Instructions_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instructions_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Register.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Registers
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Instructions_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instructions_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Instructions_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instructions_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/buffer.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Buffer_Pipeline
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Buffer_Pipeline_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Buffer_Pipeline_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Buffer_Pipeline_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Buffer_Pipeline_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Register.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Registers
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/ALU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity ALU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Instructions_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instructions_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/buffer.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Buffer_Pipeline
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Instructions_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instructions_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Instructions_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instructions_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Instructions_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instructions_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Processor_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Instructions_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instructions_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Registers_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Registers_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Registers_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Registers_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Registers_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Registers_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Registers_Simulation.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Registers_Simulation
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Instructions_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instructions_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Instructions_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instructions_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Instructions_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instructions_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Instructions_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instructions_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Instructions_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instructions_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Instructions_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instructions_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Instructions_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instructions_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Instructions_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instructions_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity processor

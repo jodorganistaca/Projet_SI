@@ -41,9 +41,8 @@ component Processor
            CLK : in STD_LOGIC);
 end component;
 
-
 --- Proccessor
-signal Processor_CLK_Test : STD_LOGIC := '0';
+signal Processor_CLK_Test : STD_LOGIC := '1';
 signal Processor_RST_Test : STD_LOGIC := '1';
 constant Clock_period : time := 10 ns;
 
@@ -58,6 +57,5 @@ begin
     Processor_CLK_Test <= not(Processor_CLK_Test);
     wait for Clock_period/2;
 end process;
-
 
 end Behavioral;

@@ -81,12 +81,14 @@ begin
 end process;
 
  --Stimulus process
-Test_DATA <= X"FF" after 0 ns, X"AA" after 100 ns, X"A0" after 300 ns, X"CA" after 700 ns, X"AB" after 800 ns;
+--Test_DATA <= X"FF" after 0 ns, X"AA" after 100 ns, X"A0" after 300 ns, X"CA" after 700 ns, X"AB" after 800 ns;
 
-Test_addW <= X"2" after 0 ns, X"3" after 100 ns, X"0" after 450 ns, X"1" after 500 ns;
-Test_addA <= X"0" after 0 ns, X"1" after 600 ns;
-Test_addB <= X"2", X"3" after 150 ns;
-Test_RST <= '0' after 200 ns, '1' after 300 ns;
-Test_W <= '0' after 100 ns, '1' after 250 ns;
+--Test_addW <= X"2" after 0 ns, X"3" after 100 ns, X"0" after 450 ns, X"1" after 500 ns;
+Test_DATA <= X"02" after 250 ns;
+Test_W <= '1' after 250 ns;
+Test_addW <= X"5" after 250 ns;
+Test_addA <= X"5" after 250 ns;
+--Test_addB <= X"2", X"3" after 150 ns;
+Test_RST <= '0' after 0 ns, '1' after 10 ns;
 
  end Behavioral;   

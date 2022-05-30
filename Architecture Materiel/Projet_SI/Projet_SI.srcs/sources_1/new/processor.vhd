@@ -97,6 +97,7 @@ component Buffer_Pipeline is
 end component;
 
 --- Memory instructions
+signal Instructions_Counter : STD_LOGIC_VECTOR (7 downto 0):= ( others => '0');-- instancier à 0
 --inputs
 signal Instructions_Memory_add : STD_LOGIC_VECTOR (7 downto 0):= ( others => '0');-- instancier à 0
 --output
@@ -107,10 +108,9 @@ signal Instructions_Memory_Output :  STD_LOGIC_VECTOR (31 downto 0):= ( others =
 signal Registers_addA : STD_LOGIC_VECTOR (3 downto 0):= ( others => '0');-- instancier à 0
 signal Registers_addB :  STD_LOGIC_VECTOR (3 downto 0):= ( others => '0');
 signal Registers_addW : STD_LOGIC_VECTOR (3 downto 0):= ( others => '0');
-signal Registers_W :  STD_LOGIC:='1';
+signal Registers_W :  STD_LOGIC:='0';
 signal Registers_DATA :  STD_LOGIC_VECTOR (7 downto 0):= ( others => '0');
 
---signal Registers_CLK :  STD_LOGIC:='1';
 --output
 signal Registers_QA :  STD_LOGIC_VECTOR (7 downto 0):= ( others => '0');
 signal Registers_QB :  STD_LOGIC_VECTOR (7 downto 0):= ( others => '0');
@@ -132,7 +132,7 @@ signal RISC_SI_add : STD_LOGIC_VECTOR (7 downto 0):= ( others => '0');
 signal RISC_SI_RW :  STD_LOGIC:='1';
 signal RISC_SI_INPUT :  STD_LOGIC_VECTOR (7 downto 0):= ( others => '0');
 signal RISC_SI_RST :  STD_LOGIC:='0';
---signal RISC_SI_CLK :  STD_LOGIC:='0';
+
 --output
 signal RISC_SI_OUTPUT : STD_LOGIC_VECTOR (7 downto 0):= ( others => '0');
 --clk      
@@ -204,7 +204,7 @@ Registers_W <=
     '1' when MEM_RE_OP=x"04" else --DIV
     '1' when MEM_RE_OP=x"05" else --COP
     '1' when MEM_RE_OP=x"06" else --AFC
-    '0' when MEM_RE_OP=x"07" else --LOAD
+    '1' when MEM_RE_OP=x"07" else --LOAD
     '0' when MEM_RE_OP=x"08" else --STORE
     '0';
 
@@ -227,6 +227,7 @@ with LI_DI_OP select
                     Registers_QA when x"03", --SOU
                     Registers_QA when x"04", --DIV
                     Registers_QA when x"05", --COP
+                    Registers_QA when x"08", --STORE
                     LI_DI_B when others;
                     
 DI_EX : Buffer_Pipeline PORT MAP (
@@ -275,7 +276,7 @@ EX_MEM : Buffer_Pipeline PORT MAP (
 --THIRD MUX Between EX/MEM and RISC_SI to select the EX_MEM_B or EX_MEM_A
 with EX_MEM_OP select
      MEM_MUX_A <= EX_MEM_B when x"07", --LOAD
-                  EX_MEM_B when x"08", --STORE
+                  EX_MEM_A when x"08", --STORE
                   X"00" when others;
 
 Data_Memory_Port_Map: RISC_SI  PORT MAP (
@@ -293,8 +294,8 @@ with EX_MEM_OP select
                   EX_MEM_B when others;
                   
 RISC_SI_RW <= 
-    '1' when MEM_RE_OP=x"06" else --LOAD Read
-    '0' when MEM_RE_OP=x"07" else --STORE Write
+    '1' when EX_MEM_OP=x"07" else --LOAD Read
+    '0' when EX_MEM_OP=x"08" else --STORE Write
     '1';
 
 MEM_RE : Buffer_Pipeline PORT MAP (
@@ -313,51 +314,14 @@ process(RST,CLK)
 begin
     if(RST='0') then
         Instructions_Memory_add <= X"00";
-    elsif(CLK'event and CLK='1') then        
-        Instructions_Memory_add<=Instructions_Memory_add+1;
+        Instructions_Counter <= X"00";
+    elsif(CLK'event and CLK='1') then  
+        Instructions_Counter <= Instructions_Counter+1;  
+        if(Instructions_Counter=X"05") then
+            Instructions_Counter <= X"00";
+            Instructions_Memory_add<=Instructions_Memory_add+1;
+        end if;
     end if; 
 end process;
-
---Registers_addA <= 
---    LI_DI_B(3 downto 0) when LI_DI_OP=x"01" else --ADD
---    LI_DI_B(3 downto 0) when LI_DI_OP=x"02" else --MUL
---    LI_DI_B(3 downto 0) when LI_DI_OP=x"03" else --SOU
---    LI_DI_B(3 downto 0) when LI_DI_OP=x"04" else --DIV
---    LI_DI_B(3 downto 0) when LI_DI_OP=x"05" else --COP
---    X"0";
-
---Registers_addB <= 
---    LI_DI_C(3 downto 0) when LI_DI_OP=x"01" else --ADD
---    LI_DI_C(3 downto 0) when LI_DI_OP=x"02" else --MUL
---    LI_DI_C(3 downto 0) when LI_DI_OP=x"03" else --SOU
---    LI_DI_C(3 downto 0) when LI_DI_OP=x"04" else --DIV
---    --LI_DI_C(3 downto 0) when OP=x"04" else --COP
---    X"0";
-    
---Registers_addW <= MEM_RE_A(3 downto 0);
-
---ALU_A <= 
---    Registers_QA when DI_EX_OP=x"01" else --ADD
---    Registers_QA when DI_EX_OP=x"02" else --MUL
---    Registers_QA when DI_EX_OP=x"03" else --SOU
---    Registers_QA when DI_EX_OP=x"04" else --DIV
---    X"00";
-    
---ALU_B <= 
---    Registers_QB when DI_EX_OP=x"01" else --ADD
---    Registers_QB when DI_EX_OP=x"02" else --MUL
---    Registers_QB when DI_EX_OP=x"03" else --SOU
---    Registers_QB when DI_EX_OP=x"04" else --DIV
---    X"00";
-
---RISC_SI_INPUT <= 
---        --ALU_S when MEM_RE_OP=x"06" else --LOAD Read
---        ALU_S when MEM_RE_OP=x"07" else --STORE Write
---        X"00";
-    
---RISC_SI_add <= 
---    EX_MEM_B when MEM_RE_OP=x"06" else --LOAD Read
---    EX_MEM_A when MEM_RE_OP=x"07" else --STORE Write
---    X"00";
 
 end Behavioral;
