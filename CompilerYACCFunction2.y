@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "linkedList.h"
+#include "y.tab.h"
 void yyerror(char *s);
 int depth = 0;
 int add;
@@ -12,7 +13,7 @@ int d = -1; // rajouter une erreur s'il n'est pas à -1 à la fin { } non fermé
 int o = -1;
 int debuto[20];
 int compteurdeif[20];
-int compteurfonction[20];
+int compteurfonction[20]; CACAAAAAAAAAAAAAAAAAAAAAAAA
 
 int compteurELSIF[20];
 int error = 0;
@@ -34,6 +35,7 @@ FILE *fp;
 	int int_val;
 	double double_val;
     char* str_val;
+    int nline;
 }
 %token <int_val> tIF tELSE tELSIF tWHILE tPRINTF tET tCHAR tMAIN tCONST tINTEGER tSPACE tTAB tBACKSPACE tCOMA tSEMICOLON tGEQ tLEQ tBE tINF tSUP tNEWL  tEXPO tCOMMENT
 %token <int_val> tVOID tPLUS tMOINS tMULT tDIV tPOW tEQUAL tAND tOR tPOPEN tPCLOSE tAOPEN tACLOSE tCOPEN tCCLOSE tERROR tTRUE tFALSE
@@ -125,7 +127,7 @@ declaration_pointeur
     }
     | tINT tMULT tVARNAME tEQUAL calcul_multiple{
     printf("Cas de pointeur %d \n",$5);
-    temp=temp+1%20;
+    temp=(temp+1)%20;
     add = insertNode($3,"Pointer",$5,depth);
     
     instructions[compteurinstructions][0]="AFC";
@@ -141,6 +143,20 @@ declaration_pointeur
     |tMULT tVARNAME   tEQUAL calcul_multiple {
         //printf("TEST %d %s",$4,$2);
         add = Value(findByID($2));
+        printf("addresse normal %d et son type \n",add);
+        /* // Problème ici pour dire que const n'est pas modif
+        printf("addresse normal %d et son type %s\n",add,TypeByID(add));
+
+        char t[20] = "const";
+       if (strcmp(t,TypeByID(add))==0){
+           
+           printf("Constante inmodifiable ligne %d\n",compteurinstructions);
+           yyerror("cannot be altered\n");
+           error = 1;
+           break;
+       }
+       */
+    
         changeValuebyadd(add,type,Value($4));
         instructions[compteurinstructions][0]="COP";
         snprintf( si, 39, "%d", add);
@@ -165,7 +181,7 @@ expression_arithmetic
        add= findByID($1);
        //printf("l'adresse %d\n",add);
        if (add==-1){
-           printf("Variable non définie ligne %d \n", compteurinstructions);
+           printf("Variable non définie ligne %d \n", yylval.nline);
            yyerror("undefined \n");
            error = 1;
            break;
@@ -216,6 +232,25 @@ expression_print
         compteurinstructions++;
         
         }//{printf($2);}
+    | tPRINTF tPOPEN  tMULT tVARNAME tPCLOSE tSEMICOLON {
+       // printf("AAAAAAAAAAA");
+        // fprintf(fp,"PRI %s\n", $3);
+        add= Value(findByID($4));
+        
+        if (add==-1){
+            printf("variable %s non définie error ligne %d\n ", $4,compteurinstructions);
+           yyerror("undefined\n");
+           error = 1;
+           break;
+       }
+        instructions[compteurinstructions][0]="PRI";
+        instructions[compteurinstructions][1]=malloc(1);
+        snprintf( si, 39, "%d", add);
+        strcpy(instructions[compteurinstructions][1],si);
+        
+        compteurinstructions++;
+        
+        }
     ;
 type
     : tINT 
@@ -450,10 +485,26 @@ calcul_multiple
       
        $$ = Value(add);
     }
-  /*  | tET tVARNAME {
-        $$ = 
+    | tET tVARNAME {
+        add = findByID($2);
+        
+        temp = (temp+1)%20;
+        changeValuebyadd(temp,type,add);
+        instructions[compteurinstructions][0]="AFC";
+        snprintf( si, 39, "%d", temp);
+        instructions[compteurinstructions][1]=malloc(1);
+        strcpy(instructions[compteurinstructions][1],si);
+        snprintf( si, 39, "%d", add);
+        instructions[compteurinstructions][2]=malloc(1);
+         strcpy(instructions[compteurinstructions][2],si);
+        compteurinstructions++;
+        
+        
+        changeValuebyadd(temp,"int",add);
+       
+        $$ = temp;
     }
-    */
+    
     ;
 
 iteration_statement
@@ -776,6 +827,7 @@ int main(){
                 //printf("\n");
                 fprintf(finstructions,instructions[i][j]);
                 fprintf(finstructions," ");
+                 printf("LOL %d \n", yylval.nline);
                 //printf("Fin boucle %d\n",j);
                 
             }

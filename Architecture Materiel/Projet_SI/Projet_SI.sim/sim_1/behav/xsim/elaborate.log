@@ -3,6 +3,10 @@ Copyright 1986-1999, 2001-2018 Xilinx, Inc. All Rights Reserved.
 Running: /usr/local/insa/Xilinx.VIVADO/Vivado/2018.2/bin/unwrapped/lnx64.o/xelab -wto a1930c5de3264d199e48c8b14d2692ce --incr --debug typical --relax --mt 8 -L xil_defaultlib -L secureip --snapshot Processor_Simulation_behav xil_defaultlib.Processor_Simulation -log elaborate.log 
 Using 8 slave threads.
 Starting static elaboration
+WARNING: [VRFC 10-122] buffer_pipeline remains a black-box since it has no binding entity [/home/sorlin/Bureau/Langage et automates/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd:183]
+WARNING: [VRFC 10-122] buffer_pipeline remains a black-box since it has no binding entity [/home/sorlin/Bureau/Langage et automates/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd:207]
+WARNING: [VRFC 10-122] buffer_pipeline remains a black-box since it has no binding entity [/home/sorlin/Bureau/Langage et automates/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd:230]
+WARNING: [VRFC 10-122] buffer_pipeline remains a black-box since it has no binding entity [/home/sorlin/Bureau/Langage et automates/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd:251]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis

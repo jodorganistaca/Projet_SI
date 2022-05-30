@@ -6,6 +6,7 @@ char char_val;
 int int_val;
 double double_val;
 char* str_val;
+int cptline =1;
 %}
 
 %option noyywrap
@@ -205,7 +206,7 @@ char* str_val;
         printf("tSUP "); 
     #endif
     return tSUP;}
-"\n"   printf("\n");
+"\n"   {printf("\n");yylval.nline=cptline++;}
 "true"    {
     #ifdef DEBUG 
         printf("tTRUE "); 

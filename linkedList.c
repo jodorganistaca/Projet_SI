@@ -1,8 +1,9 @@
 #include "linkedList.h"
-
+#include "y.tab.h"
 struct Node *head = NULL;
 struct Node *current = NULL;
 int pos = INITAL_SIZE;
+
 
 void printNode(struct Node *node){
     printf("%s | %d | %s | %d | %d \n", 
@@ -80,7 +81,7 @@ void changeValueadd(char identifier[200],char type[20], int value){
     if (strcmp(t,type)!=0){
         int add = findByID(identifier);
         struct Node *node = find(add);
-        
+        printf("OK\n");
         if (node != NULL){
             struct Data *data = node->data;
             data->value =value;
@@ -88,6 +89,7 @@ void changeValueadd(char identifier[200],char type[20], int value){
         }
     }else{
         printf("ERROR EXIT -1 CONSTANT CHANGED VALUE\n");
+       // yyerror("cannot be altered\n");
     }
 
 }

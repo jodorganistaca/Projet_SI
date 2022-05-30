@@ -9,27 +9,42 @@ while (i<len(lines)) :
     
     arr = lines[i].split(" ")
     aro = arr[0]
-    print(int("15",2))
+    
+
+    print("ok")
    # print(arr)
+   # "int /16" + "int%16" ...  
+   #00050489
+   #
     if (aro=="AFC"):
+        pt=str(int(int(arr[1])/16))+str(int(arr[1])%16)
+        pt2=str(int(int(arr[2])/16))+str(int(arr[2])%16)
         Data_Memory[str(arr[1])]=int(arr[2])
-        file2.write(hex(int(arr[1]))+"05"+hex(int(arr[2],16))+"00\n") 
+        file2.write(pt+"05"+pt2+"00\n") 
+        print(pt+"05"+pt2+"00\n")
             
     elif(aro=="COP") :
         Data_Memory[str(arr[1])]=Data_Memory[str(arr[2])]
-        file2.write(str(arr[1])+"04"+str(arr[2])+"00\n")  
-    #    Data_Memory[str(arr[1])]=Data_Memory[str(arr[2])]
+        pt=str(int(int(arr[1])/16))+str(int(arr[1])%16)
+        pt2=str(int(int(arr[2])/16))+str(int(arr[2])%16)
+        file2.write(pt+"04"+pt2+"00\n")  
             
     elif(aro=="ADD") :
         Data_Memory[str(arr[1])]=int(Data_Memory[str(arr[2])])+int(Data_Memory[str(arr[3])])
-            
+        pt=str(int(int(arr[1])/16))+str(int(arr[1])%16)
+        pt2=str(int(int(arr[2])/16))+str(int(arr[2])%16)
+        file2.write(pt+"0"+pt2+"00\n")     
     elif(aro=="MUL"):
         Data_Memory[str(arr[1])]=int(Data_Memory[str(arr[2])])*int(Data_Memory[str(arr[3])])
-            
+        pt=str(int(int(arr[1])/16))+str(int(arr[1])%16)
+        pt2=str(int(int(arr[2])/16))+str(int(arr[2])%16)
+        file2.write(pt+"0"+pt2+"00\n")              
             
     elif(aro=="SOU"):
         Data_Memory[str(arr[1])]=int(Data_Memory[str(arr[2])])-int(Data_Memory[str(arr[3])])
-            
+        pt=str(int(int(arr[1])/16))+str(int(arr[1])%16)
+        pt2=str(int(int(arr[2])/16))+str(int(arr[2])%16)
+        file2.write(pt+"0"+pt2+"00\n")      
     elif(aro=="JMP"):
             i = int(arr[1])-2
             # -1 ++ à la fin
@@ -69,7 +84,7 @@ while (i<len(lines)) :
     
             
     
-    print(Data_Memory)
+    #print(Data_Memory)
    
 
     

@@ -203,7 +203,7 @@ variable_multiple
     }
     | variable_multiple tCOMA variable_multiple 
     | tVARNAME 
-    {add = insertNode($1,type,0,depth);}// cas triviaux a
+    {add = insertNode($1,type,NULL,depth);}// cas triviaux a
     ;
 // problème dans l'ordre de calcul
 calcul_multiple
