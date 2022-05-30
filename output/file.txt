@@ -1,2 +1,2 @@
-AFC 1 5
-COP 20 1
+AFC 3 5
+AFC 4 4

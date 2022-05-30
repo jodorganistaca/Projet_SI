@@ -13,7 +13,7 @@ int d = -1; // rajouter une erreur s'il n'est pas à -1 à la fin { } non fermé
 int o = -1;
 int debuto[20];
 int compteurdeif[20];
-int compteurfonction[20]; CACAAAAAAAAAAAAAAAAAAAAAAAA
+int compteurfonction[20]; 
 
 int compteurELSIF[20];
 int error = 0;
@@ -128,13 +128,13 @@ declaration_pointeur
     | tINT tMULT tVARNAME tEQUAL calcul_multiple{
     printf("Cas de pointeur %d \n",$5);
     temp=(temp+1)%20;
-    add = insertNode($3,"Pointer",$5,depth);
+    add = insertNode($3,"Pointer",Value($5),depth);
     
     instructions[compteurinstructions][0]="AFC";
     snprintf( si, 39, "%d", add);
     instructions[compteurinstructions][1]=malloc(1);
     strcpy(instructions[compteurinstructions][1],si);
-    snprintf( si, 39, "%d", $5);
+    snprintf( si, 39, "%d", Value($5));
     instructions[compteurinstructions][2]=malloc(1);
     strcpy(instructions[compteurinstructions][2],si);
     compteurinstructions++;
