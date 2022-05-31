@@ -1,8 +1,0 @@
-JMP 8   
-AFC 1 1  
-COP 20 1  
-AFC 2 2  
-COP 21 2  
-ADD 3 20 21 
-JMP LR   
-COP 22 0  
