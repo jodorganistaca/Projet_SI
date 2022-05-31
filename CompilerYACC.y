@@ -68,21 +68,22 @@ expression
     | expression_arithmetic     
     | iteration_statement
     | expression_print
-   // | expression_fonction
+    | expression_fonction
     ;
-/*
+
 expression_fonction
     : tVARNAME tPOPEN parameters tPCLOSE statement {printf("fonction\n");} // $statement =/tINT yyerror("Mauvais type en return")
     | tINT tVARNAME tPOPEN parameters tPCLOSE statement {printf("fonction\n");}
-    |tINT tVARNAME tPOPEN tPCLOSE statement {printf("fonction\n");}
+    | tINT tVARNAME tPOPEN tPCLOSE statement {printf("fonction\n");}
     ;
+
 parameters
     : tINT tVARNAME
     | tCHAR tVARNAME
     | tINT tVARNAME tCOMA parameters
     | tCHAR tVARNAME tCOMA parameters
     ;
-*/
+
     // : type tVARNAME tEQUAL tAPOS tVARNAME tAPOS tSEMICOLON // string dans file, on peut transformer en ascii sur un registre et le traduire lorsqu'appelé
 // ok ?
 expression_arithmetic 

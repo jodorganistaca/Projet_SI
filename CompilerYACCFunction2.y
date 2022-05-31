@@ -14,7 +14,8 @@ int o = -1;
 int debuto[20];
 int compteurdeif[20];
 int compteurfonction[20]; 
-
+int retour;
+int f = -1; //index to get the actual function
 int compteurELSIF[20];
 int error = 0;
  
@@ -38,7 +39,7 @@ FILE *fp;
     int nline;
 }
 %token <int_val> tIF tELSE tELSIF tWHILE tPRINTF tET tCHAR tMAIN tCONST tINTEGER tSPACE tTAB tBACKSPACE tCOMA tSEMICOLON tGEQ tLEQ tBE tINF tSUP tNEWL  tEXPO tCOMMENT
-%token <int_val> tVOID tPLUS tMOINS tMULT tDIV tPOW tEQUAL tAND tOR tPOPEN tPCLOSE tAOPEN tACLOSE tCOPEN tCCLOSE tERROR tTRUE tFALSE
+%token <int_val> tVOID tPLUS tMOINS tMULT tDIV tPOW tEQUAL tAND tOR tPOPEN tPCLOSE tAOPEN tACLOSE tCOPEN tCCLOSE tERROR tTRUE tFALSE tRETURN
 %token <double_val> tDEC tAPOS 
 %token  <char_val> tCHARACTER
 %token <str_val> tVARNAME tFLOAT tINT 
@@ -61,26 +62,30 @@ FILE *fp;
 %%
 // $first priorité sur les parenthèse et division multiplier
 //Penser à fonction imbriqués 
-go
-    :main {printf("%d \n",$1);}
-    /* |{
+/* {
             instructions[0][0]="JMP";
-        
-        compteurinstructions++;
-        } 
-        function 
+            compteurinstructions++;
+            printf("ERROR 2 \n");
+        }*/ 
+go
+    :function main
         {
+        printf("ca se lance\n");
         instructions[compteurinstructions][0]="JMP";
-        instructions[compteurinstructions][1]="LR";
+        instructions[compteurinstructions][1]=compteurfonction[f];
+        f--; 
+        // adresse retour
         compteurinstructions++;
         snprintf( si, 39, "%d", compteurinstructions);
         instructions[0][1]=malloc(1);
         strcpy(instructions[0][1],si); 
+        printf("Error fucntion \n");
         //Ajout de valeur de fonction retour ?
-    } main {snprintf( si, 39, "%d", compteurinstructions);
+     }  /*{snprintf( si, 39, "%d", compteurinstructions);
         instructions[0][1]=malloc(1);
-        strcpy(instructions[0][1],si);} // Jump de début vers function est noté dans la variable name , le retour sur une variable LR qui sera traitée par l'interpréteur
-    */
+        printf("Error main %d \n");
+        strcpy(instructions[0][1],si);} */// Jump de début vers function est noté dans la variable name , le retour sur une variable LR qui sera traitée par l'interpréteur
+    //|main {printf("%d \n",$1);}
     ;
 
 main
@@ -88,12 +93,15 @@ main
     /*  if(d !=-1){
         yyerror("Curly brace error in your statement \n");
     }}*/ //printf("Bien lu\n");
-    | tINT tMAIN tPOPEN tPCLOSE statement {$$=$5; //printList();
+    | tINT tMAIN tPOPEN tPCLOSE statement 
+    {
+        printf("Error main %d \n");
+        $$=$5; //printList();
     }
     ;
 
 statement
-    : tAOPEN expression tACLOSE {$$=$2;}//{ printf("Profondeur %d",depth);}
+    : tAOPEN expression tACLOSE {$$=$2; printf("statement\n");}//{ printf("Profondeur %d",depth);}
     ;
 
 expression
@@ -101,13 +109,27 @@ expression
     | expression_arithmetic {$$=$1;} 
     | iteration_statement {$$=0;}
     | expression_print  {$$=0;}
-   // | expression_fonction // APPEL DE FONCTION
+    | expression_return {$$=0;printf("Return fini \n");}
+//    | expression_fonction // APPEL DE FONCTION
     ;
-// FUNCTION A TERMINER SOUCIS DE RACCORD ENTRE VARIABLE
-/*function
-    :tVARNAME tPOPEN parameters tPCLOSE statement {printf("fonction\n");} // $statement =/tINT yyerror("Mauvais type en return")
-    | tINT tVARNAME tPOPEN parameters tPCLOSE statement {printf("fonction\n");}
-    |tINT tVARNAME tPOPEN tPCLOSE statement {printf("fonction\n");}
+// FUNCTION A TERMINER SOUCIS DE RACCORD ENTRE VARIABLE + 
+function
+    : tINT tVARNAME tPOPEN tPCLOSE  statement {printf("fonction\n");}
+       { 
+        printf("ERROR insert node %s %d \n", $2, compteurinstructions);
+        insertNode($2,"Function",compteurinstructions+1,depth);
+        changeValuebyadd(retour,"int",$5);
+        //AFC Retour temporaire 
+        instructions[compteurinstructions][0]="AFC";
+        snprintf( si, 39, "%d", add);
+        instructions[compteurinstructions][1]=malloc(1);
+        strcpy(instructions[compteurinstructions][1],si);
+        snprintf( si, 39, "%d", Value($5));
+      } 
+           
+         
+  //  | tVOID tVARNAME tPOPEN tPCLOSE statement { printf("ERROR 6 \n"); } 
+   // | {printf("ERROR 4 \n");} tINT tVARNAME tPOPEN parameters tPCLOSE statement {printf("fonction\n");}
     //| function function
     ;
 parameters
@@ -116,14 +138,14 @@ parameters
     | tINT tVARNAME tCOMA parameters // compteur d'arguments 
  //   | tCHAR tVARNAME tCOMA parameters
     ;
-*/
+
     // : type tVARNAME tEQUAL tAPOS tVARNAME tAPOS tSEMICOLON // string dans file, on peut transformer en ascii sur un registre et le traduire lorsqu'appelé
 // ok ?
 // peut être rentré dans variable multiple 
 declaration_pointeur 
     : tINT tMULT tVARNAME {
         $$=0;
-        add = insertNode($3,"Pointer",NULL,depth); //sans adresse
+        add = insertNode($3,"Pointer",-256,depth); //sans adresse
     }
     | tINT tMULT tVARNAME tEQUAL calcul_multiple{
     printf("Cas de pointeur %d \n",$5);
@@ -170,6 +192,9 @@ declaration_pointeur
 
     }
     ;
+
+expression_return
+    : tRETURN calcul_multiple tSEMICOLON { printf("Return %d \n", $2);};
 
 expression_arithmetic 
     :type variable_multiple tSEMICOLON {$$=0;} //prendre en compte le cas int a=2, b=4 , c=5;
@@ -517,7 +542,24 @@ calcul_multiple
        
         $$ = temp;
     }
-    
+    | tVARNAME tPOPEN tPCLOSE {
+        //insertnode
+        //compteurinstructions ++, JMP value($1), 
+        // f++, compteurfunction[f]=Compteur instruction;, temp=(temp+1)%20 , $$=temp 
+        //printf("ERROR 5 \n");
+        f++;
+        instructions[compteurinstructions][0]="JMP";
+        snprintf( si, 39, "%d", Value($1));
+        instructions[compteurinstructions][1]=malloc(1);
+        strcpy(instructions[compteurinstructions][1],si); 
+        compteurinstructions++;
+        compteurfonction[f]=compteurinstructions;
+        
+        temp=(temp+1)%20;
+        retour=temp;
+
+        $$=retour;
+    }
     ;
 
 iteration_statement
