@@ -13,6 +13,7 @@ Compiling package ieee.std_logic_1164
 Compiling package ieee.std_logic_arith
 Compiling package ieee.std_logic_unsigned
 Compiling package ieee.numeric_std
+Compiling architecture behavioral of entity xil_defaultlib.Counter [counter_default]
 Compiling architecture behavioral of entity xil_defaultlib.Instructions_Memory [instructions_memory_default]
 Compiling architecture behavioral of entity xil_defaultlib.Buffer_Pipeline [buffer_pipeline_default]
 Compiling architecture behavioral of entity xil_defaultlib.Registers [registers_default]

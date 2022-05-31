@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date: 07.04.2022 08:45:19
+-- Create Date: 31.05.2022 15:02:22
 -- Design Name: 
--- Module Name: RISC_SI - Behavioral
+-- Module Name: Counter - Behavioral
 -- Project Name: 
 -- Target Devices: 
 -- Tool Versions: 
@@ -23,6 +23,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 use IEEE.NUMERIC_STD.ALL;
+
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 --use IEEE.NUMERIC_STD.ALL;
@@ -32,37 +33,29 @@ use IEEE.NUMERIC_STD.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity RISC_SI is
-    Port ( add : in STD_LOGIC_VECTOR (7 downto 0);
-           INPUT : in STD_LOGIC_VECTOR (7 downto 0);
-           RW : in STD_LOGIC;
-           RST : in STD_LOGIC;
+entity Counter is
+    Port ( NUM : in STD_LOGIC_VECTOR (7 downto 0);
+           A_F : in STD_LOGIC;
            CLK : in STD_LOGIC;
            OUTPUT : out STD_LOGIC_VECTOR (7 downto 0));
-end RISC_SI;
+end Counter;
 
-architecture Behavioral of RISC_SI is
-type dataMemoryArray is array (0 to 255) of std_logic_vector(7 downto 0);
-signal DataM : dataMemoryArray := (others => x"00");
+architecture Behavioral of Counter is
+
 signal Value: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
 
-begin 
+begin
+
 process
 begin
     wait until CLK'Event and CLK='1';
-    
-    if(RST/='0') then
-        if(RW='0') then -- écriture
-            DataM(to_integer(unsigned(add)))<= INPUT;
-           -- Value <= INPUT;
-        else -- (RW='1')  lecture 
-            Value <= add;
+        if(A_F='1') then
+        Value <= NUM;
+        else 
+        Value <= NUM+1;
         end if;
-    else
-        for i in 0 to 255 loop
-            DataM(i) <= ( others => '0');   
-        end loop;
-    end if;
 end process;
-OUTPUT<=DataM(to_integer(unsigned(Value)));
+
+OUTPUT<=Value;
+
 end Behavioral;
