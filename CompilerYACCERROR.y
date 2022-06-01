@@ -5,6 +5,7 @@
 #include "y.tab.h"
 #define SIZE_TEMP 20 
 // SIZE_TEMP => adresse retour et Taille de variable temporaire
+extern int yylineno;
 void yyerror(char *s);
 int depth = 0;
 int add;
@@ -13,32 +14,40 @@ char value[SIZE_TEMP];
 char operat[4];
 int d = -1; // rajouter une erreur s'il n'est pas à -1 à la fin { } non fermée
 int o = -1;
+int p=-1;
+int cptfcarg = -1;
 int debuto[SIZE_TEMP];
 int compteurdeif[SIZE_TEMP];
 int compteurfonction[SIZE_TEMP]; 
+int compteurarguments[SIZE_TEMP]; 
 int retour;
+int paramfunc=0;
+int pose=0;
 int f = -1; //index to get the actual function
 int compteurELSIF[SIZE_TEMP];
 int error = 0;
 int function_detected=0;
- 
+char ArgumentsFonction[38]="";
+char * Tableau[20][20];
+int nb_param=0;
 int boolean;
+int pile[40];
 char* instructions[256][4];
 int compteurinstructions=0;
 int FinStruct=0;
+int finlecture=-1;
 int temp =0;
+int adrfunc;
 int valueInt;
 char si[38]=""; // Taille d'un integer
 FILE *finstructions;
 FILE *fp;
-// FUNCTION :Attention adresse retour : sum() addr retour=>JMP addr retour , 
-//mais si l'on relance cela ne marche pas , 
-//on peut envisager un test boolean pour savoir si opér déjà effectuée ou 
+
 // ecriture dans un tableau de fonction du type tableaufonction[fonction][ligne][colonne]
-// Creer un Label LR qui sera interpreté par python et qui fait des retours seul
-// ou alors creer une nouvelle fonction "Call" function
-// REGLER JMP FUNCTION
-// ET LES AFC/CPY EN FIN DE FONCTION SUR L'ADRESSE RETOUR
+// Creer une fonction qui cherche Variable fonction et retourne un nombre de param et adresse associé
+// tq pointeur  struct id, nb_param, add INT INT INT
+// REGLER LE SOUCIS DE VARIABLE NON DEFINIE DANS LE CAS DUNE FONCTION (On peut creer directement au debut les paramètres demandés puis les supprimer par la suite)
+// exemple Insertnode(.. a .. depth+1) et dans l'appel de fonction changer la valeur de ... a .. depth+1
 %}
 %union
 {
@@ -124,11 +133,12 @@ expression
 // FUNCTION A TERMINER SOUCIS DE RACCORD ENTRE VARIABLE + 
 function
     : tINT tVARNAME tPOPEN tPCLOSE {
+        f++;
         if (function_detected==0){
             compteurinstructions++;
             function_detected++;
         } //à mettre pour la première fonction
-        insertNode($2,"Function",compteurinstructions+1,depth);depth++;} statement {printf("fonction\n");}
+        insertNode($2,"Function",compteurinstructions+1,0);depth++;} statement {printf("fonction\n");}
        { 
         printf("ERROR insert node %s %d \n", $2, $6);
          //retiens le début de la fonction
@@ -138,21 +148,59 @@ function
         instructions[compteurinstructions][0]="LR";
         
         compteurinstructions++;
-        deletebyDepth(depth);
+        //deletebyDepth(depth);
         depth--;
       } 
     
            
          
   //  | tVOID tVARNAME tPOPEN tPCLOSE statement { printf("ERROR 6 \n"); } 
-   // | {printf("ERROR 4 \n");} tINT tVARNAME tPOPEN parameters tPCLOSE statement {printf("fonction\n");}
+    | tINT tVARNAME tPOPEN {insertFunction($2,0);}parameters tPCLOSE  {
+        if (function_detected==0){
+            compteurinstructions++;
+            function_detected++;
+        } 
+       // int $2 = cptfcarg++;
+        //compteurarguments[$2]=nb_param;
+        ChangeParam($2,nb_param+1);
+        pose++;
+        nb_param=0; //à mettre pour la première fonction
+        insertNode($2,"Function",compteurinstructions+1,0);depth++; 
+        printf("profondeur  après%d",depth); } statement {printf("fonction\n");}
+       { 
+        
+         //retiens le début de la fonction
+       // changeValuebyadd(retour,"int",$6);
+        //AFC Retour temporaire 
+
+        instructions[compteurinstructions][0]="LR";
+        
+        compteurinstructions++;
+       // deletebyDepth(depth);
+        depth--;
+
+      } 
     //| function function
     ;
 parameters
-    : tINT tVARNAME
+    : tINT tVARNAME {printf("profondeur %d",depth+1);
+  //  strcpy(ArgumentsFonction,$2);
+     Tableau[pose][nb_param]=malloc(1);
+     strcpy(Tableau[pose][nb_param],$2);
+     printf("CECI EST L'ARGUMENT %d %s\n",nb_param,Tableau[pose][nb_param]);
+
+    insertNode($2,"int",0,depth+1);}
   //  | tCHAR tVARNAME
-    | tINT tVARNAME tCOMA parameters {nb_param[f]++;}// compteur d'arguments 
- //   | tCHAR tVARNAME tCOMA parameters
+    | tINT tVARNAME {
+        
+        printf("nombre de param %d",nb_param);
+        
+        Tableau[pose][nb_param]=malloc(1);
+        strcpy(Tableau[pose][nb_param],$2);
+        printf("CECI EST L'ARGUMENT %d %s\n",nb_param,Tableau[pose][nb_param]);
+        nb_param++;
+        insertNode($2,"int",0,depth+1);
+     } tCOMA parameters // compteur d'arguments 
     ;
 
     // : type tVARNAME tEQUAL tAPOS tVARNAME tAPOS tSEMICOLON // string dans file, on peut transformer en ascii sur un registre et le traduire lorsqu'appelé
@@ -180,7 +228,7 @@ declaration_pointeur
     }
     |tMULT tVARNAME   tEQUAL calcul_multiple {
         //printf("TEST %d %s",$4,$2);
-        add = Value(findByID($2));
+        add = Value(findByID($2,depth));
         printf("addresse normal %d et son type \n",add);
         /* // Problème ici pour dire que const n'est pas modif
         printf("addresse normal %d et son type %s\n",add,TypeByID(add));
@@ -227,10 +275,10 @@ expression_arithmetic
    
     | tVARNAME tEQUAL calcul_multiple tSEMICOLON  /* cas où l'on change la value d'une variable existante  a = 1+7+a-b*/
     {
-       add= findByID($1);
+       add= findByID($1,depth);
        //printf("l'adresse %d\n",add);
        if (add==-1){
-           printf("Variable non définie ligne %d \n", yylval.nline);
+           printf("Variable %s non définie ligne %d \n",$1, yylineno/2+1);
            yyerror("undefined \n");
            error = 1;
            break;
@@ -238,7 +286,7 @@ expression_arithmetic
        char t[20] = "const";
        if (strcmp(t,TypeByID($1))==0){
            
-           printf("Constante inmodifiable ligne %d\n",compteurinstructions);
+           printf("Constante %s inmodifiable ligne %d\n", $1 ,yylineno/2+1);
            yyerror("cannot be altered\n");
            error = 1;
            break;
@@ -265,16 +313,16 @@ expression_print
     : tPRINTF tPOPEN  tVARNAME tPCLOSE tSEMICOLON {
        // printf("AAAAAAAAAAA");
         // fprintf(fp,"PRI %s\n", $3);
-        add= findByID($3);
+        add= findByID($3,depth);
         
         if (add==-1){
-            printf("variable %s non définie error ligne %d\n ", $3,compteurinstructions);
+            printf("variable %s non définie error ligne %d\n ", $3,yylineno/2+1);
            yyerror("undefined\n");
            error = 1;
            break;
        }
        if (Value(add)==-256){
-           printf("Valeur %s null non initée\n",$3);
+           printf("Valeur %s null non initée ligne %d\n",$3,yylineno/2+1);
            yyerror("NULL\n");
            error = 1;
             break;
@@ -290,17 +338,17 @@ expression_print
     | tPRINTF tPOPEN  tMULT tVARNAME tPCLOSE tSEMICOLON {
        // printf("AAAAAAAAAAA");
         // fprintf(fp,"PRI %s\n", $3);
-        add= Value(findByID($4));
+        add= Value(findByID($4,depth));
         printf("CETTE VALEUR %d",add);
         if (add==-1){
-            printf("variable %s non définie error ligne %d\n ", $4,compteurinstructions);
+            printf("variable %s non définie error ligne %d\n ", $4,yylineno/2+1);
            yyerror("undefined\n");
            error = 1;
            break;
        }
         printf("Value(add) %d\n",Value(add));
         if (Value(add)==(-256)){
-           printf("Valeur %s null non initée\n",$4);
+           printf("Constante %s inmodifiable ligne %d\n", $1,yylineno/2+1);
            yyerror("NULL\n");
            error = 1;
             break;
@@ -353,8 +401,8 @@ variable_multiple
      //   printf("Depth !!!%d\n", depth);
         // print("%s",type);
         //if (!($3 ==1 || $3 ==0)) {
-        if (findByID($1) != -1){
-            printf("variable %s déjà instanciée error ligne %d\n ", $1, compteurinstructions);
+        if (findByID($1,depth) != -1){
+            printf("variable %s déjà instanciée error ligne %d\n ", $1, yylineno/2+1);
             yyerror("already instantiated\n ");
             error = 1;
             break;
@@ -383,15 +431,17 @@ variable_multiple
     }
     | variable_multiple tCOMA variable_multiple 
     | tVARNAME 
-    { if (findByID($1) != -1){
-            printf("variable %s déjà instanciée error ligne %d\n ", $1, compteurinstructions);
+    { if (findByID($1,depth) != -1){
+            printf("variable %s déjà instanciée error ligne %d\n ", $1, yylineno/2+1);
             yyerror("already instantiated\n ");
             error = 1;
             break;
         }
         add = insertNode($1,type,-256,depth);
         }// cas triviaux a
+    
     ;
+
 
 calcul_multiple
     
@@ -525,9 +575,10 @@ calcul_multiple
     {
      //   printf("tVARNAME %s\n", $1);
        // printf("value integer %d\n", findByID($1));   
-        add =findByID($1);
+       printf("%s %s %d\n",$1,$1,depth);
+        add =findByID($1,depth);
         if (add==-1){
-            printf("variable %s non définie error ligne %d\n ", $1, compteurinstructions);
+            printf("variable %s non définie error ligne %d\n ", $1, yylineno/2+1);
            yyerror("undefined\n");
            error = 1;
            break;
@@ -538,9 +589,9 @@ calcul_multiple
     | tDEC {printf("%.2f\n", yylval.double_val);}
     | tMULT tVARNAME {
         
-        add =findByID($2);
+        add =findByID($2,depth);
         if (add==-1){
-            printf("variable %s non définie error ligne %d\n ", $1, compteurinstructions);
+            printf("variable %s non définie error ligne %d\n ", $1, yylineno/2+1);
            yyerror("undefined\n");
            error = 1;
            break;
@@ -549,7 +600,7 @@ calcul_multiple
        $$ = Value(add);
     }
     | tET tVARNAME {
-        add = findByID($2);
+        add = findByID($2,depth);
         temp = (temp+1)%(SIZE_TEMP-1);
         changeValuebyadd(temp,type,add);
         instructions[compteurinstructions][0]="AFC";
@@ -573,8 +624,7 @@ calcul_multiple
         //printf("ERROR 5 \n");
        // f++;
         instructions[compteurinstructions][0]="BJ";
-        snprintf( si, 39, "%d", Value(findByID($1)));
-        printf("ROOOOOOOOOOT ME %d\n",Value(findByID($1)));
+        snprintf( si, 39, "%d", Value(findByID($1,0)));
         instructions[compteurinstructions][1]=malloc(1);
         strcpy(instructions[compteurinstructions][1],si); 
         compteurinstructions++;
@@ -582,11 +632,55 @@ calcul_multiple
 
         $$=SIZE_TEMP-1;
     }
-    |tVARNAME tPOPEN Param tPCLOSE
+    |tVARNAME tPOPEN {finlecture=p; nb_param=0;adrfunc= findFunction($1);printf("FUN?CTION %s ADR %d\n",$1,adrfunc); paramfunc=findParam($1);} Param tPCLOSE
+     {
+       if ( nb_param < paramfunc){
+            yyerror("nombre de paramètres non respecté, pas assez de paramètre \n");
+        }
+        printf("ON RENTRE BIEN ICI \n");
+        instructions[compteurinstructions][0]="BJ";
+        snprintf( si, 39, "%d", Value(findByID($1,0)));
+        instructions[compteurinstructions][1]=malloc(1);
+        strcpy(instructions[compteurinstructions][1],si); 
+        compteurinstructions++;
+        for(p; p>finlecture; p=p-2){
+            printf("Tableau =%s \n",Tableau[0][2]);
+            instructions[compteurinstructions][0]="AFC";
+            snprintf( si, 39, "%d", pile[p]);
+            instructions[compteurinstructions][1]=malloc(1);
+            strcpy(instructions[compteurinstructions][1],si);
+            snprintf( si, 39, "%d", pile[p-1]);
+            instructions[compteurinstructions][2]=malloc(1);
+            strcpy(instructions[compteurinstructions][2],si);
+            compteurinstructions++;
+            changeValuebyadd(pile[p],"int",pile[p-1]);
+            
+        }
+        
+        $$=SIZE_TEMP-1;
+        printf("ON RENTRE BIEN ICI \n");
+    }
     ;
 Param
-    :tVARNAME {Value(find)}
-    |tVARNAME Param
+    :tVARNAME {
+        if ( nb_param == paramfunc){
+            yyerror("nombre de paramètres non respecté, trop de paramètre \n");
+        }
+       // printf("PROFONDEUR DEPTH %d %s\n",depth+1,Tableau[adrfunc][nb_param]);
+        p++;pile[p]=Value(findByID($1,depth));p++;pile[p]=findByID($1,depth);changeValueadd(Tableau[adrfunc][nb_param],"int",pile[p],depth+1);
+         instructions[compteurinstructions][0]="AFC";
+         
+         snprintf( si, 39, "%d", findByID(Tableau[adrfunc][nb_param],depth+1));
+        instructions[compteurinstructions][1]=malloc(1);
+        strcpy(instructions[compteurinstructions][1],si);
+        snprintf( si, 39, "%d", pile[p-1]);
+        instructions[compteurinstructions][2]=malloc(1);
+        strcpy(instructions[compteurinstructions][2],si);
+        compteurinstructions++;
+        nb_param++;
+                
+        }
+    |Param tCOMA Param
     ;
 
 iteration_statement
@@ -604,14 +698,14 @@ iteration_statement
         compteurdeif[d]=compteurinstructions; 
         //printf("LE COMPTEUR AFFICHE %d \n",compteurdeif[d]);
         compteurinstructions++;
-        depth++;} statement {
+        } statement {
         instructions[compteurinstructions][0]="JMP";
         snprintf( si, 39, "%d", compteurdeif[d-1]);
         instructions[compteurinstructions][1]=malloc(1);
         strcpy(instructions[compteurinstructions][1],si); 
         compteurinstructions++;
         snprintf( si, 39, "%d", compteurinstructions+1);
-        strcpy(instructions[compteurdeif[d]][2],si);deletebyDepth(depth); d=d-2; depth--;} //rajouter JMP au debut du while avec test condition à chaque fin de while 
+        strcpy(instructions[compteurdeif[d]][2],si); d=d-2;} //rajouter JMP au debut du while avec test condition à chaque fin de while 
     | tIF conditioner {boolean=$2;
         instructions[compteurinstructions][0]="JMF";
         snprintf( si, 39, "%d", boolean);
@@ -624,7 +718,7 @@ iteration_statement
         compteurdeif[d]=compteurinstructions; 
        // printf("LE COMPTEUR AFFICHE %d \n",compteurdeif[d]);
         compteurinstructions++;
-        depth++;} statement BlocIf 
+        } statement BlocIf 
     //| tIF conditioner {printf("t3\n");depth++;} statement  elsif {deletebyDepth(depth); depth--;}
         // je retiens d pour jump au prochain elsif j'efface ce d et le réutilise pour le prochain jump elsif ? 
         // on peut utiliser un tableau qui retient une vingtaine de d pour les elsif imbriqués
@@ -634,10 +728,9 @@ BlocIf
     :
         {snprintf( si, 39, "%d", compteurinstructions+1);
         strcpy(instructions[compteurdeif[d]][2],si); 
-        d--; 
-        deletebyDepth(depth);
+        
         // printf("Je supprime %d\n",depth); 
-        depth--;} // free depth
+        } // free depth
     |
         {instructions[compteurinstructions][0]="JMP";
         snprintf( si, 39, "%d", compteurinstructions);
@@ -652,10 +745,10 @@ BlocIf
         } 
     tELSE statement 
         {
-        snprintf( si, 39, "%d", compteurinstructions+1);strcpy(instructions[compteurdeif[d]][1],si); deletebyDepth(depth);d=d-2; depth--;
+        snprintf( si, 39, "%d", compteurinstructions+1);strcpy(instructions[compteurdeif[d]][1],si); d=d-2;
         }
     |{
-        deletebyDepth(depth);depth--;o++;
+        o++;
       debuto[depth]=o; 
       instructions[compteurinstructions][0]="JMP"; 
       instructions[compteurinstructions][1]=malloc(1); 
@@ -683,7 +776,7 @@ BlocIf
         snprintf( si, 39, "%d", compteurinstructions+1);
         strcpy(instructions[compteurdeif[d]][2],si);
         d--; } 
-    elsif {depth--;} 
+    elsif 
         
     ;
 
@@ -879,7 +972,7 @@ conditioner
 %%
 yyerror(char *s)
 {
-  fprintf(stderr, "%s\n", s);
+  fprintf(stderr, "error line %d: %s\n", yylineno/2+1, s);
   exit(-1);
 }
 

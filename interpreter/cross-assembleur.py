@@ -5,7 +5,9 @@ Data_Memory={}
 #While not end of line
 i = 0
 #print(len(lines))
-while (i<len(lines)) :
+k=1
+j= []
+while (i<len(lines) and k) :
     
     arr = lines[i].split(" ")
     aro = arr[0]
@@ -60,6 +62,7 @@ while (i<len(lines)) :
     elif(aro=="DIV"):
             if (Data_Memory[str(arr[3])]==0):
                 print("Forbidden Division")
+                k =0
                 break
             else :
                 Data_Memory[str(arr[1])]=int(int(Data_Memory[str(arr[2])])/int(Data_Memory[str(arr[3])]))
@@ -83,6 +86,11 @@ while (i<len(lines)) :
    
     elif(aro=="INFE"):
         Data_Memory[str(arr[1])] = (int(Data_Memory[str(arr[2])])<=int(Data_Memory[str(arr[3])]))
+   elif(aro=="LR"):
+        i=j.pop()
+    elif(aro=="BJ"):
+        j.append(i)
+        i = int(arr[1])-2     
     i+=1                         
     
             

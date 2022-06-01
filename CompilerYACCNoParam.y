@@ -128,7 +128,7 @@ function
             compteurinstructions++;
             function_detected++;
         } //à mettre pour la première fonction
-        insertNode($2,"Function",compteurinstructions+1,depth);depth++;} statement {printf("fonction\n");}
+        insertNode($2,"Function",compteurinstructions+1,0);depth++;} statement {printf("fonction\n");}
        { 
         printf("ERROR insert node %s %d \n", $2, $6);
          //retiens le début de la fonction
@@ -151,7 +151,7 @@ function
 parameters
     : tINT tVARNAME
   //  | tCHAR tVARNAME
-    | tINT tVARNAME tCOMA parameters {nb_param[f]++;}// compteur d'arguments 
+    | tINT tVARNAME tCOMA parameters // compteur d'arguments 
  //   | tCHAR tVARNAME tCOMA parameters
     ;
 
@@ -180,7 +180,7 @@ declaration_pointeur
     }
     |tMULT tVARNAME   tEQUAL calcul_multiple {
         //printf("TEST %d %s",$4,$2);
-        add = Value(findByID($2));
+        add = Value(findByID($2,depth));
         printf("addresse normal %d et son type \n",add);
         /* // Problème ici pour dire que const n'est pas modif
         printf("addresse normal %d et son type %s\n",add,TypeByID(add));
@@ -227,10 +227,10 @@ expression_arithmetic
    
     | tVARNAME tEQUAL calcul_multiple tSEMICOLON  /* cas où l'on change la value d'une variable existante  a = 1+7+a-b*/
     {
-       add= findByID($1);
+       add= findByID($1,depth);
        //printf("l'adresse %d\n",add);
        if (add==-1){
-           printf("Variable non définie ligne %d \n", yylval.nline);
+           printf("Variable non définie ligne %d \n", compteurinstructions);
            yyerror("undefined \n");
            error = 1;
            break;
@@ -265,7 +265,7 @@ expression_print
     : tPRINTF tPOPEN  tVARNAME tPCLOSE tSEMICOLON {
        // printf("AAAAAAAAAAA");
         // fprintf(fp,"PRI %s\n", $3);
-        add= findByID($3);
+        add= findByID($3,depth);
         
         if (add==-1){
             printf("variable %s non définie error ligne %d\n ", $3,compteurinstructions);
@@ -290,7 +290,7 @@ expression_print
     | tPRINTF tPOPEN  tMULT tVARNAME tPCLOSE tSEMICOLON {
        // printf("AAAAAAAAAAA");
         // fprintf(fp,"PRI %s\n", $3);
-        add= Value(findByID($4));
+        add= Value(findByID($4,depth));
         printf("CETTE VALEUR %d",add);
         if (add==-1){
             printf("variable %s non définie error ligne %d\n ", $4,compteurinstructions);
@@ -353,7 +353,7 @@ variable_multiple
      //   printf("Depth !!!%d\n", depth);
         // print("%s",type);
         //if (!($3 ==1 || $3 ==0)) {
-        if (findByID($1) != -1){
+        if (findByID($1,depth) != -1){
             printf("variable %s déjà instanciée error ligne %d\n ", $1, compteurinstructions);
             yyerror("already instantiated\n ");
             error = 1;
@@ -383,7 +383,7 @@ variable_multiple
     }
     | variable_multiple tCOMA variable_multiple 
     | tVARNAME 
-    { if (findByID($1) != -1){
+    { if (findByID($1,depth) != -1){
             printf("variable %s déjà instanciée error ligne %d\n ", $1, compteurinstructions);
             yyerror("already instantiated\n ");
             error = 1;
@@ -525,7 +525,7 @@ calcul_multiple
     {
      //   printf("tVARNAME %s\n", $1);
        // printf("value integer %d\n", findByID($1));   
-        add =findByID($1);
+        add =findByID($1,depth);
         if (add==-1){
             printf("variable %s non définie error ligne %d\n ", $1, compteurinstructions);
            yyerror("undefined\n");
@@ -538,7 +538,7 @@ calcul_multiple
     | tDEC {printf("%.2f\n", yylval.double_val);}
     | tMULT tVARNAME {
         
-        add =findByID($2);
+        add =findByID($2,depth);
         if (add==-1){
             printf("variable %s non définie error ligne %d\n ", $1, compteurinstructions);
            yyerror("undefined\n");
@@ -549,7 +549,7 @@ calcul_multiple
        $$ = Value(add);
     }
     | tET tVARNAME {
-        add = findByID($2);
+        add = findByID($2,depth);
         temp = (temp+1)%(SIZE_TEMP-1);
         changeValuebyadd(temp,type,add);
         instructions[compteurinstructions][0]="AFC";
@@ -573,8 +573,8 @@ calcul_multiple
         //printf("ERROR 5 \n");
        // f++;
         instructions[compteurinstructions][0]="BJ";
-        snprintf( si, 39, "%d", Value(findByID($1)));
-        printf("ROOOOOOOOOOT ME %d\n",Value(findByID($1)));
+        snprintf( si, 39, "%d", Value(findByID($1,0)));
+        printf("ROOOOOOOOOOT ME %d\n",Value(findByID($1,0)));
         instructions[compteurinstructions][1]=malloc(1);
         strcpy(instructions[compteurinstructions][1],si); 
         compteurinstructions++;
@@ -582,11 +582,6 @@ calcul_multiple
 
         $$=SIZE_TEMP-1;
     }
-    |tVARNAME tPOPEN Param tPCLOSE
-    ;
-Param
-    :tVARNAME {Value(find)}
-    |tVARNAME Param
     ;
 
 iteration_statement
@@ -604,14 +599,14 @@ iteration_statement
         compteurdeif[d]=compteurinstructions; 
         //printf("LE COMPTEUR AFFICHE %d \n",compteurdeif[d]);
         compteurinstructions++;
-        depth++;} statement {
+        } statement {
         instructions[compteurinstructions][0]="JMP";
         snprintf( si, 39, "%d", compteurdeif[d-1]);
         instructions[compteurinstructions][1]=malloc(1);
         strcpy(instructions[compteurinstructions][1],si); 
         compteurinstructions++;
         snprintf( si, 39, "%d", compteurinstructions+1);
-        strcpy(instructions[compteurdeif[d]][2],si);deletebyDepth(depth); d=d-2; depth--;} //rajouter JMP au debut du while avec test condition à chaque fin de while 
+        strcpy(instructions[compteurdeif[d]][2],si); d=d-2;} //rajouter JMP au debut du while avec test condition à chaque fin de while 
     | tIF conditioner {boolean=$2;
         instructions[compteurinstructions][0]="JMF";
         snprintf( si, 39, "%d", boolean);
@@ -624,7 +619,7 @@ iteration_statement
         compteurdeif[d]=compteurinstructions; 
        // printf("LE COMPTEUR AFFICHE %d \n",compteurdeif[d]);
         compteurinstructions++;
-        depth++;} statement BlocIf 
+        } statement BlocIf 
     //| tIF conditioner {printf("t3\n");depth++;} statement  elsif {deletebyDepth(depth); depth--;}
         // je retiens d pour jump au prochain elsif j'efface ce d et le réutilise pour le prochain jump elsif ? 
         // on peut utiliser un tableau qui retient une vingtaine de d pour les elsif imbriqués
@@ -634,10 +629,9 @@ BlocIf
     :
         {snprintf( si, 39, "%d", compteurinstructions+1);
         strcpy(instructions[compteurdeif[d]][2],si); 
-        d--; 
-        deletebyDepth(depth);
+        
         // printf("Je supprime %d\n",depth); 
-        depth--;} // free depth
+        } // free depth
     |
         {instructions[compteurinstructions][0]="JMP";
         snprintf( si, 39, "%d", compteurinstructions);
@@ -652,10 +646,10 @@ BlocIf
         } 
     tELSE statement 
         {
-        snprintf( si, 39, "%d", compteurinstructions+1);strcpy(instructions[compteurdeif[d]][1],si); deletebyDepth(depth);d=d-2; depth--;
+        snprintf( si, 39, "%d", compteurinstructions+1);strcpy(instructions[compteurdeif[d]][1],si); d=d-2;
         }
     |{
-        deletebyDepth(depth);depth--;o++;
+        o++;
       debuto[depth]=o; 
       instructions[compteurinstructions][0]="JMP"; 
       instructions[compteurinstructions][1]=malloc(1); 
@@ -683,7 +677,7 @@ BlocIf
         snprintf( si, 39, "%d", compteurinstructions+1);
         strcpy(instructions[compteurdeif[d]][2],si);
         d--; } 
-    elsif {depth--;} 
+    elsif 
         
     ;
 
