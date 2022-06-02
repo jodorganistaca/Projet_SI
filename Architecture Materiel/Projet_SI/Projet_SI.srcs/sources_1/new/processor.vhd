@@ -153,10 +153,7 @@ signal OP: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0'); -- Op : 23 down to
 signal B: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0'); -- B : 15 down to 8 addA
 signal C: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0'); -- C : 7 down to 0 addB
 
-signal ROM_A: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
 signal ROM_OP: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
-signal ROM_B: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
-signal ROM_C: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
 
 
 signal LI_DI_A: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
@@ -181,10 +178,10 @@ signal EX_MEM_C: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
 signal MEM_MUX_A: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
 signal MEM_MUX_B: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
 
+
 signal MEM_RE_A: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
 signal MEM_RE_OP: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
 signal MEM_RE_B: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
-signal MEM_RE_C: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
 
 -- alea gestion
 signal Alea_Found: STD_LOGIC :='0';
@@ -209,28 +206,10 @@ Instructions_Memory_Port_Map:Instructions_Memory  PORT MAP (
     OUTPUT => Instructions_Memory_Output
 );
 
---MUX ZERO Between ROM and LI/DI for alea gestion
-ROM_A <= 
-    --x"00" when (OP=x"05" and LI_DI_OP=x"06") else --COP before an AFC
-    --x"00" when (OP=x"05" and DI_EX_OP=x"06") else --COP before an AFC
-    --x"00" when (OP=x"05" and EX_MEM_OP=x"06") else --COP before an AFC
-    A;
-    
+--MUX ZERO Between ROM and LI/DI for alea gestion    
 ROM_OP <= 
     x"00" when Alea_Found='1' else --COP before an AFC
     OP;
-        
-ROM_B <= 
-    --x"00" when (OP=x"05" and LI_DI_OP=x"06") else --COP before an AFC
-    --x"00" when (OP=x"05" and DI_EX_OP=x"06") else --COP before an AFC
-    --x"00" when (OP=x"05" and EX_MEM_OP=x"06") else --COP before an AFC
-    B;
-            
-ROM_C <= 
-    --x"00" when (OP=x"05" and LI_DI_OP=x"06") else --COP before an AFC
-    --x"00" when (OP=x"05" and DI_EX_OP=x"06") else --COP before an AFC
-    --x"00" when (OP=x"05" and EX_MEM_OP=x"06") else --COP before an AFC
-    C;
     
 --AFC then COP / STORE then LOAD / LOAD then COP / AFC then ALU OP / ALU then COP / AFC then STORE / ALU then STORE (Alea Cases) 
 Alea_Found <=
@@ -249,26 +228,31 @@ Alea_Found <=
            or OP=x"02"
            or OP=x"03"
            or OP=x"04") and DI_EX_OP=x"06") else --(AFC then ALU OP)
+    '1' when((OP=x"01" 
+           or OP=x"02"
+           or OP=x"03"
+           or OP=x"04") and LI_DI_OP=x"05") else --(COP then ALU OP)
+    '1' when((OP=x"01" 
+           or OP=x"02"
+           or OP=x"03"
+           or OP=x"04") and DI_EX_OP=x"05") else --(COP then ALU OP)
     '1' when((OP=x"05" or OP=x"08") and (LI_DI_OP=x"01" 
-                      or   LI_DI_OP=x"02"
-                      or   LI_DI_OP=x"03"
-                      or   LI_DI_OP=x"04")) else --(ALU then COP/STORE)
+                                    or   LI_DI_OP=x"02"
+                                    or   LI_DI_OP=x"03"
+                                    or   LI_DI_OP=x"04")) else --(ALU then COP/STORE)
     '1' when((OP=x"05" or OP=x"08") and (DI_EX_OP=x"01" 
-                      or   DI_EX_OP=x"02"
-                      or   DI_EX_OP=x"03"
-                      or   DI_EX_OP=x"04")) else --(ALU then COP/STORE)           
+                                    or   DI_EX_OP=x"02"
+                                    or   DI_EX_OP=x"03"
+                                    or   DI_EX_OP=x"04")) else --(ALU then COP/STORE)           
     '1' when (OP=x"08" and LI_DI_OP=x"06") else --AFC then STORE 
     '1' when (OP=x"08" and DI_EX_OP=x"06") else --AFC then STORE 
-    '0';
-    
---Instructions_Memory_Cntrl <=  Instructions_Memory_Cntrl when Alea_Found='1' else Instructions_Memory_Cntrl+1;
- 
+    '0'; 
 
 LI_DI : Buffer_Pipeline PORT MAP (
-    A => ROM_A,
+    A => A,
     OP => ROM_OP,
-    B => ROM_B,
-    C => ROM_C,
+    B => B,
+    C => C,
     CLK => CLK,
     A_Out => LI_DI_A,
     OP_Out => LI_DI_OP,
@@ -395,23 +379,7 @@ begin
         Instructions_Memory_add <= X"00";
         --Instructions_Counter <= X"00";
     elsif(CLK'event and CLK='1') then  
-        --Instructions_Counter <= Instructions_Counter+1;
-        --if(Alea_Found='1') then
-        --    Instructions_Memory_Cntrl <= Instructions_Memory_Cntrl-1;      
-            --Instructions_Counter <= Instructions_Counter+1;
-        --else            
-        --    Instructions_Memory_Cntrl <= Instructions_Memory_Cntrl+1;      
-            --Instructions_Counter <= Instructions_Counter+1;
-        --end if;
-        if(Alea_Found='0') then
-        Instructions_Memory_add<=Instructions_Memory_Cntrl;
-        end if;
-        --Instructions_Counter <= Instructions_Counter+1;  
-        --if(Instructions_Counter=X"05") then
-        --    Instructions_Counter <= X"00";
-            --Instructions_Memory_add<=Instructions_Memory_add+1;
         Instructions_Memory_Cntrl<=Instructions_Counter; 
-        --end if;
     end if; 
 end process;
 
