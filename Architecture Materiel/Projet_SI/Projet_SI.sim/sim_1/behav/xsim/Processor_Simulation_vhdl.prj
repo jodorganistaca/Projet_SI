@@ -1,9 +1,11 @@
 # compile vhdl design source files
 vhdl xil_defaultlib  \
 "../../../../Projet_SI.srcs/sources_1/new/ALU.vhd" \
+"../../../../Projet_SI.srcs/sources_1/new/Counter.vhd" \
 "../../../../Projet_SI.srcs/sources_1/new/Data_Memory.vhd" \
 "../../../../Projet_SI.srcs/sources_1/new/Instructions_Memory.vhd" \
 "../../../../Projet_SI.srcs/sources_1/new/Register.vhd" \
+"../../../../Projet_SI.srcs/sources_1/new/buffer.vhd" \
 "../../../../Projet_SI.srcs/sources_1/new/processor.vhd" \
 "../../../../Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd" \
 

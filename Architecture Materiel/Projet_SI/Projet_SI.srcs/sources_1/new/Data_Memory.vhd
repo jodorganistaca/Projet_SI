@@ -43,7 +43,7 @@ end RISC_SI;
 
 architecture Behavioral of RISC_SI is
 type dataMemoryArray is array (0 to 255) of std_logic_vector(7 downto 0);
-signal DataM : dataMemoryArray;
+signal DataM : dataMemoryArray := (others => x"00");
 signal Value: STD_LOGIC_VECTOR (7 downto 0) := ( others => '0');
 
 begin 

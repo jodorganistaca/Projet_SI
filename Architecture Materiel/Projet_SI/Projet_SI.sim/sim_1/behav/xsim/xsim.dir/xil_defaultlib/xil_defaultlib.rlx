@@ -2,9 +2,16 @@
 2018.2
 Jun 14 2018
 20:07:38
-/home/sorlin/Bureau/Langage et automates/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd,1653579429,vhdl,,,,processor_simulation,,,,,,,,
-/home/sorlin/Bureau/Langage et automates/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/ALU.vhd,1653492084,vhdl,,,,alu,,,,,,,,
-/home/sorlin/Bureau/Langage et automates/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Data_Memory.vhd,1653492084,vhdl,,,,risc_si,,,,,,,,
-/home/sorlin/Bureau/Langage et automates/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Instructions_Memory.vhd,1653579429,vhdl,,,,instructions_memory,,,,,,,,
-/home/sorlin/Bureau/Langage et automates/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Register.vhd,1653579429,vhdl,,,,registers,,,,,,,,
-/home/sorlin/Bureau/Langage et automates/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd,1653579429,vhdl,,,,processor,,,,,,,,
+/home/organist/Documents/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Data_Memory_Simulation.vhd,1652177631,vhdl,,,,risc_si_simulation,,,,,,,,
+/home/organist/Documents/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Instructions_Memory_Simulation.vhd,1652172376,vhdl,,,,instructions_memory_simulation,,,,,,,,
+/home/organist/Documents/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Simulation_ALU.vhd,1650528750,vhdl,,,,simulation_alu,,,,,,,,
+/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Buffer_Pipeline_Simulation.vhd,1653555454,vhdl,,,,buffer_pipeline_simulation,,,,,,,,
+/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Processor_Simulation.vhd,1654174449,vhdl,,,,processor_simulation,,,,,,,,
+/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sim_1/new/Registers_Simulation.vhd,1653900541,vhdl,,,,registers_simulation,,,,,,,,
+/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/ALU.vhd,1654174449,vhdl,,,,alu,,,,,,,,
+/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Counter.vhd,1654174449,vhdl,,,,counter,,,,,,,,
+/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Data_Memory.vhd,1654174450,vhdl,,,,risc_si,,,,,,,,
+/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Instructions_Memory.vhd,1654174450,vhdl,,,,instructions_memory,,,,,,,,
+/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/Register.vhd,1653568438,vhdl,,,,registers,,,,,,,,
+/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/buffer.vhd,1653662114,vhdl,,,,buffer_pipeline,,,,,,,,
+/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.srcs/sources_1/new/processor.vhd,1654174450,vhdl,,,,processor,,,,,,,,

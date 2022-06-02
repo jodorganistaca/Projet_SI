@@ -3,7 +3,7 @@
 <!--                                                         -->
 <!-- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="38" Path="/home/sorlin/Bureau/Langage et automates/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.xpr">
+<Project Version="7" Minor="38" Path="/home/organist/Documents/repo/Projet_SI/Architecture Materiel/Projet_SI/Projet_SI.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="a1930c5de3264d199e48c8b14d2692ce"/>
@@ -32,7 +32,7 @@
     <Option Name="DSAVendor" Val="xilinx"/>
     <Option Name="DSABoardId" Val="basys3"/>
     <Option Name="DSANumComputeUnits" Val="60"/>
-    <Option Name="WTXSimLaunchSim" Val="184"/>
+    <Option Name="WTXSimLaunchSim" Val="626"/>
     <Option Name="WTModelSimLaunchSim" Val="0"/>
     <Option Name="WTQuestaLaunchSim" Val="0"/>
     <Option Name="WTIesLaunchSim" Val="0"/>
@@ -62,8 +62,14 @@
       <Filter Type="Srcs"/>
       <File Path="$PSRCDIR/sources_1/new/ALU.vhd">
         <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../../../RISC_SI/RISC_SI.srcs/sources_1/new/ALU.vhd"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../../../../../RISC_SI/RISC_SI.srcs/sources_1/new/ALU.vhd"/>
           <Attr Name="ImportTime" Val="1649314559"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/new/Counter.vhd">
+        <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
@@ -76,7 +82,7 @@
       </File>
       <File Path="$PSRCDIR/sources_1/new/Instructions_Memory.vhd">
         <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../../../RISC_SI/RISC_SI.srcs/sources_1/new/Instructions_Memory.vhd"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../../../../../RISC_SI/RISC_SI.srcs/sources_1/new/Instructions_Memory.vhd"/>
           <Attr Name="ImportTime" Val="1649314916"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -84,8 +90,14 @@
       </File>
       <File Path="$PSRCDIR/sources_1/new/Register.vhd">
         <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../../../RISC_SI/RISC_SI.srcs/sources_1/new/Register.vhd"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../../../../../RISC_SI/RISC_SI.srcs/sources_1/new/Register.vhd"/>
           <Attr Name="ImportTime" Val="1649314903"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/new/buffer.vhd">
+        <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
@@ -123,6 +135,13 @@
         </FileInfo>
       </File>
       <File Path="$PSRCDIR/sim_1/new/Registers_Simulation.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sim_1/new/Buffer_Pipeline_Simulation.vhd">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
