@@ -1,4 +1,13 @@
-file1 = open('../output/assembleur.asm', 'r')
+
+import argparse
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument('--file', required=True)
+
+args = parser.parse_args()
+
+file1 = open(f'{args.file}', 'r')
 
 lines = file1.readlines()
 Data_Memory={}

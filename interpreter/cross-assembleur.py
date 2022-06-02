@@ -1,5 +1,14 @@
-file1 = open('../output/assembleur.asm', 'r')
-file2=open('../output/crossassembleur.txt', 'w')
+import argparse
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument('--file', required=True)
+parser.add_argument('--output', required=True)
+
+args = parser.parse_args()
+
+file1 = open(f'{args.file}', 'r')
+file2 = open(f'{args.output}', 'w')
 lines = file1.readlines()
 Data_Memory={}
 #While not end of line
@@ -24,7 +33,7 @@ while (i<len(lines) and k) :
         pt2=str(hex(int(int(arr[2])/16))[2:])+str(hex(int(arr[2])%16)[2:])
         Data_Memory[str(arr[1])]=int(arr[2])
         file2.write(pt+"06"+pt2+"00\n") 
-        print(pt+"05"+pt2+"00\n")
+        #print(pt+"05"+pt2+"00\n")
             
     elif(aro=="COP") :
         Data_Memory[str(arr[1])]=Data_Memory[str(arr[2])]

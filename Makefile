@@ -24,3 +24,9 @@ $(BIN): $(OBJ)
 clean:
 	rm $(OBJ) y.tab.c y.tab.h lex.yy.c
 
+interpretate:
+	python ./interpreter/interpreter.py --file ./output/assembleur.asm
+
+cross:
+	python ./interpreter/cross-assembleur.py --file ./output/assembleur.asm --output ./output/crossassembleur.txt
+

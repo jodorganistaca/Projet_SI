@@ -576,7 +576,7 @@ calcul_multiple
     {
      //   printf("tVARNAME %s\n", $1);
        // printf("value integer %d\n", findByID($1));   
-       printf("%s %s %d\n",$1,$1,depth);
+      // printf("%s %s %d\n",$1,$1,depth);
         add =findByID($1,depth);
         if (add==-1){
             printf("variable %s non définie error ligne %d\n ", $1, yylineno/2+1);
