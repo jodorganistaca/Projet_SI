@@ -1,8 +1,12 @@
 #include "linkedList.h"
-
+#include "y.tab.h"
 struct Node *head = NULL;
 struct Node *current = NULL;
+struct Function *pointhead = NULL;
+struct Function *pointcurrent = NULL;
 int pos = INITAL_SIZE;
+int posfunc=0;
+
 
 void printNode(struct Node *node){
     printf("%s | %d | %s | %d | %d \n", 
@@ -75,19 +79,20 @@ int insertNode(char identifier[200], char type[20], int value, int deep){ // ger
     return data->address;
 }
 
-void changeValueadd(char identifier[200],char type[20], int value){
+void changeValueadd(char identifier[200],char type[20], int value, int depth){
     char t[20] = "const";
     if (strcmp(t,type)!=0){
-        int add = findByID(identifier);
+        int add = findByID(identifier,depth);
         struct Node *node = find(add);
-        
+        printf("OK\n");
         if (node != NULL){
             struct Data *data = node->data;
             data->value =value;
 
         }
     }else{
-        printf("ERROR EXIT -1 A ECRIRE\n");
+        printf("ERROR EXIT -1 CONSTANT CHANGED VALUE\n");
+       // yyerror("cannot be altered\n");
     }
 
 }
@@ -99,8 +104,8 @@ void changeValuebyadd(int address,char type[20], int value){
 
     while (current != NULL){
         if(current->data->address == address){
-            printf("Node found! \n");
-            printNode(current);
+           // printf("Node found! \n");
+            //printNode(current);
             current->data->value =value;
             break;
         }
@@ -117,8 +122,8 @@ void deleteFirstNode(){
         
         head = head -> next;
 
-        printf("Eliminated Node: \n");
-        printNode(tempPtr);
+        //printf("Eliminated Node: \n");
+        //printNode(tempPtr);
         
         free(tempPtr);
     
@@ -130,8 +135,8 @@ void deleteAll(){
         
         head = head -> next;
 
-        printf("Eliminated Node: \n");
-        printNode(tempPtr);
+       // printf("Eliminated Node: \n");
+       // printNode(tempPtr);
         
         free(tempPtr);
     
@@ -152,7 +157,7 @@ void deletebyDepth(int depth){
         
                 current -> next = current -> next -> next;
 
-                printf("Node to be deleted! \n");
+             //   printf("Node to be deleted! \n");
                 printNode(nodeToDelete);
                 
                 free(nodeToDelete);           
@@ -174,7 +179,7 @@ struct Node* find(int address){
 
     while (current != NULL){
         if(current->data->address == address){
-            printf("Node found! \n");
+           // printf("Node found! \n");
             printNode(current);
             return current;
         }
@@ -187,34 +192,50 @@ int Value(int address){
     struct Node *current = head;
 
     if(isEmpty())
-        return NULL;
+        return -256;
 
     while (current != NULL){
         if(current->data->address == address){
-            printf("Node found! \n");
+            //printf("Node found! \n");
             printNode(current);
             return current->data->value;
         }
         current = current -> next;
     }
 
-    return NULL;    
+    return -256;    
 }
 
-int findByID(char identifier[20]){ //deep à ajouter pour plus tard
+int findByID(char identifier[20] , int depth){ //deep à ajouter pour plus tard
     struct Node *current = head;
 
     if(isEmpty())
         return -1;
 
     while (current != NULL){
-        if(strcmp(current->data->identifier, identifier)==0){
+        if(strcmp(current->data->identifier, identifier)==0 && depth==current->data->deep){
             return current->data->address;
         }
         current = current -> next;
     }
 
     return -1;    
+}
+
+char* TypeByID(char identifier[20]){ //deep à ajouter pour plus tard
+    struct Node *current = head;
+
+    if(isEmpty())
+        return "";
+
+    while (current != NULL){
+        if(strcmp(current->data->identifier, identifier)==0){
+            return current->data->type;
+        }
+        current = current -> next;
+    }
+
+    return "";    
 }
 
 void deleteNode(int address){
@@ -230,8 +251,8 @@ void deleteNode(int address){
             
                     current -> next = current -> next -> next;
 
-                    printf("Node to be deleted! \n");
-                    printNode(nodeToDelete);
+                   // printf("Node to be deleted! \n");
+                    //printNode(nodeToDelete);
                     
                     free(nodeToDelete);           
                 }
@@ -242,3 +263,61 @@ void deleteNode(int address){
     }
 }
 
+int insertFunction(char identifier[200], int nb_parametre){ 
+    struct Function *function = (struct Function*)malloc(sizeof(struct Function));
+
+    strcpy(function->identifier, identifier);
+    //printf("INSERT %s \n",function->identifier);
+    function->address = posfunc;
+    posfunc++;
+    function->nb_parametre =nb_parametre;
+
+    struct NodeFunction *NodeFunction = (struct NodeFunction*)malloc(sizeof(struct NodeFunction));
+    NodeFunction -> function = function;
+    NodeFunction -> next = pointhead;
+    pointhead = NodeFunction;
+    return function->address;
+}
+
+int findFunction(char identifier[20]){ //deep à ajouter pour plus tard
+    struct NodeFunction *pointcurrent = pointhead;
+
+   
+    while (pointcurrent != NULL){
+        printf("Function %s %s\n",identifier,pointcurrent->function->identifier);
+        if(strcmp(pointcurrent->function->identifier, identifier)==0){
+            return pointcurrent->function->address;
+        }
+        pointcurrent = pointcurrent -> next;
+    }
+    printf("NULLLL \n");
+
+    return -1;    
+}
+int findParam(char identifier[20]){ //deep à ajouter pour plus tard
+    struct NodeFunction *pointcurrent = pointhead;
+
+    
+    while (pointcurrent != NULL){
+       // printf("Function %s \n",identifier);
+        if(strcmp(pointcurrent->function->identifier, identifier)==0){
+            return pointcurrent->function->nb_parametre;
+        }
+        pointcurrent = pointcurrent -> next;
+    }
+
+    return -1;    
+}
+void ChangeParam(char identifier[20], int nb_parametre){ //deep à ajouter pour plus tard
+    struct NodeFunction *pointcurrent = pointhead;
+
+    
+    while (pointcurrent != NULL){
+       // printf("Function %s \n",identifier);
+        if(strcmp(pointcurrent->function->identifier, identifier)==0){
+            pointcurrent->function->nb_parametre = nb_parametre;
+        }
+        pointcurrent = pointcurrent -> next;
+    }  
+    pointcurrent = pointhead;
+}

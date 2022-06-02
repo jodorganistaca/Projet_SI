@@ -6,9 +6,12 @@ char char_val;
 int int_val;
 double double_val;
 char* str_val;
+int cptline =1;
+int yylineno;
 %}
 
 %option noyywrap
+%option yylineno
 
 %%
 
@@ -73,11 +76,22 @@ char* str_val;
             printf("tPRINTF "); 
         #endif    
         return tPRINTF;}
+"return"    {
+        #ifdef DEBUG 
+            printf("tRETURN "); 
+        #endif    
+        return tRETURN;}
+
 "+"    {
         #ifdef DEBUG 
             printf("tPLUS "); 
         #endif    
         return tPLUS;}
+"&"    {
+        #ifdef DEBUG 
+            printf("tET "); 
+        #endif    
+        return tET;}
 "&&"    {
         #ifdef DEBUG 
             printf("tAND "); 
@@ -179,12 +193,12 @@ char* str_val;
         ("tSEMICOLON \n");
     #endif
     return tSEMICOLON;}
-"=>"    {
+">="    {
     #ifdef DEBUG 
         printf("tGEQ "); 
     #endif
     return tGEQ;}
-"=<"    {
+"<="    {
     #ifdef DEBUG 
         printf("tLEQ "); 
     #endif
@@ -199,7 +213,7 @@ char* str_val;
         printf("tSUP "); 
     #endif
     return tSUP;}
-"\n"   printf("\n");
+"\n"   {printf("\n");printf("%4d\t%s", ++yylineno, yytext);yylval.nline=cptline++;}
 "true"    {
     #ifdef DEBUG 
         printf("tTRUE "); 
@@ -245,9 +259,7 @@ char* str_val;
     #endif
     return tERROR;}
 
-[*][A-Za-z][A-Za-z_0-9]* {printf("tPOINTER"); 
-    yylval.str_val = malloc(yyleng * sizeof(char)); 
-     strcpy(yylval.str_val, yytext); return tPOINTER;}
+
 %%
 /*
 int main(){
