@@ -84,7 +84,7 @@ void changeValueadd(char identifier[200],char type[20], int value, int depth){
     if (strcmp(t,type)!=0){
         int add = findByID(identifier,depth);
         struct Node *node = find(add);
-        printf("OK\n");
+        // printf("OK\n");
         if (node != NULL){
             struct Data *data = node->data;
             data->value =value;
@@ -157,8 +157,8 @@ void deletebyDepth(int depth){
         
                 current -> next = current -> next -> next;
 
-             //   printf("Node to be deleted! \n");
-                printNode(nodeToDelete);
+                // printf("Node to be deleted! \n");
+                // printNode(nodeToDelete);
                 
                 free(nodeToDelete);           
             }
@@ -179,8 +179,8 @@ struct Node* find(int address){
 
     while (current != NULL){
         if(current->data->address == address){
-           // printf("Node found! \n");
-            printNode(current);
+            // printf("Node found! \n");
+            // printNode(current);
             return current;
         }
         current = current -> next;
@@ -197,7 +197,7 @@ int Value(int address){
     while (current != NULL){
         if(current->data->address == address){
             //printf("Node found! \n");
-            printNode(current);
+            // printNode(current);
             return current->data->value;
         }
         current = current -> next;
@@ -284,13 +284,13 @@ int findFunction(char identifier[20]){ //deep à ajouter pour plus tard
 
    
     while (pointcurrent != NULL){
-        printf("Function %s %s\n",identifier,pointcurrent->function->identifier);
+        // printf("Function %s %s\n",identifier,pointcurrent->function->identifier);
         if(strcmp(pointcurrent->function->identifier, identifier)==0){
             return pointcurrent->function->address;
         }
         pointcurrent = pointcurrent -> next;
     }
-    printf("NULLLL \n");
+    // printf("NULLLL \n");
 
     return -1;    
 }

@@ -213,7 +213,13 @@ int yylineno;
         printf("tSUP "); 
     #endif
     return tSUP;}
-"\n"   {printf("\n");printf("%4d\t%s", ++yylineno, yytext);yylval.nline=cptline++;}
+"\n"   {
+    ++yylineno;
+
+    //printf("\n");
+    //prinktf("%4d\t%s", ++yylineno, yytext);
+    yylval.nline=cptline++;
+        }
 "true"    {
     #ifdef DEBUG 
         printf("tTRUE "); 

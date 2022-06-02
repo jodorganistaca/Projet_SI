@@ -1,22 +1,52 @@
-JMP 6   
-ADD 1 20 21 
-ADD 2 1 22 
-COP 19 2  
-LR    
-AFC 3 2  
-COP 25 3  
-AFC 4 4  
-COP 26 4  
-AFC 5 5  
-COP 27 5  
-AFC 6 1  
-COP 28 6  
-COP 20 25  
-COP 21 26  
-COP 22 27  
-BJ 2   
-COP 27 27  
-COP 26 26  
-COP 25 25  
-COP 24 19  
-PRI 24   
+AFC 1 5  
+COP 20 1  
+AFC 2 5  
+INF 3 20 2 
+JMF 3 11  
+AFC 4 2  
+AFC 5 2  
+MUL 6 4 5 
+COP 20 6  
+JMP 52   
+AFC 7 5  
+SUP 8 20 7 
+JMF 8 29  
+AFC 9 2  
+EQU 10 20 9 
+JMF 10 20  
+AFC 11 3  
+COP 20 11  
+JMP 26   
+AFC 12 2  
+SUP 13 20 12 
+JMF 13 26  
+AFC 14 4  
+COP 20 14  
+JMP 26   
+AFC 15 0  
+COP 20 15  
+JMP 52   
+AFC 16 5  
+EQU 17 20 16 
+JMF 17 50  
+AFC 18 2  
+COP 20 18  
+AFC 0 2  
+EQU 1 20 0 
+JMF 1 39  
+AFC 2 3  
+COP 20 2  
+AFC 3 1  
+EQU 4 20 3 
+JMF 4 44  
+AFC 5 3  
+COP 20 5  
+AFC 6 3  
+EQU 7 20 6 
+JMF 7 49  
+AFC 8 7  
+COP 20 8  
+JMP 52   
+AFC 9 4  
+COP 20 9  
+PRI 20   

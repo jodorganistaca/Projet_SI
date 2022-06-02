@@ -1,4 +1,4 @@
-GRM=CompilerYACCERROR.y
+GRM=CompilerYACC.y
 LEX=CompilerLEX.l
 BIN=Compiler
 
