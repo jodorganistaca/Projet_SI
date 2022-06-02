@@ -27,6 +27,6 @@ clean:
 interpretate:
 	python ./interpreter/interpreter.py --file ./output/assembleur.asm
 
-:
+cross:
 	python ./interpreter/cross-assembleur.py --file ./output/assembleur.asm --output ./output/crossassembleur.txt
 

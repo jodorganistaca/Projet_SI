@@ -4,5 +4,4 @@ int main()
     int *o=&b;
     *o=3;
     printf(b);
-
 }

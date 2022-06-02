@@ -1,52 +1,35 @@
-AFC 1 5  
-COP 20 1  
-AFC 2 5  
-INF 3 20 2 
-JMF 3 11  
-AFC 4 2  
+JMP 19   
+ADD 1 20 21 
+ADD 2 1 22 
+COP 19 2  
+LR    
+COP 20 24  
+COP 21 25  
+COP 22 26  
+BJ 2   
+COP 26 26  
+COP 25 25  
+COP 24 24  
+COP 28 19  
+PRI 28   
+ADD 3 24 25 
+ADD 4 3 28 
+COP 19 4  
+LR    
 AFC 5 2  
-MUL 6 4 5 
-COP 20 6  
-JMP 52   
+COP 30 5  
+AFC 6 4  
+COP 31 6  
 AFC 7 5  
-SUP 8 20 7 
-JMF 8 29  
-AFC 9 2  
-EQU 10 20 9 
-JMF 10 20  
-AFC 11 3  
-COP 20 11  
-JMP 26   
-AFC 12 2  
-SUP 13 20 12 
-JMF 13 26  
-AFC 14 4  
-COP 20 14  
-JMP 26   
-AFC 15 0  
-COP 20 15  
-JMP 52   
-AFC 16 5  
-EQU 17 20 16 
-JMF 17 50  
-AFC 18 2  
-COP 20 18  
-AFC 0 2  
-EQU 1 20 0 
-JMF 1 39  
-AFC 2 3  
-COP 20 2  
-AFC 3 1  
-EQU 4 20 3 
-JMF 4 44  
-AFC 5 3  
-COP 20 5  
-AFC 6 3  
-EQU 7 20 6 
-JMF 7 49  
-AFC 8 7  
-COP 20 8  
-JMP 52   
-AFC 9 4  
-COP 20 9  
-PRI 20   
+COP 32 7  
+AFC 8 1  
+COP 33 8  
+COP 24 30  
+COP 25 31  
+COP 26 33  
+BJ 6   
+COP 33 33  
+COP 31 31  
+COP 30 30  
+COP 29 19  
+PRI 29   

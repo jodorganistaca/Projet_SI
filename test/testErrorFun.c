@@ -1,5 +1,6 @@
 
 int sumo(int a, int b, int c){
+    
     return a+b+c;
 }
 
@@ -9,7 +10,7 @@ int main()
     int b=4;
     int d=5;
     int c=1;
-    result = sumo(a,b,d);
+    result = sumo(a,b,d,d);
 
     printf(result);
 }

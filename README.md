@@ -40,6 +40,6 @@ This will generate an file in hexa in the folder output
 
 ## Contact
 
-Kezia Sorlin - [@Keziahsorlin](https://github.com/Keziahsorlin) - sorlin@insa-toulouse.fr
+Keziah Sorlin - [@Keziahsorlin](https://github.com/Keziahsorlin) - sorlin@insa-toulouse.fr
 
 Organista Jose - [@jodorganistaca](https://github.com/jodorganistaca) - organist@insa-toulouse.fr
