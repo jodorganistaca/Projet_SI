@@ -3,7 +3,7 @@ int main(){
     if(5==5){
 
 
-        a=5;
+        a=1;
         int i =0;
         while(i<a){
             i=i+1;

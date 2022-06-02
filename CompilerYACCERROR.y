@@ -8,6 +8,7 @@
 extern int yylineno;
 void yyerror(char *s);
 int depth = 0;
+int memdepth=0;
 int add;
 char type[SIZE_TEMP];
 char value[SIZE_TEMP];
@@ -132,13 +133,13 @@ expression
     ;
 // FUNCTION A TERMINER SOUCIS DE RACCORD ENTRE VARIABLE + 
 function
-    : tINT tVARNAME tPOPEN tPCLOSE {
+    : tINT tVARNAME tPOPEN tPCLOSE {add=insertFunction($2,0);
         f++;
         if (function_detected==0){
             compteurinstructions++;
             function_detected++;
         } //à mettre pour la première fonction
-        insertNode($2,"Function",compteurinstructions+1,0);depth++;} statement {printf("fonction\n");}
+        insertNode($2,"Function",compteurinstructions+1,0);depth=add+1;} statement {printf("fonction\n");}
        { 
         printf("ERROR insert node %s %d \n", $2, $6);
          //retiens le début de la fonction
@@ -149,13 +150,13 @@ function
         
         compteurinstructions++;
         //deletebyDepth(depth);
-        depth--;
+        depth=0;
       } 
     
            
          
   //  | tVOID tVARNAME tPOPEN tPCLOSE statement { printf("ERROR 6 \n"); } 
-    | tINT tVARNAME tPOPEN {insertFunction($2,0);}parameters tPCLOSE  {
+    | tINT tVARNAME tPOPEN {add=insertFunction($2,0);depth=add+1;}parameters tPCLOSE  {
         if (function_detected==0){
             compteurinstructions++;
             function_detected++;
@@ -165,8 +166,8 @@ function
         ChangeParam($2,nb_param+1);
         pose++;
         nb_param=0; //à mettre pour la première fonction
-        insertNode($2,"Function",compteurinstructions+1,0);depth++; 
-        printf("profondeur  après%d",depth); } statement {printf("fonction\n");}
+        insertNode($2,"Function",compteurinstructions+1,0); 
+        printf("profondeur  après %d",depth); } statement {printf("fonction\n");}
        { 
         
          //retiens le début de la fonction
@@ -177,29 +178,29 @@ function
         
         compteurinstructions++;
        // deletebyDepth(depth);
-        depth--;
+        depth=0;
 
       } 
     //| function function
     ;
 parameters
-    : tINT tVARNAME {printf("profondeur %d",depth+1);
+    : tINT tVARNAME {printf("profondeur %d",add+1);
   //  strcpy(ArgumentsFonction,$2);
      Tableau[pose][nb_param]=malloc(1);
      strcpy(Tableau[pose][nb_param],$2);
      printf("CECI EST L'ARGUMENT %d %s\n",nb_param,Tableau[pose][nb_param]);
 
-    insertNode($2,"int",0,depth+1);}
+    insertNode($2,"int",0,depth);}
   //  | tCHAR tVARNAME
     | tINT tVARNAME {
         
-        printf("nombre de param %d",nb_param);
+        printf("nombre de param %d prof %d",nb_param,depth);
         
         Tableau[pose][nb_param]=malloc(1);
         strcpy(Tableau[pose][nb_param],$2);
         printf("CECI EST L'ARGUMENT %d %s\n",nb_param,Tableau[pose][nb_param]);
         nb_param++;
-        insertNode($2,"int",0,depth+1);
+        insertNode($2,"int",0,depth);
      } tCOMA parameters // compteur d'arguments 
     ;
 
@@ -632,20 +633,21 @@ calcul_multiple
 
         $$=SIZE_TEMP-1;
     }
-    |tVARNAME tPOPEN {finlecture=p; nb_param=0;adrfunc= findFunction($1);printf("FUN?CTION %s ADR %d\n",$1,adrfunc); paramfunc=findParam($1);} Param tPCLOSE
+    |tVARNAME tPOPEN {memdepth=depth;finlecture=p; nb_param=0;adrfunc= findFunction($1);depth = adrfunc+1;printf("FUN?CTION %s ADR %d\n",$1,adrfunc); paramfunc=findParam($1);} Param tPCLOSE
      {
        if ( nb_param < paramfunc){
             yyerror("nombre de paramètres non respecté, pas assez de paramètre \n");
-        }
-        printf("ON RENTRE BIEN ICI \n");
+       }
+       
+       printf("PROF FUNCTION A %d \n",depth);
         instructions[compteurinstructions][0]="BJ";
         snprintf( si, 39, "%d", Value(findByID($1,0)));
         instructions[compteurinstructions][1]=malloc(1);
         strcpy(instructions[compteurinstructions][1],si); 
         compteurinstructions++;
         for(p; p>finlecture; p=p-2){
-            printf("Tableau =%s \n",Tableau[0][2]);
-            instructions[compteurinstructions][0]="AFC";
+            printf("Tableau =%s \n",Tableau[1][2]);
+            instructions[compteurinstructions][0]="COP";
             snprintf( si, 39, "%d", pile[p]);
             instructions[compteurinstructions][1]=malloc(1);
             strcpy(instructions[compteurinstructions][1],si);
@@ -656,9 +658,9 @@ calcul_multiple
             changeValuebyadd(pile[p],"int",pile[p-1]);
             
         }
-        
+        depth = memdepth;
         $$=SIZE_TEMP-1;
-        printf("ON RENTRE BIEN ICI \n");
+        
     }
     ;
 Param
@@ -667,10 +669,15 @@ Param
             yyerror("nombre de paramètres non respecté, trop de paramètre \n");
         }
        // printf("PROFONDEUR DEPTH %d %s\n",depth+1,Tableau[adrfunc][nb_param]);
-        p++;pile[p]=Value(findByID($1,depth));p++;pile[p]=findByID($1,depth);changeValueadd(Tableau[adrfunc][nb_param],"int",pile[p],depth+1);
-         instructions[compteurinstructions][0]="AFC";
+        p++;pile[p]=findByID($1,memdepth);p++;pile[p]=findByID($1,memdepth);
+       
+        depth= adrfunc+1;
+         printf("je retiens %d %d profondeur %d \n",pile[p],pile[p-1],depth);
+        changeValueadd(Tableau[adrfunc][nb_param],"int",pile[p],depth);
+        
+        instructions[compteurinstructions][0]="COP";
          
-         snprintf( si, 39, "%d", findByID(Tableau[adrfunc][nb_param],depth+1));
+         snprintf( si, 39, "%d", findByID(Tableau[adrfunc][nb_param],depth));
         instructions[compteurinstructions][1]=malloc(1);
         strcpy(instructions[compteurinstructions][1],si);
         snprintf( si, 39, "%d", pile[p-1]);
@@ -678,7 +685,7 @@ Param
         strcpy(instructions[compteurinstructions][2],si);
         compteurinstructions++;
         nb_param++;
-                
+        depth = memdepth; 
         }
     |Param tCOMA Param
     ;
@@ -706,7 +713,9 @@ iteration_statement
         compteurinstructions++;
         snprintf( si, 39, "%d", compteurinstructions+1);
         strcpy(instructions[compteurdeif[d]][2],si); d=d-2;} //rajouter JMP au debut du while avec test condition à chaque fin de while 
-    | tIF conditioner {boolean=$2;
+    | tIF conditioner {
+        printf("rapide\n");
+        boolean=$2;
         instructions[compteurinstructions][0]="JMF";
         snprintf( si, 39, "%d", boolean);
         instructions[compteurinstructions][1]=malloc(1);
@@ -718,7 +727,8 @@ iteration_statement
         compteurdeif[d]=compteurinstructions; 
        // printf("LE COMPTEUR AFFICHE %d \n",compteurdeif[d]);
         compteurinstructions++;
-        } statement BlocIf 
+        } statement BlocIf
+   
     //| tIF conditioner {printf("t3\n");depth++;} statement  elsif {deletebyDepth(depth); depth--;}
         // je retiens d pour jump au prochain elsif j'efface ce d et le réutilise pour le prochain jump elsif ? 
         // on peut utiliser un tableau qui retient une vingtaine de d pour les elsif imbriqués
@@ -728,7 +738,7 @@ BlocIf
     :
         {snprintf( si, 39, "%d", compteurinstructions+1);
         strcpy(instructions[compteurdeif[d]][2],si); 
-        
+        d--;
         // printf("Je supprime %d\n",depth); 
         } // free depth
     |
@@ -743,7 +753,7 @@ BlocIf
         snprintf( si, 39, "%d", compteurinstructions+1);
         strcpy(instructions[compteurdeif[d-1]][2],si);
         } 
-    tELSE statement 
+        tELSE statement 
         {
         snprintf( si, 39, "%d", compteurinstructions+1);strcpy(instructions[compteurdeif[d]][1],si); d=d-2;
         }
@@ -769,14 +779,14 @@ BlocIf
         d++;
         compteurdeif[d]=compteurinstructions;
         compteurinstructions++;}  
-    statement 
+        statement 
         {o++;instructions[compteurinstructions][0]="JMP"; // Faire un ELSIF
        compteurELSIF[o]=compteurinstructions;
         compteurinstructions++;
         snprintf( si, 39, "%d", compteurinstructions+1);
         strcpy(instructions[compteurdeif[d]][2],si);
         d--; } 
-    elsif 
+        elsif 
         
     ;
 

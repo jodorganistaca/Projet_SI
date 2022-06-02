@@ -7,7 +7,7 @@ int main()
        a=5;
    }
    else{
-       a=4;
+       a=6;
    }
    printf(a);
 

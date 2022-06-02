@@ -1,22 +1,8 @@
-JMP 6   
-ADD 1 20 21 
-ADD 2 1 22 
-COP 19 2  
-LR    
-AFC 3 2  
-COP 25 3  
-AFC 4 4  
-COP 26 4  
-AFC 5 5  
-COP 27 5  
-AFC 6 1  
-COP 28 6  
-AFC 20 2  
-AFC 21 4  
-AFC 22 5  
-BJ 2   
-AFC 27 5  
-AFC 26 4  
-AFC 25 2  
-COP 24 19  
-PRI 24   
+AFC 1 5  
+COP 20 1  
+AFC 2 20  
+AFC 21 20  
+AFC 4 3  
+COP 20 4  
+PRI 20   
+git 

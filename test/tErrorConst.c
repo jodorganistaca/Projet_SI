@@ -4,5 +4,4 @@ int main()
     int b=5;
     const c=5;
     c=4;
-
 }

@@ -1,9 +1,12 @@
 int function (int a , int b , int c){
-        d= 0;
-        return d;
+        return c;
     }
 int main(){
     int a,b,d;
-    function (a,b,d);
+    a=2;
+    b=2;
+    d=2;
+    d=function (a,b,d);
+    printf(d);
     
 }

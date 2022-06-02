@@ -3,8 +3,6 @@ int main()
     b= 5;
     int *o=&b;
     *o=3;
-
-    
-    printf(*o);
+    printf(b);
 
 }
